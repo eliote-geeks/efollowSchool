@@ -145,6 +145,12 @@ class SchoolInformationController extends Controller
      */
     public function destroy(SchoolInformation $schoolInformation)
     {
-        //
+        try{
+            $schoolInformation->status = 0;
+            $schoolInformation->save();
+        }catch(\Exception $e)
+        {
+            return redirect()->back()->with('message','Oups une erreur s\'est produite veuillez reesayer: '.$e->getMessage()); 
+        }
     }
 }
