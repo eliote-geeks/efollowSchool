@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Scolarite;
 use App\Models\SmartCard;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Scolarite;
+use App\Models\User;
+use App\Models\Niveau;
+use App\Models\Student;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Niveau extends Model
+class Scolarite extends Model
 {
     use HasFactory;
 
@@ -16,8 +18,13 @@ class Niveau extends Model
         return $this->belongsTo(SchoolInformation::class);
     }
 
-    public function scolarite()
+    public function user()
     {
-        return $this->hasMany(Scolarite::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function niveau()
+    {
+        return $this->belongsTo(Niveau::class);
     }
 }

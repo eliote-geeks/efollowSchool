@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('niveaux', function (Blueprint $table) {
+        Schema::create('scolarites', function (Blueprint $table) {
             $table->id();
             $table->foreignId('school_information_id')->references('id')->on('school_informations')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('niveau_id')->references('id')->on('niveaux')->onDelete('cascade'); 
+            $table->string('tranche');
+            $table->string('uniqid');
+            $table->float('amount');
             $table->string('name');
-            $table->boolean('status')->default(1);
+            $table->timestamp('end_date');
             $table->timestamps();
         });
     }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('niveaux');
+        Schema::dropIfExists('scolarites');
     }
 };
