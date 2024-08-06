@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Classe;
 use App\Models\Scolarite;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;
@@ -19,5 +20,10 @@ class Niveau extends Model
     public function scolarite()
     {
         return $this->hasMany(Scolarite::class);
+    }
+
+    public function classe()
+    {
+        return $this->hasMany(Classe::class);
     }
 }

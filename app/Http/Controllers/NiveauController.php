@@ -34,7 +34,7 @@ class NiveauController extends Controller
                 'name' => 'required'
             ]);
     
-            $schoolInformation = SchoolInformation::first();
+            $schoolInformation = SchoolInformation::where('status',1)->first();
             if(Niveau::where([
                 'name' => $request->name,
                 'school_information_id' => $schoolInformation->id
@@ -79,7 +79,7 @@ class NiveauController extends Controller
                'name' => 'required'
            ]);
    
-           $schoolInformation = SchoolInformation::first();
+           $schoolInformation = SchoolInformation::where('status',1)->first();
            if(Niveau::where([
                'name' => $request->name,
                'school_information_id' => $schoolInformation->id

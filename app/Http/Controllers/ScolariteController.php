@@ -44,7 +44,7 @@ class ScolariteController extends Controller
 
             $number = (float) $str;
 
-            $schoolInformation = SchoolInformation::first();
+            $schoolInformation = SchoolInformation::where('status',1)->first();
             $user = auth()->user();
 
             foreach ($request->niveaux as $niveau) {
@@ -120,7 +120,7 @@ class ScolariteController extends Controller
 
             $number = (float) $str;
 
-            $schoolInformation = SchoolInformation::first();
+            $schoolInformation = SchoolInformation::where('status',1)->first();
             $user = auth()->user();
 
             foreach ($request->niveaux as $niveau) {

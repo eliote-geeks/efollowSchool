@@ -52,7 +52,7 @@ class CreateStudent extends Component
     public function mount()
     {
         try {
-            $this->schoolInformation = SchoolInformation::first();
+            $this->schoolInformation = SchoolInformation::where('status',1)->first();
         } catch (\Exception $e) {
             return redirect()->route('schoolInformation.create', [
                 'message' => 'Veuillez configurer les informations de votre école',
