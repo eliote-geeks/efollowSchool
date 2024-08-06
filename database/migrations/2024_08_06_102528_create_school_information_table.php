@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('logo');
             $table->string('name');
+            $table->string('poBox');
+            $table->string('tel_school');
             $table->string('verso_path')->nullable();
             $table->string('recto_path')->nullable();
             $table->string('matricular');
             $table->boolean('fillPath')->default(0);
             $table->timestamp('start');
             $table->timestamp('end');
+
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

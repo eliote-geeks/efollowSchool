@@ -147,6 +147,7 @@ class SchoolInformationController extends Controller
     {
         try{
             $schoolInformation->status = 0;
+            // select all table passe status a 0
             $schoolInformation->save();
         }catch(\Exception $e)
         {

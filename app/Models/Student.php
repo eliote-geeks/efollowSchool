@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Classe;
 use App\Models\Scolarite;
 use App\Models\SmartCard;
 use App\Models\SchoolInformation;
@@ -26,5 +27,10 @@ class Student extends Model
     public function smartCard()
     {
         return $this->hasOne(SmartCard::class);
+    }
+
+    public function classe()
+    {
+        return $this->belongsTo(Classe::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Classe;
 use App\Models\User;
 use App\Models\Student;
 use Livewire\Component;
@@ -47,6 +48,9 @@ class CreateStudent extends Component
     #[Validate('required')]
     public $name_mother;
 
+    #[Validate('required')]
+    public $classe;
+
     public $matricular;
 
     public function mount()
@@ -84,6 +88,7 @@ class CreateStudent extends Component
                 $matricule = date('Y') . $this->schoolInformation->matricular . $uniqueId;
 
                 $student = new Student();
+                $student->classe_id = Classe::find($this->classe)->id;
                 $student->first_name = $this->first_name;
                 $student->last_name = $this->last_name;
                 $student->place_birth = $this->place_birth;
