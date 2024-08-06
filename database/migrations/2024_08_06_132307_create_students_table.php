@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamp('date_birth');
             $table->string('phone_father')->nullable();
             $table->string('phone_mother')->nullable();
+            $table->string('name_father')->nullable();
+            $table->string('name_mother')->nullable();
             $table->string('matricular');
             $table->boolean('status');
             $table->timestamps();
