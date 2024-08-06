@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('school_information', function (Blueprint $table) {
+        Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
-            $table->string('logo');
             $table->string('name');
-            $table->string('verso_path')->nullable();
-            $table->string('recto_path')->nullable();
-            $table->string('matricular');
-            $table->boolean('fillPath')->default(0);
-            $table->timestamp('start');
-            $table->timestamp('end');
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
@@ -31,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('school_information');
+        Schema::dropIfExists('niveaux');
     }
 };
