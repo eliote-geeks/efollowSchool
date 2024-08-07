@@ -33,3 +33,8 @@ Route::middleware([
 Route::resource('schoolInformation',SchoolInformationController::class);
 Route::resource('student',StudentController::class);
 
+
+Route::get('card-view',function(){
+    return view('student.card-view');
+});
+
