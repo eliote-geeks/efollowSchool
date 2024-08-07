@@ -1,27 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+    <title>Add Customer</title>
+    <style>
 
- <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 20px;
+}
+
+.text-start {
+  text-align: start !important;
+  justify-content: center;
+  text-align: center;
+}
+
+.text-end {
+  text-align: end !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+
+.page-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.breadcrumb {
+    margin: 10px 0;
+}
+
+.breadcrumb ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.breadcrumb li {
+    margin-right: 10px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.breadcrumb li.active {
+    color: #6c757d;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+}
 
 .student-card {
-  background-image: url('assets/images/background-studentCard.jpeg');
-  z-index: -1;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  font-weight: bold;
+    background-image: url('assets/images/background-studentCard.jpeg');
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    font-weight: bold;
+    width: 100%;
+    max-width: 800px;
 }
 
 .student-card::before {
@@ -39,181 +103,149 @@
   z-index: -1;
 }
 
-.student-photo {
-  width: 130px;
-  height: 130px;
-  object-fit: cover;
-}
-
-.logo {
-  width: 180px;
-  height: 180px;
-  background-image: url('assets/images/logo-studentCard.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0.8;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-}
-
-.student-card-infos {
-  font-size: 16px;
+.card-header {
+    margin-bottom: 20px;
 }
 
 .text-warning {
-  color: #ffc107 !important;
+    color: #ffc107;
+    display: flex;
+    justify-content: space-between;
 }
 
-.text-primary {
-  color: #007bff !important;
+.text-start,
+.text-end {
+    width: 45%;
+}
+
+.student-card-infos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-left {
+    font-size: 16px;
+    width: 45%;
+}
+
+.info-right {
+    width: 45%;
+    text-align: right;
+}
+
+.student-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+}
+
+.logo {
+    width: 180px;
+    height: 180px;
+    background-image: url('assets/images/logo-studentCard.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .text-success {
-  color: #28a745 !important;
+    color: #28a745;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
 }
 
-.text-center {
-  text-align: center !important;
+.text-center-content {
+    display: inline-block; /* Ensures that the content is only as wide as necessary */
+    text-align: center;
 }
 
-.text-start {
-  text-align: start !important;
+.info-left {
+    display: flex;
+    flex-direction: column;
 }
 
-.text-end {
-  text-align: end !important;
+.info-left p {
+    display: flex;
+    align-items: center; /* Vertically center-aligns the text within each paragraph */
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 10px; 
 }
 
-.mb-0 {
-  margin-bottom: 0 !important;
+.label {
+    display: inline-block;
+    width: 150px; /* Adjust width as needed to ensure alignment */
+    font-weight: bold;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem !important;
+.value {
+    margin-left: 10px; /* Adjust this value to control the space between the label and the value */
 }
 
-.mb-3 {
-  margin-bottom: 1rem !important;
-}
 
-.mb-5 {
-  margin-bottom: 3rem !important;
-}
+    </style>
+    
+</head>
+<body>
+    <section class="container">
+        <div class="page-header">
+            <h1>Add Customer</h1>
+            <nav class="breadcrumb">
+                <ol>
+                    <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li><a href="#">Ecommerce</a></li>
+                    <li class="active">Add Customer</li>
+                </ol>
+            </nav>
+        </div>
 
-.me-3 {
-  margin-right: 1rem !important;
-}
-
-.me-4 {
-  margin-right: 1.5rem !important;
-}
-
-.me-5 {
-  margin-right: 3rem !important;
-}
-
-.p-4 {
-  padding: 1.5rem !important;
-}
-
-.container-fluid {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
-.col-12 {
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-.col-6 {
-  flex: 0 0 50%;
-  max-width: 50%;
-}
-
-.col-md-8 {
-  flex: 0 0 66.666667%;
-  max-width: 66.666667%;
-}
-
-.col-lg-12 {
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-.col-md-12 {
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-@media (min-width: 768px) {
-  .col-md-8 {
-    flex: 0 0 66.666667%;
-    max-width: 66.666667%;
-  }
-}
-
-@media (min-width: 992px) {
-  .col-lg-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-}
-
- </style>
-
-                <section>
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="student-card">
-                                <div class="row text-warning">
-                                    <div class="col-6 text-start">
-                                        <p class="mb-0 text-center">République du Cameroun</p>
-                                        <p class="mb-0 text-center">Paix-Travail-Patrie</p>
-                                        <p class="mb-0 text-center">Ministère de l'Enseignement Secondaire</p>
-                                        <p class="mb-0 text-center">BP: 845</p>
-                                        <p class="mb-0 text-center">TEL: 223 43 67 64</p>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                        <p class="mb-0 text-center">Republic of Cameroon</p>
-                                        <p class="mb-0 text-center">Peace-Work-Fatherland</p>
-                                        <p class="mb-0 text-center">Ministry of Secondary Education</p>
-                                        <p class="mb-0 text-center">PO BOX: 845</p>
-                                        <p class="mb-0 text-center">Ph: 223 43 67 64</p>
-                                    </div>
-                                </div>
-                                <div class="row my-5 student-card-infos">
-                                    <div class="col-6">
-                                        <p class="mb-0"><span class="me-5 text-primary">Nom :</span>John Doe</p>
-                                        <p class="mb-0"><span class="me-4 text-primary">Prénom :</span>Jane Doe</p>
-                                        <p class="mb-0"><span class="me-4 text-primary">Né(e) le :</span>01/01/2005</p>
-                                        <p class="mb-0"><span class="me-3 text-primary">Matricule :</span>12345678</p>
-                                        <p class="mb-0"><span class="me-5 text-primary">Classe :</span>Terminale</p>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <img src="assets/images/blank_image.jpg"  class="student-photo">
-                                    </div>
-                                </div>
-                                <div class="logo"></div>
-                                    <h4 class="text-center text-success" style="font-weight: bold;">Lycée Bilingue de Yaoundé</h4>
-                                </div>
-                            </div>
+        <div class="card-container">
+            <div class="student-card">
+                <div class="card-header">
+                    <div class="text-warning">
+                        <div class="text-start">
+                         <div class="text-center-content">
+                            <p>République du Cameroun</p>
+                            <p>Paix-Travail-Patrie</p>
+                            <p>Ministère de l'Enseignement Secondaire</p>
+                            <p>BP: 845</p>
+                            <p>TEL: 223 43 67 64</p>
+                        </div>
+                        </div>
+                        <div class="text-end">
+                         <div class="text-center-content">
+                            <p>Republic of Cameroon</p>
+                            <p>Peace-Work-Fatherland</p>
+                            <p>Ministry of Secondary Education</p>
+                            <p>PO BOX: 845</p>
+                            <p>Ph: 223 43 67 64</p>
+                        </div>
                         </div>
                     </div>
-                </section>
+                </div>
+                <div class="student-card-infos">
+                    <div class="info-left">
+                        <p><span class="label">Nom :</span> <span class="value">John Doe</span></p>
+                        <p><span class="label">Prénom :</span> <span class="value">Jane Doe</span></p>
+                        <p><span class="label">Né(e) le :</span> <span class="value">01/01/2005</span></p>
+                        <p><span class="label">Matricule :</span> <span class="value">12345678</span></p>
+                        <p><span class="label">Classe :</span> <span class="value">Terminale</span></p>
+                    </div>
+                    <div class="info-right">
+                        <img src="assets/images/blank_image.jpg" class="student-photo" alt="Student Photo">
+                    </div>
+                </div>
+                <div class="logo"></div>
+                <h2 class="text-center text-success">Lycée Bilingue de Yaoundé</h2>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
