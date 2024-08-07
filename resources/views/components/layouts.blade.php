@@ -801,7 +801,6 @@
                 </nav>
             </div>
         </main>
-        {{ $slot }}
 
 
              {{ $slot }}
