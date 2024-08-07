@@ -195,16 +195,6 @@
 </head>
 <body>
     <section class="container">
-        <div class="page-header">
-            <h1>Add Customer</h1>
-            <nav class="breadcrumb">
-                <ol>
-                    <li><a href="admin-dashboard.html">Dashboard</a></li>
-                    <li><a href="#">Ecommerce</a></li>
-                    <li class="active">Add Customer</li>
-                </ol>
-            </nav>
-        </div>
 
         <div class="card-container">
             <div class="student-card">
