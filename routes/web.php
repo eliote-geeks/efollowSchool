@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SchoolInformationController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,3 +31,5 @@ Route::middleware([
 
 
 Route::resource('schoolInformation',SchoolInformationController::class);
+Route::resource('student',StudentController::class);
+

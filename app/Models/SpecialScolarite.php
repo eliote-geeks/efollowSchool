@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Student;
 use App\Models\Scolarite;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Moratoire extends Model
+class SpecialScolarite extends Model
 {
     use HasFactory;
 

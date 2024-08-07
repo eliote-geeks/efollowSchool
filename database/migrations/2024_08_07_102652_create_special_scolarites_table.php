@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('moratoires', function (Blueprint $table) {
+        Schema::create('special_scolarites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('scolarite_id')->references('id')->on('scolarites')->onDelete('cascade');
             $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->string('name');
-            $table->timestamp('end_date');
-            $table->string('file_path');
-            $table->foreignId('school_information_id')->references('id')->on('school_informations')->onDelete('cascade');
+            $table->foreignId('scolarite_id')->references('id')->on('scolarites')->onDelete('cascade');
+            $table->integer('discount');
             $table->timestamps();
+            $table->foreignId('school_information_id')->references('id')->on('school_informations')->onDelete('cascade');
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('moratoires');
+        Schema::dropIfExists('special_scolarites');
     }
 };

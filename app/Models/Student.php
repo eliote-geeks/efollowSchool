@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Classe;
+use App\Models\Moratoire;
 use App\Models\Scolarite;
 use App\Models\SmartCard;
 use App\Models\StudentClasse;
+use App\Models\SpecialScolarite;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,5 +37,13 @@ class Student extends Model
         return $this->hasMany(StudentClasse::class);
     }
 
+    public function moratoire()
+    {
+        return $this->hasMany(Moratoire::class);
+    }
 
+    public function specialScolarite()
+    {
+        return $this->hasMany(SpecialScolarite::class);
+    }
 }

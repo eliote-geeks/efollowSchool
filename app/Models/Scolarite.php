@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Niveau;
 use App\Models\Student;
+use App\Models\SpecialScolarite;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,5 +27,15 @@ class Scolarite extends Model
     public function niveau()
     {
         return $this->belongsTo(Niveau::class);
+    }
+
+    public function moratoire()
+    {
+        return $this->hasMany(Moratoire::class);
+    }
+
+    public function specialScolarite()
+    {
+        return $this->hasMany(SpecialScolarite::class);
     }
 }
