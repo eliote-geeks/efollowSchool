@@ -39,6 +39,6 @@ Route::get('card-view',function(){
 });
 
 
-Route::get('import-students', [StudentController::class, 'showImportForm']);
+Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
 Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
 
