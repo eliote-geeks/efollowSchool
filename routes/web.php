@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\SchoolInformationController;
-use App\Http\Controllers\StudentController;
+use App\Exports\StudentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SchoolInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +44,6 @@ Route::get('card-view',function(){
 Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
 Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
 
+Route::get('export-students', function () {
+    return Excel::download(new StudentsExport, 'students.xlsx');
+})->name('exportModel');

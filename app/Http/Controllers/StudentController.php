@@ -17,6 +17,11 @@ class StudentController extends Controller
         //
     }
 
+    public function showImportForm()
+    {
+        return view('student.import-students');
+    }
+
     public function import(Request $request)
     {
         $request->validate([
