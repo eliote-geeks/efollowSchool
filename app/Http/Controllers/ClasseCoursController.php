@@ -28,25 +28,37 @@ class ClasseCoursController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $request->validate([
                 'day' => 'required',
                 'name' => 'required',
                 'start_hour' => 'required',
                 'end_hour' => 'required',
-                'class' => 'required',
+                'classes' => 'required|array',
             ]);
 
-            $classeCours = new ClasseCours();
-            $classeCours->name = $request->name;
-            $classeCours->classe_id = $request->class;
-            $classeCours->day = $request->day;
-            $classeCours->start_Hour = $request->start_hour;
-            $classeCours->end_Hour = $request->end_hour;
-            $classeCours->save();
-            return redirect()->back()->with('message','Nouvel emploi de temps ajouté !!');            
-        }catch(\Exception $e){
-            return redirect()->back()->with('message','Erreur Innatendue !!');
+            foreach ($request->classes as $class) {
+                if (
+                    ClasseCours::where([
+                        'name' => $request->name,
+                        'classe_id' => $class,
+                    ])->count() == 0
+                ) {
+                    $classeCours = new ClasseCours();
+                    $classeCours->name = $request->name;
+                    $classeCours->classe_id = $class;
+                    $classeCours->day = $request->day;
+                    $classeCours->start_Hour = $request->start_hour;
+                    $classeCours->end_Hour = $request->end_hour;
+                    $classeCours->save();
+                }
+             
+                return redirect()->back()->with('message', 'nouveaux cours ajouté !!');
+            }
+
+            return redirect()->back()->with('message', 'Nouvel emploi de temps ajouté !!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', 'Erreur Innatendue !!');
         }
     }
 
@@ -71,24 +83,36 @@ class ClasseCoursController extends Controller
      */
     public function update(Request $request, ClasseCours $classeCours)
     {
-        try{
+        try {
             $request->validate([
                 'day' => 'required',
                 'name' => 'required',
                 'start_hour' => 'required',
                 'end_hour' => 'required',
-                'class' => 'required',
+                'classes' => 'required|array',
             ]);
 
-            $classeCours->name = $request->name;
-            $classeCours->classe_id = $request->class;
-            $classeCours->day = $request->day;
-            $classeCours->start_Hour = $request->start_hour;
-            $classeCours->end_Hour = $request->end_hour;
-            $classeCours->save();
-            return redirect()->back()->with('message','Emploi de temps edité !!');            
-        }catch(\Exception $e){
-            return redirect()->back()->with('message','Erreur Innatendue !!');
+            foreach ($request->classes as $class) {
+                if (
+                    ClasseCours::where([
+                        'name' => $request->name,
+                        'classe_id' => $class,
+                    ])->count() == 0
+                ) {
+                    $classeCours = new ClasseCours();
+                }
+                $classeCours->name = $request->name;
+                $classeCours->classe_id = $class;
+                $classeCours->day = $request->day;
+                $classeCours->start_Hour = $request->start_hour;
+                $classeCours->end_Hour = $request->end_hour;
+                $classeCours->save();
+                return redirect()->back()->with('message', 'nouveaux cours ajouté !!');
+            }
+
+            return redirect()->back()->with('message', 'Nouvel emploi de temps ajouté !!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', 'Erreur Innatendue !!');
         }
     }
 
@@ -97,12 +121,11 @@ class ClasseCoursController extends Controller
      */
     public function destroy(ClasseCours $classeCours)
     {
-        try{
+        try {
             $classeCours->status = 0;
             $classeCours->save();
-        }catch(\Exception $e)
-        {
-            return redirect()->back()->with('message','Erreur innatendue !!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', 'Erreur innatendue !!');
         }
     }
 }
