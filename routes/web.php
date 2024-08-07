@@ -38,3 +38,7 @@ Route::get('card-view',function(){
     return view('student.card-view');
 });
 
+
+Route::get('import-students', [StudentController::class, 'showImportForm']);
+Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
+
