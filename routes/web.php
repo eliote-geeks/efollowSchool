@@ -46,4 +46,4 @@ Route::post('import-students', [StudentController::class, 'import'])->name('stud
 
 Route::get('export-students', function () {
     return Excel::download(new StudentsExport, 'students.xlsx');
-});
+})->name('exportModel');
