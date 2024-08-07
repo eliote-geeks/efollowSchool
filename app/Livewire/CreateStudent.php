@@ -105,14 +105,14 @@ class CreateStudent extends Component
         }
     }
 
-    
+
     public function render()
     {
-        if (SchoolInformation::where('status', 1)->count() == 0) {
+        if (SchoolInformation::where('status', 1)->count() > 0) {
             $this->schoolInformation = SchoolInformation::where('status', 1)->first();
             return view('livewire.create-student');
         } else {
-            return redirect()->back()->with('message', 'Erreur d\'information de l\'ecole');
+            return view('welcome');
         }
     }
 }
