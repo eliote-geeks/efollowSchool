@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Niveau;
 use App\Models\Student;
 use App\Models\Scolarite;
+use App\Models\StudentClasse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -25,5 +26,10 @@ class SchoolInformation extends Model
     public function scolarite()
     {
         return $this->hasMany(Scolarite::class);
+    }
+
+    public function studentClasse()
+    {
+        return $this->hasMany(StudentClasse::class);
     }
 }

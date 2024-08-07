@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Classe;
 use App\Models\Scolarite;
 use App\Models\SmartCard;
+use App\Models\StudentClasse;
 use App\Models\SchoolInformation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,8 +30,10 @@ class Student extends Model
         return $this->hasOne(SmartCard::class);
     }
 
-    public function classe()
+    public function studentClasse()
     {
-        return $this->belongsTo(Classe::class);
+        return $this->hasMany(StudentClasse::class);
     }
+
+
 }
