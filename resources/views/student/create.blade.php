@@ -1,6 +1,66 @@
 <base href="/">
 <x-layouts>
 
+ <style>
+
+    .student-card {
+    background-image: url('assets/images/background-studentCard.jpeg');
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    font-weight: bold;
+  }
+
+  .student-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    opacity: 0.8;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+  }
+
+  .student-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+  }
+
+  .logo {
+    width: 180px;
+    height: 180px;
+    background-image: url('assets/images/logo-studentCard.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+
+  .student-card-infos {
+
+    font-size: 16px;
+
+  }
+
+ </style>
+
                 <section class="container-fluid p-4">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
@@ -41,7 +101,7 @@
                                             <div class="col-md-12 col-12 mb-4 position-relative">
                                             <h5 class="mb-2">Photo de l'élève</h5>
                                                 <label for="img" class="img-thumbnail position-relative" style="height: 100px; width: 100px; cursor: pointer;">
-                                                    <img id="StudentImage" src="blank_image.jpg" class=" w-100 h-100">
+                                                    <img id="StudentImage" src="assets/images/blank_image.jpg" class=" w-100 h-100">
                                                     <input class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100" type="file" accept="image/*" id="img" name="img" onchange="previewImage(this)" />
                                                 </label>
                                             </div>
@@ -144,7 +204,7 @@
                                         <p class="mb-0"><span class="me-5 text-primary">Classe :</span>Terminale</p>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <img src="img.jpg" alt="Photo de l'étudiant" class="student-photo">
+                                        <img src="assets/images/blank_image.jpg"  class="student-photo">
                                     </div>
                                 </div>
                                 <div class="logo"></div>

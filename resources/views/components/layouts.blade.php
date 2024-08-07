@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EffollowSchool</title>
 
-    <link rel="stylesheet" href="vendor/owl-carousel/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="vendor/owl-carousel/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link href="vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="icons/fontawesome/css/all.css" rel="stylesheet">
+
+<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon/favicon.ico" />
+<script src="assets/js/vendors/darkMode.js"></script>
+<link href="assets/fonts/feather/feather.css" rel="stylesheet" />
+<link href="assets/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+<link href="assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/theme.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="canonical" href="add-customer.html" >
 </head>
 <body>
     
@@ -821,6 +824,7 @@
 
              {{ $slot }}
         
+            </main>
         </div>
 
 
