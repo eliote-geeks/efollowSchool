@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('niveau_id')->references('id')->on('niveaux')->onDelete('cascade'); 
-            $table->foreignId('school_information_id')->references('id')->on('school_informations')->onDelete('cascade');           
+            $table->foreignId('school_information_id')->references('id')->on('school_information')->onDelete('cascade');           
             $table->string('name');
             $table->boolean('status')->default(1);
             $table->string('prof_titulaire')->nullable();

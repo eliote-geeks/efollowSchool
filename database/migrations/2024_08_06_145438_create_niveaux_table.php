@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('school_information_id')->references('id')->on('school_informations')->onDelete('cascade');
+            $table->foreignId('school_information_id')->references('id')->on('school_information')->onDelete('cascade');
             $table->string('name');
             $table->boolean('status')->default(1);
             $table->timestamps();

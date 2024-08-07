@@ -54,17 +54,6 @@ class CreateStudent extends Component
 
     public $matricular;
 
-    public function mount()
-    {
-        try {
-            $this->schoolInformation = SchoolInformation::where('status',1)->first();
-        } catch (\Exception $e) {
-            return redirect()->route('schoolInformation.create', [
-                'message' => 'Veuillez configurer les informations de votre école',
-            ]);
-        }
-    }
-
     public function save()
     {
         try {
@@ -88,7 +77,7 @@ class CreateStudent extends Component
                 $uniqueId = str_pad($user->id, 6, '0', STR_PAD_LEFT);
                 $matricule = date('Y') . $this->schoolInformation->matricular . $uniqueId;
 
-                $student = new Student();            
+                $student = new Student();
                 $student->first_name = $this->first_name;
                 $student->last_name = $this->last_name;
                 $student->place_birth = $this->place_birth;
@@ -103,7 +92,7 @@ class CreateStudent extends Component
                 $student->save();
 
                 $classe = Classe::find($this->classe)->id;
-                $studentClass =  new StudentClasse();
+                $studentClass = new StudentClasse();
                 $studentClass->classe_id = $classe;
                 $studentClass->student_id = $student->id;
                 $student->school_information_id = $this->schoolInformation->id;
@@ -111,14 +100,19 @@ class CreateStudent extends Component
             });
 
             alert('success', 'utilisateur Crée mais non actif', 'position', 'center');
-
-            
         } catch (\Exception $e) {
             alert('danger', 'erreur de creation de ce profil: ' . $e->getMessage());
         }
     }
+
+    
     public function render()
     {
-        return view('livewire.create-student');
+        if (SchoolInformation::where('status', 1)->count() == 0) {
+            $this->schoolInformation = SchoolInformation::where('status', 1)->first();
+            return view('livewire.create-student');
+        } else {
+            return redirect()->back()->with('message', 'Erreur d\'information de l\'ecole');
+        }
     }
 }

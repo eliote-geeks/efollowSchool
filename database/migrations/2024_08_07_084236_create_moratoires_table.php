@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamp('end_date');
             $table->string('file_path');
-            $table->foreignId('school_information_id')->references('id')->on('school_informations')->onDelete('cascade');
+            $table->foreignId('school_information_id')->references('id')->on('school_information')->onDelete('cascade');
             $table->timestamps();
         });
     }
