@@ -13,7 +13,10 @@ class SchoolInformationController extends Controller
      */
     public function index()
     {
-        //
+        $schoolInformations = SchoolInformation::all();
+        return view('school-information.school-information',[
+            'schoolInformations' => $schoolInformations
+        ]);
     }
 
     /**
@@ -30,18 +33,22 @@ class SchoolInformationController extends Controller
     public function store(Request $request)
     {
         try {
-            if(SchoolInformation::count() > 0){
-                return redirect()->back()->with('message','Cette école existe deja !!');
-            }
+            // if(SchoolInformation::whereYear(date('Y'))->count() > 0){
+            //     return redirect()->back()->with('message','Cette école existe deja !!');
+            // }
+            // dd($request->all());
             $request->validate([
                 'start_date' => 'required|date',
                 'logo' => 'required|image',
+                'verso_path' => 'required|image',
+                'recto_path' => 'required|image',
+                'tel_school' => 'required',
                 'name' => 'required|string|max:150',
                 'matricular' => 'required|string',
-                'fillPath' => 'required|boolean',
+                // 'fillPath' => 'required',
                 'end_date' => 'required|date|after:start',
-                'recto_path' => 'image|nullable',
-                'verso_path' => 'image|nullable',
+                // 'recto_path' => 'image|nullable',
+                // 'verso_path' => 'image|nullable',
             ],
             [
                 'start_date.required' => 'le champ designant l\'année de debut ne peut rester vide',
@@ -54,8 +61,8 @@ class SchoolInformationController extends Controller
                 'logo.image' => 'Le logo de l\'établissement doit etre une image',
                 'matricular.required' => 'Le masque de matricule doit etre renseigné',
                 'fillPath.required' => 'veuiller selectionner si oui ou non vous desirez imprimer vous vos informations',
-                'verso_path.image' => 'Le verso de l\'établissement doit etre une image',
-                'recto_path.image' => 'Le recto de l\'établissement doit etre une image',
+                // 'verso_path.image' => 'Le verso de l\'établissement doit etre une image',
+                // 'recto_path.image' => 'Le recto de l\'établissement doit etre une image',
             ]);
 
             
@@ -63,11 +70,20 @@ class SchoolInformationController extends Controller
             $school->start = Carbon::parse('start');
             $school->end = Carbon::parse('end');
             $school->name = $request->name;
+            $school->poBox = $request->poBox;
+            $school->tel_school = $request->tel_school;
             $school->matricular = $request->matricular;
             $school->logo = 'storage/' . $request->logo->store('logoSchool', 'public');
+            $school->verso_path = 'storage/' . $request->verso_path->store('verso_path', 'public');
+            $school->recto_path = 'storage/' . $request->recto_path->store('recto_path', 'public');
             if ($request->fillPath == 'on') {
-                $school->verso_path = 'storage/' . $request->verso_path->store('verso_path', 'public');
-                $school->recto_path = 'storage/' . $request->recto_path->store('recto_path', 'public');
+
+                // $request->validate([
+                //     'verso_path' => 'required|image',
+                //     'recto_path' => 'required|image',
+                // ]);
+                $schoolInformation->fillPath = 1;
+
             }
             $school->save();
             return response()->json(['message' => 'Event created successfully', 'event' => $school], 201);
@@ -99,14 +115,17 @@ class SchoolInformationController extends Controller
     {
         try {
             $request->validate([
-                'start_date' => 'required|date',
+                // 'start_date' => 'required|date',
                 'logo' => 'required|image',
+                // 'verso_path' => 'required|image',
+                // 'recto_path' => 'required|image',
+                'tel_school' => 'required',
                 'name' => 'required|string|max:150',
                 'matricular' => 'required|string',
-                'fillPath' => 'required|boolean',
-                'end_date' => 'required|date|after:start',
-                'recto_path' => 'image|nullable',
-                'verso_path' => 'image|nullable',
+                // 'fillPath' => 'required',
+                // 'end_date' => 'required|date|after:start',
+                // 'recto_path' => 'image|nullable',
+                // 'verso_path' => 'image|nullable',
             ],
             [
                 'start_date.required' => 'le champ designant l\'année de debut ne peut rester vide',
@@ -127,14 +146,17 @@ class SchoolInformationController extends Controller
             $schoolInformation->start = Carbon::parse('start');
             $schoolInformation->end = Carbon::parse('end');
             $schoolInformation->name = $request->name;
+            $schoolInformation->poBox = $request->poBox;
+            $schoolInformation->tel_school = $request->tel_school;
             $schoolInformation->matricular = $request->matricular;
+            $schoolInformation->verso_path = 'storage/' . $request->verso_path->store('verso_path', 'public');
+            $schoolInformation->recto_path = 'storage/' . $request->recto_path->store('recto_path', 'public');
             $schoolInformation->logo = 'storage/' . $request->logo->store('logoSchool', 'public');
             if ($request->fillPath == 'on') {
-                $schoolInformation->verso_path = 'storage/' . $request->verso_path->store('verso_path', 'public');
-                $schoolInformation->recto_path = 'storage/' . $request->recto_path->store('recto_path', 'public');
+                $schoolInformation->fillPath = 1;
             }
             $schoolInformation->save();
-            return ;
+            return redirect()->back()->with('message','Modifié avec success !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('message','Oups une erreur s\'est produite veuillez reesayer: '.$e->getMessage());
         }
