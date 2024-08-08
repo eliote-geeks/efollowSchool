@@ -2,6 +2,7 @@
 
 use App\Exports\StudentsExport;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\NiveauController;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -36,7 +37,7 @@ Route::middleware([
 Route::resource('schoolInformation',SchoolInformationController::class);
 Route::resource('student',StudentController::class);
 Route::resource('classe',ClasseController::class);
-
+Route::resource('niveau',NiveauController::class);
 
 Route::get('card-view',function(){
     return view('student.card-view');
@@ -46,9 +47,7 @@ Route::get('print/card/{student}/{schoolInformation}',[StudentController::class,
 Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
 Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
 
-Route::get('niveau',function(){
-    return view('niveau.niveau');
-});
+
 
 Route::get('school',function(){
     return view('school-information.school-information');
