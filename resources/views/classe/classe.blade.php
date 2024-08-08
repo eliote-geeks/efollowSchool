@@ -1,6 +1,6 @@
 <base href="/">
 <x-layouts>
-     <!-- Container fluid -->
+    <!-- Container fluid -->
     <section class="container-fluid p-4">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
@@ -28,21 +28,23 @@
                 <div class="card">
                     <!-- card header  -->
                     <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2 class="mb-1">Liste des classes</h2>
-                        <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addClassroom" role="button">
-                            <i class="fas fa-plus me-2"></i>
-                            Créer une classe
-                        </a>
-                    </div>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-1">Liste des classes</h2>
+                            <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addClassroom"
+                                role="button">
+                                <i class="fas fa-plus me-2"></i>
+                                Créer une classe
+                            </a>
+                        </div>
                         <p class="mb-0">
-                        Sur cette page vous pouvez créer, visualiser ou modifier des classes
+                            Sur cette page vous pouvez créer, visualiser ou modifier des classes
                         </p>
                     </div>
                     <!-- table  -->
                     <div class="card-body">
                         <div class="table-card">
-                            <table id="dataTableBasic" class="table table-hover align-middle table-responsive" style="width: 100%">
+                            <table id="dataTableBasic" class="table table-hover align-middle table-responsive"
+                                style="width: 100%">
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Nom de la classe</th>
@@ -53,108 +55,131 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($classes as $c)
-                                        
-                                   
-                                    <tr>
-                                        <td>6EME A</td>
-                                        <td>6EME</td>
-                                        <td>PAULAIN BRICE</td>
-                                        <td scope="col" class="text-center">
-                                            <span class="dropdown dropstart">
-                                                <a
-                                                    class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                                    href="#"
-                                                    role="button"
-                                                    id="courseDropdown2"
-                                                    data-bs-toggle="dropdown"
-                                                    data-bs-offset="-20,20"
-                                                    aria-expanded="false">
-                                                    <i class="fe fe-more-vertical"></i>
-                                                </a>
-                                                <span class="dropdown-menu" aria-labelledby="courseDropdown2">
-                                                    <span class="dropdown-header">Action</span>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#deleteClassroom" role="button">
-                                                        <i class="fe fe-trash dropdown-item-icon"></i>
-                                                        Supprimer
+                                        <tr>
+                                            <td>{{ $c->name }}</td>
+                                            <td>{{ $c->niveau->name }}</td>
+                                            <td>{{ $c->prof_titulaire ? $c->prof_titulaire : '// ' }}</td>
+                                            <td scope="col" class="text-center">
+                                                <span class="dropdown dropstart">
+                                                    <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                        href="#" role="button" id="courseDropdown2"
+                                                        data-bs-toggle="dropdown" data-bs-offset="-20,20"
+                                                        aria-expanded="false">
+                                                        <i class="fe fe-more-vertical"></i>
                                                     </a>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#editSchoolYear" role="button">
-                                                        <i class="fe fe-edit dropdown-item-icon"></i>
-                                                        Modifier
-                                                    </a>
+                                                    <span class="dropdown-menu" aria-labelledby="courseDropdown2">
+                                                        <span class="dropdown-header">Action</span>
+                                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                                            href="#deleteClassroom{{ $c->id }}" role="button">
+                                                            <i class="fe fe-trash dropdown-item-icon"></i>
+                                                            Supprimer
+                                                        </a>
+                                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                                            href="#editSchoolYear{{ $c->id }}" role="button">
+                                                            <i class="fe fe-edit dropdown-item-icon"></i>
+                                                            Modifier
+                                                        </a>
+                                                    </span>
                                                 </span>
-                                            </span>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
 
-                                    <div class="modal fade" id="editSchoolYear{{ $c->id }}" aria-hidden="true" aria-labelledby="editSchoolYear" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h3 class="modal-title" id="editSchoolYearLabel">Modifier la classe</h3>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <form method="post" class="needs-validation" novalidate>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <!-- input -->
-                                                        <div class="mb-5 col-md-10">
-                                                            <label class="form-label" for="class">Nom de la classe</label>
-                                                            <input type="text" class="form-control" placeholder="Entrez le nom de la classe" value="{{ $c->name }}" id="className" name="className" required>
-                                                            <div class="invalid-feedback">Veuillez entrer le nom de la classe</div>
-                                                        </div>
-                                                        <!-- input -->
-                                                        <div class="mb-5 col-md-10">
-                                                            <label class="form-label" for="level">Niveau</label>
-                                                            <select class="form-control" id="level" name="level" required>
-                                                                <option>6eme</option>
-                                                                <option>5eme</option>
-                                                                <option>4eme</option>
-                                                            </select>
-                                                            <div class="invalid-feedback">Veuillez selectionner le niveau de la classe</div>
-                                                        </div>
-                                                        <!-- input -->
-                                                        <div class="mb-5 col-md-10">
-                                                            <label class="form-label" for="classe">Professeur principal</label>
-                                                            <select class="form-control" id="level" name="level" required>
-                                                                <option>BRICE PAULAIN</option>
-                                                                <option>PAULAIN BRICE</option>
-                                                                <option>PAUBRI LAINCE</option>
-                                                            </select>
-                                                            <div class="invalid-feedback">Veuillez selectionner le professeur principal de la classe</div>
-                                                        </div>
+                                        <div class="modal fade" id="editSchoolYear{{ $c->id }}"
+                                            aria-hidden="true" aria-labelledby="editSchoolYear" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="editSchoolYearLabel">Modifier la
+                                                            classe</h3>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                     </div>
-                                                </div>
-                                                </form>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-primary">Modifier</button>
+                                                    <form method="post" action="{{ route('classe.update', $c) }}"
+                                                        class="needs-validation" autocomplete="off">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <!-- input -->
+                                                                <div class="mb-5 col-md-10">
+                                                                    <label class="form-label" for="class">Nom de la
+                                                                        classe</label>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Entrez le nom de la classe"
+                                                                        value="{{ $c->name }}" id="className"
+                                                                        name="name" required>
+                                                                    <div class="invalid-feedback">Veuillez entrer le nom
+                                                                        de la classe</div>
+                                                                </div>
+                                                                <!-- input -->
+                                                                <div class="mb-5 col-md-10">
+                                                                    <label class="form-label"
+                                                                        for="level">Niveau</label>
+                                                                    <select class="form-control" id="level"
+                                                                        name="niveau" required>
+                                                                        @foreach ($niveaux as $n)
+                                                                            <option value="{{ $n->id }}"
+                                                                                @if ($n->id == $c->niveau->id) selected @endif>
+                                                                                {{ $n->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <div class="invalid-feedback">Veuillez selectionner
+                                                                        le niveau de la classe</div>
+                                                                </div>
+                                                                <!-- input -->
+                                                                <div class="mb-5 col-md-10">
+                                                                    <label class="form-label" for="class">Nom prof
+                                                                        Titulaire</label>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Entrez le nom du prof titulaire"
+                                                                        id="className" name="prof_titulaire" >
+                                                                    {{-- <div class="invalid-feedback">Veuillez entrer le nom du prof titulaire</div> --}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Annuler</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Modifier</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
 
-                                    <div class="modal fade" id="deleteClassroom{{ $c->id }}" aria-hidden="true" aria-labelledby="deleteClassroom" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h3 class="modal-title" id="deleteClassroomLabel">Supprimer la classe</h3>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <form method="post" class="needs-validation" novalidate>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <h2>Voulez-vous vraiment supprimer cette classe?</h2>
+                                        <div class="modal fade" id="deleteClassroom{{ $c->id }}"
+                                            aria-hidden="true" aria-labelledby="deleteClassroom" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="deleteClassroomLabel">Supprimer la
+                                                            classe</h3>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                </div>
-                                                </form>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-danger">supprimer</button>
+                                                    <form method="post" class="needs-validation" novalidate>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <h2>Voulez-vous vraiment supprimer cette classe?</h2>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Annuler</button>
+                                                        <form method="POST"
+                                                            action="{{ route('classe.destroy', $c) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-danger">supprimer</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -163,7 +188,7 @@
                 </div>
             </div>
         </div>
-    </section>               
+    </section>
 
     <div class="modal fade" id="addClassroom" aria-hidden="true" aria-labelledby="addClassroom" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -172,44 +197,49 @@
                     <h3 class="modal-title" id="addClassroomLabel">Créer une classe</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" class="needs-validation" novalidate>
+                <form method="post" class="needs-validation" action="{{ route('classe.store') }}">
+                    @csrf
                     <div class="modal-body">
                         <div class="row">
                             <!-- input -->
                             <div class="mb-5 col-md-10">
-                                    <label class="form-label" for="class">Nom de la classe</label>
-                                    <input type="text" class="form-control" placeholder="Entrez le nom de la classe" id="className" name="className" required>
-                                    <div class="invalid-feedback">Veuillez entrer le nom de la classe</div>
-                                </div>
-                                <!-- input -->
-                                <div class="mb-5 col-md-10">
-                                    <label class="form-label" for="level">Niveau</label>
-                                    <select class="form-control" id="level" name="level" required>
-                                        <option value="">Selectionnez le niveau de la classe</option>
-                                        <option>6eme</option>
-                                        <option>5eme</option>
-                                        <option>4eme</option>
-                                    </select>
-                                    <div class="invalid-feedback">Veuillez selectionner le niveau de la classe</div>
-                                </div>
-                                <!-- input -->
-                                <div class="mb-5 col-md-10">
-                                    <label class="form-label" for="classe">Professeur principal</label>
-                                    <select class="form-control" id="level" name="level" required>
-                                        <option value="">Selectionnez le professeur principal de la classe</option>
-                                        <option>BRICE PAULAIN</option>
-                                        <option>PAULAIN BRICE</option>
-                                        <option>PAUBRI LAINCE</option>
-                                    </select>
-                                    <div class="invalid-feedback">Veuillez selectionner le professeur principal de la classe</div>
-                                </div>
+                                <label class="form-label" for="class">Nom de la classe</label>
+                                <input type="text" class="form-control" placeholder="Entrez le nom de la classe"
+                                    id="className" name="name" required>
+                                @error('name')
+                                    <div class="text-danger">Veuillez entrer le nom de la classe</div>
+                                @enderror
+                            </div>
+                            <!-- input -->
+                            <div class="mb-5 col-md-10">
+                                <label class="form-label" for="level">Niveau</label>
+                                <select class="form-control" id="level" name="niveau" required>
+                                    <option value="">Selectionnez le niveau de la classe</option>
+                                    @foreach ($niveaux as $n)
+                                        <option value="{{ $n->id }}">{{ $n->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                @error('niveau')
+                                    <div class="text-danger">Veuillez valider le niveau</div>
+                                @enderror
+                            </div>
+                            <!-- input -->
+                            <div class="mb-5 col-md-10">
+                                <label class="form-label" for="class">Nom prof Titulaire</label>
+                                <input type="text" class="form-control"
+                                    placeholder="Entrez le nom du prof titulaire" id="className"
+                                    name="prof_titulaire" >
+                                {{-- <div class="invalid-feedback">Veuillez entrer le nom du prof titulaire</div> --}}
+                            </div>
                         </div>
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                    </div>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Créer</button>
-                </div>
             </div>
         </div>
     </div>

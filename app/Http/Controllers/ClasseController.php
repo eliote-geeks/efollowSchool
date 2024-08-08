@@ -42,9 +42,8 @@ class ClasseController extends Controller
             ]);
 
             $classe = new Classe();
-            $classe->niveau = $request->niveau;
-            $classe->school_information_id = SchoolInformation::where('status',1)->latest()->first();
-            $classe->niveau_id = Niveau::find($request->niveau);
+            $classe->school_information_id = SchoolInformation::where('status',1)->latest()->first()->id;
+            $classe->niveau_id = Niveau::find($request->niveau)->id;
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
@@ -78,11 +77,9 @@ class ClasseController extends Controller
         try{
             $request->validate([
                 'name' => 'required',
+                'niveau' => 'required'
             ]);
-
-            $classe->niveau = $request->niveau;
-            $classe->school_information_id = SchoolInformation::where('status',1)->latest()->first();
-            $classe->niveau_id = $request->niveau;
+            $classe->niveau_id = Niveau::find($request->niveau)->id;
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
@@ -100,6 +97,7 @@ class ClasseController extends Controller
         try{
             $classe->status = 0;
             $classe->save();
+            return redirect()->back()->with('message','Nouvelle Classe AJoutée !!');
         }catch(\Exception $e)
         {
             return redirect()->back()->with('message','Oups une erreur s\'est produite veuillez reesayer: '.$e->getMessage()); 

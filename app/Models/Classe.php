@@ -14,7 +14,7 @@ class Classe extends Model
     use HasFactory;
     public function niveau()
     {
-        return $this->hasMany(Niveau::class);
+        return $this->belongsTo(Niveau::class);
     }
 
     public function ClasseCours()
