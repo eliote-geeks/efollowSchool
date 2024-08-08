@@ -44,6 +44,19 @@ Route::get('print/card/{student}/{schoolInformation}',[StudentController::class,
 Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
 Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
 
+
+Route::get('classe',function(){
+    return view('classe.classe');
+});
+
+Route::get('niveau',function(){
+    return view('niveau.niveau');
+});
+
+Route::get('school',function(){
+    return view('school-information.school-information');
+});
+
 Route::get('export-students', function () {
     return Excel::download(new StudentsExport, 'students.xlsx');
 })->name('exportModel');

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EffollowSchool</title>
 
-
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon/favicon.ico" />
     <script src="assets/js/vendors/darkMode.js"></script>
     <link href="assets/fonts/feather/feather.css" rel="stylesheet" />
@@ -14,7 +13,9 @@
     <link href="assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/theme.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="canonical" href="add-customer.html">
+    <link rel="canonical" href="add-customer.html" >
+    <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" />
     @livewireStyles
 </head>
 
@@ -821,12 +822,24 @@
     <script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
     <script src="assets/js/vendors/validation.js"></script>
     <script src="assets/libs/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="assets/libs/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="assets/libs/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="assets/js/vendors/dropzone.js"></script>
     <script src="assets/js/theme.min.js"></script>
-    <script src="assets/js/function.js"></script>
-    <script src="assets/js/vendors/flatpickr.js"></script>
+    <script src="assets/js/vendors/jquery.min.js"></script>
+    <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+    <script src="assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+    <script src="assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="assets/libs/pdfmake/build/pdfmake.min.js"></script>
+    <script src="assets/js/vendors/datatables.js"></script>
+    <script src="assets/libs/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="assets/js/vendors/dropzone.js"></script>
+    <script src="assets/js/vendors/validation.js"></script>
+    <script src="assets/js/uploadStudentCardImages.js"></script>
+
 
 </body>
 
