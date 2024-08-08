@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
+use App\Models\Niveau;
 use App\Models\SchoolInformation;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,12 @@ class ClasseController extends Controller
      */
     public function index()
     {
-        //
+        $classes = Classe::where('status',1)->get();
+        $niveaux = Niveau::where('status',1)->get();
+        return view('classe.classe',[
+            'classes' => $classes,
+            'niveaux' => $niveaux
+        ]);
     }
 
     /**
@@ -32,12 +38,13 @@ class ClasseController extends Controller
         try{
             $request->validate([
                 'name' => 'required',
+                'niveau' => 'required'
             ]);
 
             $classe = new Classe();
             $classe->niveau = $request->niveau;
             $classe->school_information_id = SchoolInformation::where('status',1)->latest()->first();
-            $classe->niveau_id = $request->niveau;
+            $classe->niveau_id = Niveau::find($request->niveau);
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();

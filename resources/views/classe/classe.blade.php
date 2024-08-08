@@ -52,6 +52,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($classes as $c)
+                                        
+                                   
                                     <tr>
                                         <td>6EME A</td>
                                         <td>6EME</td>
@@ -83,7 +86,7 @@
                                         </td>
                                     </tr>
 
-                                    <div class="modal fade" id="editSchoolYear" aria-hidden="true" aria-labelledby="editSchoolYear" tabindex="-1">
+                                    <div class="modal fade" id="editSchoolYear{{ $c->id }}" aria-hidden="true" aria-labelledby="editSchoolYear" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -96,7 +99,7 @@
                                                         <!-- input -->
                                                         <div class="mb-5 col-md-10">
                                                             <label class="form-label" for="class">Nom de la classe</label>
-                                                            <input type="text" class="form-control" placeholder="Entrez le nom de la classe" value="6EME A" id="className" name="className" required>
+                                                            <input type="text" class="form-control" placeholder="Entrez le nom de la classe" value="{{ $c->name }}" id="className" name="className" required>
                                                             <div class="invalid-feedback">Veuillez entrer le nom de la classe</div>
                                                         </div>
                                                         <!-- input -->
@@ -131,7 +134,7 @@
                                     </div>
 
 
-                                    <div class="modal fade" id="deleteClassroom" aria-hidden="true" aria-labelledby="deleteClassroom" tabindex="-1">
+                                    <div class="modal fade" id="deleteClassroom{{ $c->id }}" aria-hidden="true" aria-labelledby="deleteClassroom" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -152,7 +155,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

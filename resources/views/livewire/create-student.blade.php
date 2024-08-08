@@ -1,7 +1,7 @@
 <section class="container-fluid p-4">
     <style>
         .student-card {
-            background-image: url({{ $schoolInformation->verso_path }});
+            background-image: url({!! $schoolInformation->verso_path !!});
             z-index: -1;
             background-repeat: no-repeat;
             background-position: center;
@@ -38,7 +38,7 @@
         .logo {
             width: 180px;
             height: 180px;
-            background-image: url(url({{ $schoolInformation->logo }}));
+            background-image: url({!! $schoolInformation->logo !!});
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
