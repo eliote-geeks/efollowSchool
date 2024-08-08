@@ -1,241 +1,182 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Customer</title>
+    <title>Carte Étudiant</title>
     <style>
-
         body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    padding: 20px;
-}
+        @media print {
+            .print-button {
+                display: none;
+            }
 
-.text-start {
-  text-align: start !important;
-  justify-content: center;
-  text-align: center;
-}
+            .page {
+                width: 85.6mm; /* Dimension pour carte ID (86mm x 54mm) */
+                height: 54mm; /* Dimension pour carte ID (86mm x 54mm) */
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            @page {
+                size: 85.6mm 54mm;
+                margin: 0;
+            }
+        }
 
-.text-end {
-  text-align: end !important;
-}
+        .print-button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 20px;
+        }
 
-.text-center {
-  text-align: center !important;
-}
+        .container {
+            padding: 20px;
+        }
 
+        .card-container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            width: 85.6mm; /* Dimension pour carte ID (86mm x 54mm) */
+            height: 54mm; /* Dimension pour carte ID (86mm x 54mm) */
+        }
 
-.page-header {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
+        .student-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
-.page-header h1 {
-    margin: 0;
-    font-weight: bold;
-    font-size: 24px;
-}
+        .card-header {
+            margin-bottom: 10px;
+        }
 
-.breadcrumb {
-    margin: 10px 0;
-}
+        .text-warning {
+            color: #ffc107;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
 
-.breadcrumb ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
+        .text-center-content {
+            text-align: center;
+        }
 
-.breadcrumb li {
-    margin-right: 10px;
-}
+        .info-left {
+            font-size: 12px;
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+        }
 
-.breadcrumb a {
-    text-decoration: none;
-    color: #007bff;
-}
+        .info-left p {
+            margin: 0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
 
-.breadcrumb li.active {
-    color: #6c757d;
-}
+        .label {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+        }
 
-.card-container {
-    display: flex;
-    justify-content: center;
-}
+        .value {
+            margin-left: 5px;
+        }
 
-.student-card {
-    background-image: url('assets/images/background-studentCard.jpeg');
-    z-index: -1;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    max-width: 800px;
-}
+        .info-right {
+            width: 45%;
+            text-align: right;
+        }
 
-.student-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
-  opacity: 0.8;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: -1;
-}
+        .student-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
 
-.card-header {
-    margin-bottom: 20px;
-}
+        .logo {
+            width: 120px;
+            height: 120px;
+            background-image: url({!! $schoolInformation->logo !!});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.8;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-.text-warning {
-    color: #ffc107;
-    display: flex;
-    justify-content: space-between;
-}
-
-.text-start,
-.text-end {
-    width: 45%;
-}
-
-.student-card-infos {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.info-left {
-    font-size: 16px;
-    width: 45%;
-}
-
-.info-right {
-    width: 45%;
-    text-align: right;
-}
-
-.student-photo {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-}
-
-.logo {
-    width: 180px;
-    height: 180px;
-    background-image: url('assets/images/logo-studentCard.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    opacity: 0.8;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.text-success {
-    color: #28a745;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.text-center-content {
-    display: inline-block; /* Ensures that the content is only as wide as necessary */
-    text-align: center;
-}
-
-.info-left {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-left p {
-    display: flex;
-    align-items: center; /* Vertically center-aligns the text within each paragraph */
-    margin: 0;
-    font-size: 18px;
-    margin-bottom: 10px; 
-}
-
-.label {
-    display: inline-block;
-    width: 150px; /* Adjust width as needed to ensure alignment */
-    font-weight: bold;
-}
-
-.value {
-    margin-left: 10px; /* Adjust this value to control the space between the label and the value */
-}
-
+        .text-success {
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
 
     </style>
-    
 </head>
+
 <body>
     <section class="container">
-
-        <div class="card-container">
+        <!-- Page unique : Recto -->
+        <div class="card-container page">
             <div class="student-card">
                 <div class="card-header">
-                    <div class="text-warning">
-                        <div class="text-start">
-                         <div class="text-center-content">
-                            <p>République du Cameroun</p>
-                            <p>Paix-Travail-Patrie</p>
-                            <p>Ministère de l'Enseignement Secondaire</p>
-                            <p>BP: 845</p>
-                            <p>TEL: 223 43 67 64</p>
-                        </div>
-                        </div>
-                        <div class="text-end">
-                         <div class="text-center-content">
-                            <p>Republic of Cameroon</p>
-                            <p>Peace-Work-Fatherland</p>
-                            <p>Ministry of Secondary Education</p>
-                            <p>PO BOX: 845</p>
-                            <p>Ph: 223 43 67 64</p>
-                        </div>
-                        </div>
+                    <div class="text-warning text-center-content">
+                        <p>République du Cameroun</p>
+                        <p>Paix-Travail-Patrie</p>
+                        <p>Ministère de l'Enseignement Secondaire</p>
+                        <p>BP: {{ $schoolInformation->poBox }}</p>
+                        <p>TEL: {{ $schoolInformation->tel_school }}</p>
                     </div>
                 </div>
                 <div class="student-card-infos">
                     <div class="info-left">
-                        <p><span class="label">Nom :</span> <span class="value">John Doe</span></p>
-                        <p><span class="label">Prénom :</span> <span class="value">Jane Doe</span></p>
-                        <p><span class="label">Né(e) le :</span> <span class="value">01/01/2005</span></p>
-                        <p><span class="label">Matricule :</span> <span class="value">12345678</span></p>
-                        <p><span class="label">Classe :</span> <span class="value">Terminale</span></p>
+                        <p><span class="label">Nom :</span> <span class="value">{{ $student->first_name }}</span></p>
+                        <p><span class="label">Prénom :</span> <span class="value">{{ $student->last_name }}</span></p>
+                        <p><span class="label">Né(e) le :</span> <span class="value">{{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</span></p>
+                        <p><span class="label">Matricule :</span> <span class="value">{{ $student->matricular }}</span></p>
+                        <p><span class="label">Classe :</span> <span class="value">{{ $student->studentClasse->classe->name }}</span></p>
                     </div>
                     <div class="info-right">
-                        <img src="assets/images/blank_image.jpg" class="student-photo" alt="Student Photo">
+                        <img src="{{ $student->user->profile_photo_url }}" class="student-photo" alt="Student Photo">
                     </div>
                 </div>
                 <div class="logo"></div>
-                <h2 class="text-center text-success">Lycée Bilingue de Yaoundé</h2>
+                <h2 class="text-center text-success">{{ $schoolInformation->tel_school }}</h2>
             </div>
         </div>
+        <button class="print-button" type="button" onclick="window.print()">Imprimer</button>
     </section>
 </body>
+
 </html>

@@ -34,8 +34,9 @@ class Student extends Model
 
     public function studentClasse()
     {
-        return $this->hasMany(StudentClasse::class);
+        return $this->hasOne(StudentClasse::class);
     }
+
 
     public function moratoire()
     {

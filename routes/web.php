@@ -40,7 +40,7 @@ Route::get('card-view',function(){
     return view('student.card-view');
 });
 
-
+Route::get('print/card/{student}/{schoolInformation}',[StudentController::class,'printCard'])->name('print.card');
 Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
 Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
 

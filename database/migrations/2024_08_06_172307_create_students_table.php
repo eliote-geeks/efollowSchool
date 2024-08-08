@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('name_father')->nullable();
             $table->string('name_mother')->nullable();
             $table->string('matricular');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

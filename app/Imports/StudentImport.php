@@ -28,7 +28,7 @@ class StudentImport implements ToModel
 
         $email = strtolower($firstName . '.' . $lastName . '.' . uniqid() . '@example.com');
 
-        $user->name = $firstName;
+        $user->name = $firstName.' '.$lastName;
         $user->email = $email;
         $user->password = Hash::make('500//#ERROR');
         $user->save();

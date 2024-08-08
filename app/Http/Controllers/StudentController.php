@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\StudentImport;
+use App\Models\SchoolInformation;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -15,6 +16,14 @@ class StudentController extends Controller
     public function index()
     {
         //
+    }
+
+    public function printCard(Student $student, SchoolInformation $schoolInformation)
+    {
+        return view('student.card-view',[
+            'student' => $student,
+            'schoolInformation' => $schoolInformation,
+        ]);
     }
 
     public function showImportForm()
