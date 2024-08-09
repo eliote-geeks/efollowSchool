@@ -885,6 +885,7 @@
     <script src="assets/js/vendors/validation.js"></script>
     <script src="assets/js/vendors/validation.js"></script>
     <script src="assets/js/otherFunction.js"></script>
+    <script src="assets/js/uploadImagesFunctions.js"></script>
 
 
 </body>
