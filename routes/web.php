@@ -64,3 +64,7 @@ Route::get('scolarité', function(){
 Route::get('student-view', function(){
     return view('student.student-view');
 });
+
+Route::get('add-card', function(){
+    return view('student.card.add-student-card');
+});
