@@ -80,7 +80,7 @@
             <!-- Page header -->
             <div class="border-bottom pb-3 mb-3">
                 <div class="mb-2 mb-lg-0">
-                    <h1 class="mb-0 h2 fw-bold">Créer un élève</h1>
+                    <h1 class="mb-0 h2 fw-bold">Créer un élève Pour le niveau <b>{{ $this->classe->niveau->name }} : {{ $this->classe->name }}</b></h1>
                 </div>
             </div>
         </div>
@@ -88,6 +88,10 @@
 
     <div class="row">
         <div class="offset-xl-2 col-xl-8 col-12">
+            <button class="btn btn-info" wire:click="backClasse">
+                <i class="fe fe-arrow-left"></i> Retour à la classe
+            </button>
+            
             @if ($this->step == 0)
                 <!-- card -->
                 <form class="needs-validation" novalidate>
@@ -150,16 +154,16 @@
                                     @enderror
                                 </div>
                                 <!-- input -->
-                                <div class="mb-5 col-md-6">
+                                {{-- <div class="mb-5 col-md-6">
                                     <label class="form-label" for="matricule">Matricule de l'élève</label>
                                     <input type="string" class="form-control"
                                         placeholder="Generé automatiquement par le système" id="matricule"
                                         name="matricule" disabled>
 
-                                    {{-- <div class="t:ext-danger">Veuillez entrer le matricule de l'élève</div> --}}
-                                </div>
+                                    {{-- <div class="t:ext-danger">Veuillez entrer le matricule de l'élève</div> 
+                                </div> --}}
                                 <!-- input -->
-                                <div class="mb-5 col-md-6">
+                                {{-- <div class="mb-5 col-md-6">
                                     <label class="form-label" for="classe">Classe de l'élève</label>
                                     <select class="form-control" id="classe" wire:model.live='classe' required>
                                         <option value="">Selectionnez la classe de l'élève</option>
@@ -170,7 +174,7 @@
                                     @error('classe')
                                         <div class="text-danger">Veuillez selectionner la classe de l'élève</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
                                     <label class="form-label" for="FatherName">Nom complet du père</label>

@@ -47,18 +47,23 @@ class CreateStudent extends Component
     #[Validate('required')]
     public $phone_mother;
 
-    #[Validate('required')]
+    // #[Validate('required')]
     public $name_father;
 
-    #[Validate('required')]
+    // #[Validate('required')]
     public $name_mother;
 
-    #[Validate('required')]
+    
     public $classe;
 
     public $matricular;
 
     public $student;
+
+    public function mount($classe)
+    {
+        $this->classe = $classe;
+    }
 
     public function save()
     {
@@ -96,9 +101,9 @@ class CreateStudent extends Component
                 $student->user_id = $user->id;
                 $student->save();
 
-                $classe = Classe::find($this->classe)->id;
+               
                 $studentClass = new StudentClasse();
-                $studentClass->classe_id = $classe;
+                $studentClass->classe_id = $this->classe->id;
                 $studentClass->student_id = $student->id;
                 $studentClass->school_information_id = $this->schoolInformation->id;
                 $studentClass->save();
@@ -111,6 +116,11 @@ class CreateStudent extends Component
         }
     }
 
+    public function backClasse()
+    {
+        return redirect()->route('classe.show',$this->classe); 
+    }
+
     public function dec($dec)
     {
         if ($dec == 1) {
@@ -121,7 +131,9 @@ class CreateStudent extends Component
                 'schoolInformation' => $schoolInformation,
             ]);
         } else {
+            $classe = $this->classe;
             $this->reset();
+            $this->classe = $classe;
         }
     }
 
@@ -129,9 +141,7 @@ class CreateStudent extends Component
     {
         if (SchoolInformation::where('status', 1)->count() > 0) {
             $this->schoolInformation = SchoolInformation::where('status', 1)->first();
-            return view('livewire.create-student', [
-                'classes' => Classe::where('status', 1)->get(),
-            ]);
+            return view('livewire.create-student');
         } else {
             return view('welcome');
         }
