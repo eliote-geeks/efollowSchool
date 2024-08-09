@@ -53,9 +53,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    
                                         @foreach ($niveaux as $n)
-                                            <td>{{ $n->name }}</td>
+                                        <tr>
+                                        <td>{{ $n->name }}</td>
 
                                             <td scope="col" class="text-center">
                                                 <span class="dropdown dropstart">
@@ -124,8 +125,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="modal fade" id="deleteLevel{{ $n->id }}" aria-hidden="true"
                                         aria-labelledby="deleteLevel" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered">
