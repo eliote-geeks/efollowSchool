@@ -114,45 +114,47 @@
                                                 <h3 class="modal-title" id="editStudentLabel">Modifier les informations de l'élève</h3>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <form method="post" action="#" class="needs-validation">
+                                                <form method="post" action="{{ route('student.update',$student->student) }}" class="needs-validation" enctype="multipart/form-data">
+                                                    @method('PATCH')
+                                                    @csrf
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <!-- input -->
                                                         <div class="col-md-12 col-12 mb-4 position-relative">
                                                         <h5 class="mb-2">Photo de l'élève</h5>
                                                             <label for="img" class="img-thumbnail position-relative" style="height: 100px; width: 100px; cursor: pointer;">
-                                                                <img id="editStudentImage" src="assets/images/blank_image.jpg" class=" w-100 h-100">
-                                                                <input class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100" type="file" accept="image/*" id="img" name="img" onchange="previewEditStudentImage(this)" />
+                                                                <img id="editStudentImage" src="{{ $student->student->user->profile_photo_url }}" class=" w-100 h-100">
+                                                                <input class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100" name="avatar" type="file" accept="image/*" id="img" name="img" onchange="previewEditStudentImage(this)" />
                                                             </label>
                                                         </div>
                                                         <!-- input -->
                                                         <div class="mb-5 col-md-6">
                                                             <label class="form-label" for="firstName">Nom de l'élève</label>
-                                                            <input type="text" class="form-control" placeholder="Entrez le nom de l'élève" value="" id="firstName" name="firstName" required>
+                                                            <input type="text" class="form-control" placeholder="Entrez le nom de l'élève" value="{{ $student->student->first_name }}" id="firstName" name="first" required>
                                                             <div class="invalid-feedback">Veuillez entrer le nom de l'élève</div>
                                                         </div>
                                                         <!-- input -->
                                                         <div class="mb-5 col-md-6">
                                                             <label class="form-label" for="lastName">Prénom de l'élève</label>
-                                                            <input type="text" class="form-control" placeholder="Entrez le prénom de l'élève" value="" id="lastName" name="lastName" required>
+                                                            <input type="text" class="form-control" placeholder="Entrez le prénom de l'élève" value="{{ $student->student->last_name }}" id="lastName" name="last" required>
                                                             <div class="invalid-feedback">Veuillez entrer le prénom de l'élève</div>
                                                         </div>
                                                         <!-- input -->
                                                         <div class="mb-5 col-md-6">
                                                         <label class="form-label" for="birthday">Date de naissance</label>
-                                                            <input type="date" class="form-control" placeholder="Entrez le prénom de l'élève" value="" id="birthday" name="birthday" required>
+                                                            <input type="date" class="form-control" placeholder="Entrez le prénom de l'élève" value="{{ \Carbon\Carbon::parse($student->student->date_birth)->format('Y-m-d') }}" id="birthday" name="date_birth" required>
                                                             <div class="invalid-feedback">Veuillez entrer la date de naissance de l'élève</div>
                                                         </div>
                                                         <!-- input -->
                                                         <div class="mb-5 col-md-6">
                                                             <label class="form-label" for="birthPlace">Lieu de naissance</label>
-                                                            <input type="text" class="form-control" placeholder="Entrez le lieu de naissance de l'élève" value="" id="birthPlace" name="birthPlace" required>
+                                                            <input type="text" class="form-control" placeholder="Entrez le lieu de naissance de l'élève" value="{{ $student->student->place_birth }}" id="birthPlace" name="place_birth" required>
                                                             <div class="invalid-feedback">Veuillez entrer le lieu de naissance de l'élève</div>
                                                         </div>
                                                         <!-- input -->
                                                         <div class="mb-5 col-md-6">
                                                             <label class="form-label" for="matricule">Matricule de l'élève</label>
-                                                            <input type="number" class="form-control" placeholder="Entrez le matricule de l'élève" value="" id="matricule" name="matricule" required>
+                                                            <input type="number" class="form-control" placeholder="Entrez le matricule de l'élève" value="{{ $student->student->matricular }}" id="matricule" name="matricular" required>
                                                             <div class="invalid-feedback">Veuillez entrer le matricule de l'élève</div>
                                                         </div>
                                                         <!-- input -->
