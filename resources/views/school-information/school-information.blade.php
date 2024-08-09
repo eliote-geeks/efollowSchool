@@ -1,5 +1,17 @@
 <base href="/">
 <x-layouts>
+    <style>
+        .disabled-row {
+            background-color: #f5f5f5;
+            /* Change background color */
+            color: #a9a9a9;
+            /* Gray out text */
+            /* pointer-events: none; */
+            /* Disable any interaction */
+            opacity: 0.6;
+            /* Make it look "disabled" */
+        }
+    </style>
 
     <section class="container-fluid p-4">
         <div class="row">
@@ -47,6 +59,7 @@
                                 style="width: 100%">
                                 <thead class="table-light">
                                     <tr>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Nom de l'école</th>
                                         <th scope="col">Numéro de téléphone</th>
                                         <th>Masque du matricule</th>
@@ -57,7 +70,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($schoolInformations as $school)
-                                        <tr>
+                                        <tr @if ($school->status == 0) class="disabled-row" @endif>
+                                            <td>{{ $school->id }}</td>
                                             <td>{{ $school->name }}</td>
                                             <td>{{ $school->tel_school }}</td>
                                             <td>{{ $school->matricular . '-' }}</td>
@@ -78,11 +92,8 @@
                                                             <i class="fe fe-eye dropdown-item-icon"></i>
                                                             Voir plus d'informations
                                                         </a>
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#editSchoolYear{{ $school->id }}" role="button">
-                                                            <i class="fe fe-edit dropdown-item-icon"></i>
-                                                            Modifier
-                                                        </a>
+
+
                                                     </span>
                                                 </span>
                                             </td>
@@ -90,7 +101,7 @@
 
                                         <div class="modal fade" id="editSchoolYear{{ $school->id }}"
                                             aria-hidden="true" aria-labelledby="editSchoolYear" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h3 class="modal-title" id="editSchoolYearLabel">Modifier
@@ -99,18 +110,29 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <form method="post" class="needs-validation" method="POST"
-                                                        action="{{ route('schoolInformation.update', $school) }}">
+                                                        action="{{ route('schoolInformation.update', $school) }}"
+                                                        enctype="multipart/form-data">
                                                         @method('PATCH')
                                                         @csrf
                                                         <div class="modal-body">
                                                             <div class="row">
+                                                                @if ($errors->any())
+                                                                    <div class="alert alert-danger">
+                                                                        <ul>
+                                                                            @foreach ($errors->all() as $error)
+                                                                                <li>{{ $error }}</li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endif
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="schoolName">Nom de
                                                                         l'établissement</label>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="Entrez le nom de l'établissement"
-                                                                        id="schoolName" name="name" required>
+                                                                        id="schoolName" name="name"
+                                                                        value="{{ $school->name }}" required>
                                                                     <div class="invalid-feedback">Veuillez entrer le nom
                                                                         de l'établissement</div>
                                                                 </div>
@@ -120,8 +142,8 @@
                                                                         téléphone de l'établissement</label>
                                                                     <input type="number" class="form-control"
                                                                         placeholder="Entrez le numero de téléphone de l'établissement"
-                                                                        value="{{ $school->tel_school }}" id="phone"
-                                                                        name="tel_school" required>
+                                                                        value="{{ $school->tel_school }}"
+                                                                        id="phone" name="tel_school" required>
                                                                     <div class="invalid-feedback">Veuillez entrer le
                                                                         numero de téléphone de l'établissement</div>
                                                                 </div>
@@ -152,20 +174,24 @@
                                                                     <label class="form-label" for="startDate">Début de
                                                                         l'année scolaire</label>
                                                                     <input type="date" class="form-control"
-                                                                        value="{{ $school->start }}" id="startDate"
+                                                                        value="{{ \Carbon\Carbon::parse($school->start)->format('Y-m-d') }}" id="startDate"
                                                                         name="start">
                                                                     <div class="invalid-feedback">Veuillez entrer la
                                                                         date de début de l'année scolaire</div>
+                                                                    <small>Actuel:
+                                                                        {{ \Carbon\Carbon::parse($school->start)->format('d, M Y') }}</small>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-6">
                                                                     <label class="form-label" for="endDate">Fin de
                                                                         l'année scolaire</label>
                                                                     <input type="date" class="form-control"
-                                                                        value="{{ $school->end }}" id="end"
+                                                                        value="{{ \Carbon\Carbon::parse($school->end)->format('Y-m-d') }}" id="end"
                                                                         name="end">
                                                                     <div class="invalid-feedback">Veuillez entrer la
                                                                         date de la fin de l'année scolaire</div>
+                                                                    <small>Actuel:
+                                                                        {{ \Carbon\Carbon::parse($school->end)->format('d, M Y') }}</small>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="col-md-12 mb-4">
@@ -193,7 +219,9 @@
                                                                         <input class="form-check-input"
                                                                             name="fillPath" type="checkbox"
                                                                             role="switch"
-                                                                            id="flexSwitchCheckDefault">
+                                                                            id="flexSwitchCheckDefault" @if ($school->fillPath == 1)
+                                                                                checked
+                                                                            @endif>
                                                                         <label class="form-check-label"
                                                                             for="flexSwitchCheckDefault">Imprimer les
                                                                             cartes des élèves à partir de
@@ -351,9 +379,33 @@
                                                         </div>
                                                     </form>
                                                     <div class="modal-footer">
+                                                        <!-- Bouton Fermer -->
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Fermer</button>
+
+                                                        <!-- Vérification de l'année scolaire pour afficher le bouton Modifier -->
+                                                        @if (\Carbon\Carbon::parse($school->end)->format('Y') > date('Y'))
+                                                            <a class="btn btn-primary" data-bs-toggle="modal"
+                                                                href="#editSchoolYear{{ $school->id }}"
+                                                                role="button">
+                                                                <i class="fe fe-edit"></i> Modifier
+                                                            </a>
+                                                        @endif
+
+                                                        <!-- Formulaire pour désactiver/activer -->
+                                                        <form
+                                                            action="{{ route('schoolInformation.destroy', $school) }}"
+                                                            method="post" class="d-inline-block">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn {{ $school->status == 1 ? 'btn-danger' : 'btn-success' }}">
+                                                                <i class="fe fe-edit"></i>
+                                                                {{ $school->status == 1 ? 'Désactiver' : 'Activer' }}
+                                                            </button>
+                                                        </form>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -376,9 +428,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="post" class="needs-validation" method="POST"
-                    action="{{ route('schoolInformation.store') }}" autocomplete="off">
+                    action="{{ route('schoolInformation.store') }}" autocomplete="off"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="row">
                             <!-- input -->
                             <div class="mb-5 col-md-12">
@@ -413,6 +475,7 @@
                                     placeholder="Entrez le masque du matricule" id="masque" name="matricular"
                                     required>
                                 <div class="invalid-feedback">Veuillez entrer le masque du matricule</div>
+                                <small>limit: 4 caractères</small>
                             </div>
                             <!-- input -->
                             <div class="mb-5 col-md-6">
@@ -496,5 +559,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelector('.disabled-row').querySelectorAll('input, button').forEach(function(element) {
+            element.disabled = true;
+        });
+    </script>
 
 </x-layouts>
