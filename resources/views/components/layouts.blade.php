@@ -838,7 +838,7 @@
     <script src="assets/libs/dropzone/dist/min/dropzone.min.js"></script>
     <script src="assets/js/vendors/dropzone.js"></script>
     <script src="assets/js/vendors/validation.js"></script>
-    <script src="assets/js/uploadStudentCardImages.js"></script>
+    <script src="assets/js/uploadImagesFunctions.js"></script>
 
 
 </body>
