@@ -60,3 +60,7 @@ Route::get('student-list', function(){
 Route::get('scolarité', function(){
     return view('scolarité.scolarité');
 });
+
+Route::get('student-view', function(){
+    return view('student.student-view');
+});
