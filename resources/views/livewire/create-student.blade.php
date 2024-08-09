@@ -259,7 +259,7 @@
                             <p class="mb-0"><span class="me-3 text-primary">Matricule
                                     :</span>{{ $student->matricular }}</p>
                             <p class="mb-0"><span class="me-5 text-primary">Classe
-                                    :</span>{{ $student->studentClasse->classe->name }}</p>
+                                    :</span>{{ $student->studentClasse->classe->niveau->name }}&nbsp;{{ $student->studentClasse->classe->name }}</p>
                         </div>
                         <div class="col-6 text-end">
                             <img src="{{ $student->user->profile_photo_url }}" class="student-photo">
