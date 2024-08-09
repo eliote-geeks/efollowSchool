@@ -59,31 +59,19 @@
                                             <td>{{ $n->name }}</td>
 
                                             <td scope="col" class="text-center">
-                                                <span class="dropdown dropstart">
-                                                    <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                                        href="#" role="button" id="courseDropdown2"
-                                                        data-bs-toggle="dropdown" data-bs-offset="-20,20"
-                                                        aria-expanded="false">
-                                                        <i class="fe fe-more-vertical"></i>
-                                                    </a>
-                                                    <span class="dropdown-menu" aria-labelledby="courseDropdown2">
-                                                        <span class="dropdown-header">Action</span>
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#deleteLevel{{ $n->id }}" role="button">
-                                                            <i class="fe fe-trash dropdown-item-icon"></i>
-                                                            Supprimer
-                                                        </a>
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#editLevel{{ $n->id }}" role="button">
-                                                            <i class="fe fe-edit dropdown-item-icon"></i>
-                                                            Modifier
-                                                        </a>
-                                                    </span>
-                                                </span>
+                                                <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                    <i class="fe fe-eye me-1"></i>
+                                                    Liste des niveaux
+                                                </a>
+                                                 <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
+                                                    <i class="fe fe-edit me-1"></i>
+                                                    Modifier
+                                                </a>
+                                                <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="##deleteLevel{{ $n->id }}" role="button">
+                                                    <i class="fe fe-trash me-1"></i>
+                                                    Supprimer
+                                                </a>
                                             </td>
-
-
-
                                         </tr>
                                         <div class="modal fade" id="editLevel{{ $n->id }}" aria-hidden="true"
                                             aria-labelledby="editLevel" tabindex="-1">
