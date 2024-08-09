@@ -45,7 +45,7 @@ class ClasseController extends Controller
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
-            return redirect()->back()->with('message','Nouvelle Classe AJoutée !!');
+            return redirect()->back()->with('success','Nouvelle Classe AJoutée !!');
         }catch(\Exception $e){
             return redirect()->back()->with('error','Erreur innatendue !!');
         }
@@ -84,9 +84,9 @@ class ClasseController extends Controller
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
-            return redirect()->back()->with('message','Nouvelle Classe AJoutée !!');
+            return redirect()->back()->with('success','Classe Mise A jour !!');
         }catch(\Exception $e){
-            return redirect()->back()->with('message','Erreur innatendue !!');
+            return redirect()->back()->with('error','Erreur innatendue !!');
         }
     }
 
@@ -98,10 +98,10 @@ class ClasseController extends Controller
         try{
             $classe->status = 0;
             $classe->save();
-            return redirect()->back()->with('message','Nouvelle Classe AJoutée !!');
+            return redirect()->back()->with('success','Classe Retirée !!');
         }catch(\Exception $e)
         {
-            return redirect()->back()->with('message','Oups une erreur s\'est produite veuillez reesayer: '.$e->getMessage()); 
+            return redirect()->back()->with('danger','Oups une erreur s\'est produite veuillez reesayer: '.$e->getMessage()); 
         }
     }
 }
