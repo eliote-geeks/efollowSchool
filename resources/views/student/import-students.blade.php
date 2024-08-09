@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <h2 class="mb text-secondary">Sélectionnez un fichier excel</h2>
-                            <a href="{{ route('exportModel') }}" class="btn btn-primary rounded-pill">Télécharger le modèle</a>
+                            <a href="{{ route('exportModel', ['modelremplir' => 'model.xlsx']) }} class="btn btn-primary rounded-pill">Télécharger le modèle</a>
                         </div>
                         <div class="row gx-3">
                             <form method="POST" action="{{ route('importStudentClase',$classe) }}" enctype="multipart/form-data">
