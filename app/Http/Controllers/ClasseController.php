@@ -39,16 +39,15 @@ class ClasseController extends Controller
                 'name' => 'required',
                 'niveau' => 'required'
             ]);
-
             $classe = new Classe();
             $classe->school_information_id = SchoolInformation::where('status',1)->latest()->first()->id;
-            $classe->niveau_id = Niveau::find($request->niveau)->id;
+            $classe->niveau_id = $request->niveau;
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
             return redirect()->back()->with('message','Nouvelle Classe AJoutée !!');
         }catch(\Exception $e){
-            return redirect()->back()->with('message','Erreur innatendue !!');
+            return redirect()->back()->with('error','Erreur innatendue !!');
         }
     }
 

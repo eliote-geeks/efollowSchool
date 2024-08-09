@@ -70,11 +70,11 @@ class NiveauController extends Controller
     {
         $classes = Classe::where([
             'status' => 1,
-            'niveau_id' => $niveau,
+            'niveau_id' => $niveau->id,
             ])->get();
             return view('classe.classe',[
                 'classes' => $classes,
-                'niveau' => 'niveau',
+                'niveau' => $niveau,
             ]);    
     }
 

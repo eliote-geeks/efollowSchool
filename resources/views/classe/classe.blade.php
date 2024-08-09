@@ -29,7 +29,7 @@
                     <!-- card header  -->
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h2 class="mb-1">Liste des classes</h2>
+                            <h2 class="mb-1">Liste des classes pour le niveau <b>{{ $niveau->name }}</b></h2>
                             <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addClassroom"
                                 role="button">
                                 <i class="fas fa-plus me-2"></i>
@@ -59,8 +59,7 @@
                                             <td>{{ $c->name }}</td>
                                             <td>{{ $c->niveau->name }}</td>
                                             <td>{{ $c->prof_titulaire ? $c->prof_titulaire : '// ' }}</td>
-                                            <td scope="col" class="text-center">
-                                                <td scope="col" class="text-center d-flex justify-content-center">
+                                            <td scope="col" class="text-center d-flex justify-content-center">
                                                 <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des élèves
@@ -104,14 +103,14 @@
                                                                         de la classe</div>
                                                                 </div>
 
-                                                                <input type="hidden" value="{{ $niveau->id }}">
+                                                                <input type="hidden" name="niveau" value="{{ $niveau->id }}">
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-10">
                                                                     <label class="form-label" for="class">Nom prof
                                                                         Titulaire</label>
                                                                     <input type="text" class="form-control"
                                                                         placeholder="Entrez le nom du prof titulaire"
-                                                                        id="className" name="prof_titulaire" >
+                                                                        id="className" value="{{ $c->prof_titulaire  }}" name="prof_titulaire" >
                                                                     {{-- <div class="invalid-feedback">Veuillez entrer le nom du prof titulaire</div> --}}
                                                                 </div>
                                                             </div>
@@ -126,7 +125,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
 
                                         <div class="modal fade" id="deleteClassroom{{ $c->id }}"
                                             aria-hidden="true" aria-labelledby="deleteClassroom" tabindex="-1">
@@ -189,8 +187,7 @@
                                     <div class="text-danger">Veuillez entrer le nom de la classe</div>
                                 @enderror
                             </div>
-
-                            <input type="hidden" value="{{ $niveau->id }}">
+                            <input type="hidden" name="niveau" value="{{ $niveau->id }}">
                             <!-- input -->
                             <div class="mb-5 col-md-10">
                                 <label class="form-label" for="class">Nom prof Titulaire</label>
