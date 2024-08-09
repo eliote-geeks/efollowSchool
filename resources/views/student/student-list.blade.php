@@ -26,7 +26,8 @@
                                 </li>
 
                                 <li class="breadcrumb-item active" aria-current="page">Gestion des élèves de la classe
-                                    <b>{{ $classe->name }} du niveau {{ $classe->niveau->name }}</b></li>
+                                    <b>{{ $classe->name }} du niveau {{ $classe->niveau->name }}</b>
+                                </li>
                             </ol>
                         </nav>
                     </div>
@@ -43,11 +44,18 @@
                         <div class="d-flex align-items-center">
                             <h2 class="mb-1">Liste des élèves de la classe: <b>{{ $classe->name }} du niveau
                                     {{ $classe->niveau->name }}</b></h2>
-                            <a class="btn btn-primary rounded-pill ms-auto"  href="{{ route('createStudentClass',$classe) }}"
-                                role="button">
-                                <i class="fas fa-plus me-2"></i>
+                            <a class="btn btn-primary rounded-pill ms-2"
+                                href="{{ route('createStudentClass', $classe) }}" role="button">
+                                <i class="fas fa-user-plus me-2"></i>
                                 Créer un élève
                             </a>
+
+                            <a class="btn btn-success rounded-pill ms-2"
+                                href="{{ route('showImportForm', $classe->id) }}" role="button">
+                                <i class="fas fa-file-excel me-2"></i>
+                                Importer depuis Excel
+                            </a>
+
                         </div>
                         <p class="mb-0">
                             Sur cette page vous pouvez créer, visualiser ou modifier des élèves
@@ -143,9 +151,8 @@
                                                                                 class=" w-100 h-100">
                                                                             <input
                                                                                 class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100"
-                                                                                 type="file"
-                                                                                accept="image/*" id="img"
-                                                                                name="avatar"
+                                                                                type="file" accept="image/*"
+                                                                                id="img" name="avatar"
                                                                                 onchange="previewEditStudentImage(this)" />
                                                                         </label>
                                                                         <small>Cliquez sur la photo pour la
@@ -183,7 +190,8 @@
                                                                             id="birthday" name="date_birth" required>
                                                                         <div class="invalid-feedback">Veuillez entrer
                                                                             la date de naissance de l'élève</div>
-                                                                            <small>Actuel: {{ \Carbon\Carbon::parse($student->student->date_birth)->format('d, M Y') }}</small>
+                                                                        <small>Actuel:
+                                                                            {{ \Carbon\Carbon::parse($student->student->date_birth)->format('d, M Y') }}</small>
                                                                     </div>
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">
@@ -219,7 +227,8 @@
                                                                             @foreach ($classes as $c)
                                                                                 <option value="{{ $c->id }}"
                                                                                     @if ($c->id == $student->classe->id) selected @endif>
-                                                                                    ({{ $c->niveau->name }})&nbsp;
+                                                                                    ({{ $c->niveau->name }})
+                                                                                    &nbsp;
                                                                                     {{ $c->name }}</option>
                                                                             @endforeach
 
@@ -325,9 +334,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endif
-                                        @endforeach
-                                    
+                                        @endif
+                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>

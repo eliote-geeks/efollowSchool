@@ -7,6 +7,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\StudentClasse;
 use App\Imports\StudentImport;
+use App\Imports\StudentsImport;
 use App\Models\SchoolInformation;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Actions\Fortify\UpdateUserProfileInformation;
@@ -29,20 +30,21 @@ class StudentController extends Controller
         ]);
     }
 
-    public function showImportForm()
+    public function showImportForm($classe)
     {
-        return view('student.import-students');
+        return view('student.import-students',[
+            'classe' => $classe
+        ]);
     }
 
-    public function import(Request $request)
+    public function importStudentClase(Request $request, $classe)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,csv',
         ]);
+        Excel::import(new StudentsImport($classe), $request->file('file'));
 
-        Excel::import(new StudentImport(), $request->file('file'));
-
-        return redirect()->back()->with('message', 'Reussie !!');
+        return redirect()->back()->with('success', 'Les étudiants ont été importés avec succès.');
     }
 
     public function createStudentClass(Classe $classe)

@@ -47,10 +47,10 @@ class CreateStudent extends Component
     #[Validate('required')]
     public $phone_mother;
 
-    #[Validate('required')]
+    // #[Validate('required')]
     public $name_father;
 
-    #[Validate('required')]
+    // #[Validate('required')]
     public $name_mother;
 
     

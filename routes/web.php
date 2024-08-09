@@ -44,8 +44,8 @@ Route::get('card-view',function(){
 });
 
 Route::get('print/card/{student}/{schoolInformation}',[StudentController::class,'printCard'])->name('print.card');
-Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
-Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
+Route::get('import-students/{classe}', [StudentController::class, 'showImportForm'])->name('showImportForm');
+Route::post('importS/{classe}', [StudentController::class, 'importStudentClase'])->name('importStudentClase');
 Route::get('createStudentClass/{classe}',[StudentController::class,'createStudentClass'])->name('createStudentClass');
 
 
