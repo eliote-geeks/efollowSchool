@@ -72,7 +72,6 @@ class NiveauController extends Controller
             'status' => 1,
             'niveau_id' => $niveau,
             ])->get();
-
             return view('classe.classe',[
                 'classes' => $classes,
                 'niveau' => 'niveau',
