@@ -59,18 +59,20 @@
                                             <td>{{ $n->name }}</td>
 
                                             <td scope="col" class="text-center">
-                                                <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                <div class="d-flex justify-content-center">
+                                                    <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des niveaux
-                                                </a>
-                                                 <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
+                                                    </a>
+                                                    <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-edit me-1"></i>
                                                     Modifier
-                                                </a>
-                                                <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="##deleteLevel{{ $n->id }}" role="button">
+                                                    </a>
+                                                    <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="#deleteLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-trash me-1"></i>
                                                     Supprimer
-                                                </a>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                         <div class="modal fade" id="editLevel{{ $n->id }}" aria-hidden="true"
