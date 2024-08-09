@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classe;
 use App\Models\Niveau;
 use App\Models\SchoolInformation;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ClasseController extends Controller
@@ -14,8 +15,17 @@ class ClasseController extends Controller
      */
     public function index()
     {
-        $classes = Classe::where('status',1)->get();
-        $niveaux = Niveau::where('status',1)->get();
+        $year = SchoolInformation::where('status',1)->latest()->first();
+        $classes = Classe::where([
+            'status' => 1,
+            'school_information_id' => $year->id
+            ])->get();
+
+        $niveaux = Niveau::where([
+            'status' => 1,
+            'school_information_id' => $year->id
+            ])->get();
+            
         return view('classe.classe',[
             'classes' => $classes,
             'niveaux' => $niveaux
@@ -58,7 +68,10 @@ class ClasseController extends Controller
      */
     public function show(Classe $classe)
     {
-        //
+    
+        return view('student.student-list',[
+            'classe' => $classe,
+        ]);
     }
 
     /**
