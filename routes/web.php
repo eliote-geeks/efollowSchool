@@ -56,3 +56,7 @@ Route::get('export-students', function () {
 Route::get('student-list', function(){
     return view('student.student-list');
 });
+
+Route::get('scolarité', function(){
+    return view('scolarité.scolarité');
+});
