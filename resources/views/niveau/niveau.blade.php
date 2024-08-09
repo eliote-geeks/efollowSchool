@@ -82,79 +82,80 @@
                                             </td>
 
 
-                                            <div class="modal fade" id="editLevel{{ $n->id }}" aria-hidden="true"
-                                                aria-labelledby="editLevel" tabindex="-1">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title" id="editLevelLabel">Modifier le
-                                                                niveau</h3>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form method="post" class="needs-validation"
-                                                            action="{{ route('niveau.update', $n) }}" autocomplete="off">
-                                                            @method('PATCH')
-                                                            @csrf
-                                                            <div class="modal-body">
-                                                                <div class="row">
-                                                                    <!-- input -->
-                                                                    <div class="mb-5 col-md-10">
-                                                                        <label class="form-label" for="firstName">Nom du
-                                                                            niveau</label>
-                                                                        <input type="text" class="form-control"
-                                                                            placeholder="Entrez le nom du niveau"
-                                                                            value="{{ $n->name }}" id="levelName"
-                                                                            name="name" required>
-                                                                        <div class="invalid-feedback">Veuillez entrer le
-                                                                            nom du niveau</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Annuler</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Modifier</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="modal fade" id="deleteLevel{{ $n->id }}"
-                                                aria-hidden="true" aria-labelledby="deleteLevel" tabindex="-1">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title" id="LevelLabel">Supprimer le niveau
-                                                            </h3>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        {{-- <form method="post" class="needs-validation"> --}}
-                                                            <div class="modal-body">
-                                                                <div class="row">
-                                                                    <h2>Voulez-vous vraiment supprimer ce niveau?</h2>
-                                                                </div>
-                                                            </div>
-                                                        {{-- </form> --}}
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Annuler</button>
-                                                            <form action="{{ route('niveau.destroy', $n) }}" method="POST">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-danger">supprimer</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                     </tr>
+
+                                    <div class="modal fade" id="editLevel{{ $n->id }}" aria-hidden="true"
+                                        aria-labelledby="editLevel" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="editLevelLabel">Modifier le
+                                                        niveau</h3>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form method="post" class="needs-validation"
+                                                    action="{{ route('niveau.update', $n) }}" autocomplete="off">
+                                                    @method('PATCH')
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <!-- input -->
+                                                            <div class="mb-5 col-md-10">
+                                                                <label class="form-label" for="firstName">Nom du
+                                                                    niveau</label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Entrez le nom du niveau"
+                                                                    value="{{ $n->name }}" id="levelName"
+                                                                    name="name" required>
+                                                                <div class="invalid-feedback">Veuillez entrer le
+                                                                    nom du niveau</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Annuler</button>
+                                                        <button type="submit" class="btn btn-primary">Modifier</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal fade" id="deleteLevel{{ $n->id }}" aria-hidden="true"
+                                        aria-labelledby="deleteLevel" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="LevelLabel">Supprimer le niveau
+                                                    </h3>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                {{-- <form method="post" class="needs-validation"> --}}
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <h2>Voulez-vous vraiment supprimer ce niveau?</h2>
+                                                    </div>
+                                                </div>
+                                                {{-- </form> --}}
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Annuler</button>
+                                                    <form action="{{ route('niveau.destroy', $n) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-danger">supprimer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -172,7 +173,7 @@
                     <h3 class="modal-title" id="LevelLabel">Créer une niveau</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="{{ route('niveau.store') }}" class="needs-validation" >
+                <form method="post" action="{{ route('niveau.store') }}" class="needs-validation">
                     @csrf
                     <div class="modal-body">
                         <div class="row">

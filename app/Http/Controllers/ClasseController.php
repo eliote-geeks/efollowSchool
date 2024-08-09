@@ -15,21 +15,10 @@ class ClasseController extends Controller
      */
     public function index()
     {
-        $year = SchoolInformation::where('status',1)->latest()->first();
-        $classes = Classe::where([
-            'status' => 1,
-            'school_information_id' => $year->id
-            ])->get();
+       
 
-        $niveaux = Niveau::where([
-            'status' => 1,
-            'school_information_id' => $year->id
-            ])->get();
-            
-        return view('classe.classe',[
-            'classes' => $classes,
-            'niveaux' => $niveaux
-        ]);
+
+     
     }
 
     /**
@@ -68,7 +57,7 @@ class ClasseController extends Controller
      */
     public function show(Classe $classe)
     {
-    
+
         return view('student.student-list',[
             'classe' => $classe,
         ]);
