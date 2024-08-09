@@ -50,7 +50,7 @@
                                         <th scope="col">Nom de la classe</th>
                                         <th>Niveau</th>
                                         <th>Professeur principal</th>
-                                        <th></th>
+                                        <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,27 +60,20 @@
                                             <td>{{ $c->niveau->name }}</td>
                                             <td>{{ $c->prof_titulaire ? $c->prof_titulaire : '// ' }}</td>
                                             <td scope="col" class="text-center">
-                                                <span class="dropdown dropstart">
-                                                    <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                                        href="#" role="button" id="courseDropdown2"
-                                                        data-bs-toggle="dropdown" data-bs-offset="-20,20"
-                                                        aria-expanded="false">
-                                                        <i class="fe fe-more-vertical"></i>
-                                                    </a>
-                                                    <span class="dropdown-menu" aria-labelledby="courseDropdown2">
-                                                        <span class="dropdown-header">Action</span>
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#deleteClassroom{{ $c->id }}" role="button">
-                                                            <i class="fe fe-trash dropdown-item-icon"></i>
-                                                            Supprimer
-                                                        </a>
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#editSchoolYear{{ $c->id }}" role="button">
-                                                            <i class="fe fe-edit dropdown-item-icon"></i>
-                                                            Modifier
-                                                        </a>
-                                                    </span>
-                                                </span>
+                                                <td scope="col" class="text-center d-flex justify-content-center">
+                                                <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                    <i class="fe fe-eye me-1"></i>
+                                                    Liste des élèves
+                                                </a>
+                                                 <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editSchoolYear{{ $c->id }}" role="button">
+                                                    <i class="fe fe-edit me-1"></i>
+                                                    Modifier
+                                                </a>
+                                                <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="#deleteClassroom{{ $c->id }}" role="button">
+                                                    <i class="fe fe-trash me-1"></i>
+                                                    Supprimer
+                                                </a>
+                                            </td>
                                             </td>
                                         </tr>
 
