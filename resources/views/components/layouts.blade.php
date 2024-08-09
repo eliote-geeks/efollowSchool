@@ -13,7 +13,7 @@
     <link href="assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/theme.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="canonical" href="add-customer.html" >
+    <link rel="canonical" href="add-customer.html">
     <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" />
     @livewireStyles
@@ -810,8 +810,53 @@
         </main>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Affichage des messages de session -->
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @elseif(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @elseif(session('message'))
+                        <div class="alert alert-info">
+                            {{ session('message') }}
+                        </div>
+                    @elseif(session('warning'))
+                        <div class="alert alert-warning">
+                            {{ session('warning') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     @livewireScripts
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success') || session('error') || session('message') || session('warning'))
+                var feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+                feedbackModal.show();
+            @endif
+        });
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
