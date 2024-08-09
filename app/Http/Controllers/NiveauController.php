@@ -54,12 +54,12 @@ class NiveauController extends Controller
                 $niveau->name = $request->name;
                 $niveau->school_information_id = $schoolInformation->id;
                 $niveau->save();
-                return redirect()->back()->with('message', 'Nouveau niveau ajouté !!');
+                return redirect()->back()->with('success', 'Nouveau niveau ajouté !!');
             } else {
-                return redirect()->back()->with('message', 'Ce niveau existe déja dans le système');
+                return redirect()->back()->with('error', 'Ce niveau existe déja dans le système');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('message', 'Une erreur s\' est produite !!');
+            return redirect()->back()->with('error', 'Une erreur s\' est produite !!');
         }
     }
 
