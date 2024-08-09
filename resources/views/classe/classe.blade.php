@@ -60,7 +60,7 @@
                                             <td>{{ $c->niveau->name }}</td>
                                             <td>{{ $c->prof_titulaire ? $c->prof_titulaire : '// ' }}</td>
                                             <td scope="col" class="text-center d-flex justify-content-center">
-                                                <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                <a href="{{ route('classe.show',$c) }}" class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des élèves
                                                 </a>

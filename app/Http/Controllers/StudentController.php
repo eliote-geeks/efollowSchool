@@ -87,6 +87,13 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        try{
+            $student->status = 2;
+            $student->save();
+            return redirect()->back()->with('success','etudiant Retiré !!');
+        }catch(\Exception $e){
+            return redirect()->back()->with('success','Une erreur s\'est produite veuillez reessayer !!');
+        }
+        // supprimer la carte
     }
 }

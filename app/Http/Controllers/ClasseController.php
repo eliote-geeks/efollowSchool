@@ -6,6 +6,7 @@ use App\Models\Classe;
 use App\Models\Niveau;
 use App\Models\SchoolInformation;
 use App\Models\Student;
+use App\Models\StudentClasse;
 use Illuminate\Http\Request;
 
 class ClasseController extends Controller
@@ -56,9 +57,14 @@ class ClasseController extends Controller
      */
     public function show(Classe $classe)
     {
+        $students = StudentClasse::where([
+            'classe_id' => $classe->id,
+            
+            ])->get();
 
         return view('student.student-list',[
             'classe' => $classe,
+            'students' => $students,
         ]);
     }
 

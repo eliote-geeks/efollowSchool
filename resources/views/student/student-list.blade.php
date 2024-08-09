@@ -1,6 +1,17 @@
 <base href="/">
 <x-layouts>
-  
+    <style>
+        .disabled-row {
+            background-color: #f5f5f5;
+            /* Change background color */
+            color: #a9a9a9;
+            /* Gray out text */
+            /* pointer-events: none; */
+            /* Disable any interaction */
+            opacity: 0.6;
+            /* Make it look "disabled" */
+        }
+    </style>
     <section class="container-fluid p-4">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
@@ -14,7 +25,7 @@
                                     <a href="admin-dashboard.html">Dashboard</a>
                                 </li>
 
-                                <li class="breadcrumb-item active" aria-current="page">Gestion des élèves</li>
+                                <li class="breadcrumb-item active" aria-current="page">Gestion des élèves de la classe <b>{{ $classe->name }} du niveau {{ $classe->niveau->name }}</b></li>
                             </ol>
                         </nav>
                     </div>
@@ -29,7 +40,7 @@
                     <!-- card header  -->
                     <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h2 class="mb-1">Liste des élèves</h2>
+                        <h2 class="mb-1">Liste des élèves de la classe: <b>{{ $classe->name }} du niveau {{ $classe->niveau->name }}</b></h2>
                         <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addSchoolYear" role="button">
                             <i class="fas fa-plus me-2"></i>
                             Créer un élève
@@ -56,14 +67,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($students as $student)
+                               
                                     <tr>
-                                        <td>PAULAIN BRICE</td>
-                                        <td>TRYTSHJKPOS</td>
-                                        <td>6EME A</td>
-                                        <td>BRICE PAULAIN</td>
-                                        <td>+237 657 876 435</td>
-                                        <td>BRICE PAULAIN</td>
-                                        <td>+237 657 876 435</td>
+                                        <td>{{ $student->student->first_name.' '.$student->student->last_name }}</td>
+                                        <td>{{ $student->student->matricular }}</td>
+                                        <td><b>{{ $student->classe->niveau->name}}&nbsp;</b>{{ $student->classe->name }}</td>
+                                        <td>{{ $student->student->name_father }}</td>
+                                        <td>{{ $student->student->phone_father }}</td>
+                                        <td>{{ $student->student->name_mother }}</td>
+                                        <td>{{ $student->student->phone_mother }}</td>
                                         <td scope="col">
                                             <span class="dropdown dropstart">
                                                 <a
@@ -82,11 +95,11 @@
                                                         <i class="fe fe-eye dropdown-item-icon"></i>
                                                         Voir plus d'informations
                                                     </a>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#editStudent" role="button">
+                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#editStudent{{ $student->student->id }}" role="button">
                                                         <i class="fe fe-edit dropdown-item-icon"></i>
                                                         Modifier
                                                     </a>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#deleteStudent" role="button">
+                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#deleteStudent{{ $student->student->id }}" role="button">
                                                         <i class="fe fe-trash dropdown-item-icon"></i>
                                                         Supprimer
                                                     </a>
@@ -94,9 +107,7 @@
                                             </span>
                                         </td>
                                     </tr>
-
-
-                                    <div class="modal fade" id="editStudent" aria-hidden="true" aria-labelledby="editStudent" tabindex="-1">
+                                    <div class="modal fade" id="editStudent{{ $student->student->id }}" aria-hidden="true" aria-labelledby="editStudent" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -188,9 +199,8 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     
-                                    <div class="modal fade" id="deleteStudent" aria-hidden="true" aria-labelledby="deleteStudent" tabindex="-1">
+                                    <div class="modal fade" id="deleteStudent{{ $student->student->id }}" aria-hidden="true" aria-labelledby="deleteStudent" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -200,18 +210,22 @@
                                                 <form method="post" class="needs-validation" novalidate>
                                                 <div class="modal-body">
                                                     <div class="row">
-                                                        <h2>Voulez-vous vraiment supprimer l'élève NOM_DE_L'ELEVE?</h2>
+                                                        <h2>Voulez-vous vraiment supprimer l'élève: <b> {{ $student->student->first_name.' '.$student->student->last_name }} </b>?</h2>
                                                     </div>
                                                 </div>
                                                 </form>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-danger">supprimer</button>
+                                                    <form action="{{ route('student.destroy',$student->student) }}" method="post">
+                                                       @method('DELETE')
+                                                        @csrf 
+                                                        <button type="submit" class="btn btn-danger">supprimer</button>
+                                                </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -222,5 +236,9 @@
         </div>
 
     </section> 
-
+    <script>
+        document.querySelector('.disabled-row').querySelectorAll('input, button').forEach(function(element) {
+            element.disabled = true;
+        });
+    </script>
 </x-layouts>
