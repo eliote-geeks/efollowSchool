@@ -219,7 +219,9 @@
                                                                         <input class="form-check-input"
                                                                             name="fillPath" type="checkbox"
                                                                             role="switch"
-                                                                            id="flexSwitchCheckDefault">
+                                                                            id="flexSwitchCheckDefault" @if ($school->fillPath == 1)
+                                                                                checked
+                                                                            @endif>
                                                                         <label class="form-check-label"
                                                                             for="flexSwitchCheckDefault">Imprimer les
                                                                             cartes des élèves à partir de
