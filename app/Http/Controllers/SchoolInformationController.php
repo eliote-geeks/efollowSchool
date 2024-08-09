@@ -41,7 +41,7 @@ class SchoolInformationController extends Controller
                     'recto_path' => 'required|image',
                     'tel_school' => 'required',
                     'name' => 'required|string|max:150',
-                    'matricular' => 'required|string',
+                    'matricular' => 'required',
                     // 'fillPath' => 'required',
                     'end' => 'required|date|after:start',
                     // 'recto_path' => 'image|nullable',
