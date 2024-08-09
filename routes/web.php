@@ -46,16 +46,17 @@ Route::get('card-view',function(){
 Route::get('print/card/{student}/{schoolInformation}',[StudentController::class,'printCard'])->name('print.card');
 Route::get('import-students', [StudentController::class, 'showImportForm'])->name('students-import');
 Route::post('import-students', [StudentController::class, 'import'])->name('students.import');
-
+Route::get('createStudentClass/{classe}',[StudentController::class,'createStudentClass'])->name('createStudentClass');
 
 
 Route::get('export-students', function () {
     return Excel::download(new StudentsExport, 'students.xlsx');
 })->name('exportModel');
 
-Route::get('student-list', function(){
-    return view('student.student-list');
-});
+
+
+
+//to do
 
 Route::get('scolarité', function(){
     return view('scolarité.scolarité');

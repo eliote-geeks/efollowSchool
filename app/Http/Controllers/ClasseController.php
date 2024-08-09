@@ -52,20 +52,26 @@ class ClasseController extends Controller
         }
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show(Classe $classe)
     {
+        try{
+        $classes = Classe::where('school_information_id',SchoolInformation::where('status',1)->first()->id)->orderBy('name','desc')->get();
         $students = StudentClasse::where([
-            'classe_id' => $classe->id,
-            
+            'classe_id' => $classe->id,            
             ])->get();
 
         return view('student.student-list',[
             'classe' => $classe,
             'students' => $students,
+            'classes' => $classes
         ]);
+    }catch(\Exception $e){
+        return redirect()->back()->with('error','Oups petit probleme!!');
+    }
     }
 
     /**

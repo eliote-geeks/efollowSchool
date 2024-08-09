@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\StudentImport;
-use App\Models\SchoolInformation;
+use App\Models\Classe;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\StudentClasse;
+use App\Imports\StudentImport;
+use App\Models\SchoolInformation;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 
 class StudentController extends Controller
 {
@@ -20,7 +23,7 @@ class StudentController extends Controller
 
     public function printCard(Student $student, SchoolInformation $schoolInformation)
     {
-        return view('student.card-view',[
+        return view('student.card-view', [
             'student' => $student,
             'schoolInformation' => $schoolInformation,
         ]);
@@ -37,9 +40,16 @@ class StudentController extends Controller
             'file' => 'required|mimes:xlsx,csv',
         ]);
 
-        Excel::import(new StudentImport, $request->file('file'));
+        Excel::import(new StudentImport(), $request->file('file'));
 
         return redirect()->back()->with('message', 'Reussie !!');
+    }
+
+    public function createStudentClass(Classe $classe)
+    {
+        return view('student.create',[
+            'classe' => $classe
+        ]);
     }
 
     /**
@@ -63,7 +73,6 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        
     }
 
     /**
@@ -79,7 +88,44 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $validatedData = $request->validate([
+            'first' => 'required',
+            'last' => 'required',
+            'date_birth' => 'required',
+            'place_birth' => 'required',
+            'matricular' => 'required',
+            'classe' => 'required',
+            'name_father' => 'required',
+            'phone_father' => 'required',
+            'name_mother' => 'required',
+            'phone_mother' => 'required',
+        ]);
+
+        if (isset($request->avatar)) {
+            $student->user->updateProfilePhoto($request->avatar);
+        }
+
+        $student->first_name = $validatedData['first'];
+        $student->last_name = $validatedData['last'];
+        $student->date_birth = $validatedData['date_birth'];
+        $student->place_birth = $validatedData['place_birth'];
+        $student->matricular = $validatedData['matricular'];
+
+        Classe::find($validatedData['classe']);
+        $sc = StudentClasse::where([
+            'student_id' => $student->id,
+            'classe_id' => $validatedData['classe'],
+        ])->first();
+        $sc->classe_id = $validatedData['classe'];
+        $sc->save();
+
+        $student->name_father = $validatedData['name_father'];
+        $student->phone_father = $validatedData['phone_father'];
+        $student->name_mother = $validatedData['name_mother'];
+        $student->phone_mother = $validatedData['phone_mother'];
+
+        $student->save();
+        return redirect()->back()->with('success', 'Elève mis a jour !!');
     }
 
     /**
@@ -87,12 +133,12 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        try{
+        try {
             $student->status = 2;
             $student->save();
-            return redirect()->back()->with('success','etudiant Retiré !!');
-        }catch(\Exception $e){
-            return redirect()->back()->with('success','Une erreur s\'est produite veuillez reessayer !!');
+            return redirect()->back()->with('success', 'etudiant Retiré !!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('success', 'Une erreur s\'est produite veuillez reessayer !!');
         }
         // supprimer la carte
     }

@@ -2,7 +2,7 @@
 <x-layouts>
 
   
-    @livewire('create-student')
+    @livewire('create-student',['classe' => $classe])
 
 
 </x-layouts>
