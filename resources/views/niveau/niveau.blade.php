@@ -60,7 +60,7 @@
 
                                             <td scope="col" class="text-center">
                                                 <div class="d-flex justify-content-center">
-                                                    <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                    <a href="{{ route('niveau.show',$niveau) }}" class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des classes
                                                     </a>
