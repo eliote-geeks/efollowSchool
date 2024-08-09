@@ -195,7 +195,7 @@
                                 <div class="mb-5 col-md-6">
                                     <label class="form-label" for="motherName">Nom complet de la mère</label>
                                     <input type="text" class="form-control"
-                                        placeholder="Entrez le nom complet du père" id="motherName"
+                                        placeholder="Entrez le nom complet de la mère" id="motherName"
                                         wire:model.live='name_mother' required>
                                     @error('name_mother')
                                         <div class="text-danger">Veuillez entrer le nom complet de la mère</div>
@@ -205,7 +205,7 @@
                                 <div class="mb-5 col-md-6">
                                     <label class="form-label" for="motherPhone">Numero de téléphone de la mère</label>
                                     <input type="string" class="form-control"
-                                        placeholder="Entrez le numero de téléphone du père" id="motherPhone"
+                                        placeholder="Entrez le numero de téléphone de la mère" id="motherPhone"
                                         wire:model.live='phone_mother' required>
                                     @error('phone_mother')
                                         <div class="text-danger">Veuillez entrer le numero de téléphone de la mère
