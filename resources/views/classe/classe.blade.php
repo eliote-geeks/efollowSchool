@@ -103,26 +103,8 @@
                                                                     <div class="invalid-feedback">Veuillez entrer le nom
                                                                         de la classe</div>
                                                                 </div>
-<<<<<<< Updated upstream
 
                                                                 <input type="hidden" name="niveau" value="{{ $niveau->id }}">
-=======
-                                                                <!-- input -->
-                                                                <div class="mb-5 col-md-10">
-                                                                    <label class="form-label"
-                                                                        for="level">Niveau</label>
-                                                                    <select class="form-control" id="level"
-                                                                        name="niveau" required>
-                                                                        @foreach ($niveaux as $n)
-                                                                            <option value="{{ $n->id }}"
-                                                                                @if ($n->id == $c->niveau->id) selected @endif>
-                                                                                {{ $n->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <div class="invalid-feedback">Veuillez selectionner
-                                                                        le niveau de la classe</div>
-                                                                </div>
->>>>>>> Stashed changes
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-10">
                                                                     <label class="form-label" for="class">Nom prof
@@ -206,24 +188,7 @@
                                     <div class="text-danger">Veuillez entrer le nom de la classe</div>
                                 @enderror
                             </div>
-<<<<<<< Updated upstream
                             <input type="hidden" name="niveau" value="{{ $niveau->id }}">
-=======
-                            <!-- input -->
-                            <div class="mb-5 col-md-10">
-                                <label class="form-label" for="level">Niveau</label>
-                                <select class="form-control" id="level" name="niveau" required>
-                                    <option value="">Selectionnez le niveau de la classe</option>
-                                    @foreach ($niveaux as $n)
-                                        <option value="{{ $n->id }}">{{ $n->name }}</option>
-                                    @endforeach
-
-                                </select>
-                                @error('niveau')
-                                    <div class="text-danger">Veuillez valider le niveau</div>
-                                @enderror
-                            </div>
->>>>>>> Stashed changes
                             <!-- input -->
                             <div class="mb-5 col-md-10">
                                 <label class="form-label" for="class">Nom prof Titulaire</label>
