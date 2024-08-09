@@ -49,7 +49,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Nom du niveau</th>
-                                        <th></th>
+                                        <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,7 +62,7 @@
                                                 <div class="d-flex justify-content-center">
                                                     <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
-                                                    Liste des niveaux
+                                                    Liste des classes
                                                     </a>
                                                     <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-edit me-1"></i>
