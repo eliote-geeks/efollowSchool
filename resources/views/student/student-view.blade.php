@@ -44,7 +44,7 @@
                         <div class="d-flex align-items-center">
                             <div class="position-relative">
                                 <label for="img" class="img-thumbnail position-relative" style="height: 150px; width: 150px; cursor: pointer;">
-                                    <img id="studentImage" src="blank_image.jpg" class=" w-100 h-100">
+                                    <img id="studentImage" src="assets/images/blank_image.jpg" class=" w-100 h-100">
                                 </label>
                             </div>
                             <div class="ms-4" style=" font-weight: bold;">
