@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SchoolInformationController;
 use App\Http\Controllers\ScolariteController;
+use App\Http\Controllers\SmartCardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,8 @@ Route::get('print/card/{student}/{schoolInformation}', [StudentController::class
 Route::get('import-students/{classe}', [StudentController::class, 'showImportForm'])->name('showImportForm');
 Route::post('importS/{classe}', [StudentController::class, 'importStudentClase'])->name('importStudentClase');
 Route::get('createStudentClass/{classe}', [StudentController::class, 'createStudentClass'])->name('createStudentClass');
-
+Route::get('add-student-card/{student}',[SmartCardController::class,'addStudentCard'])->name('addStudentCard');
+Route::post('add-student-card/{student}',[SmartCardController::class,'addPostStudentCard'])->name('addPostStudentCard');
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');
 

@@ -133,7 +133,7 @@ class ScolariteController extends Controller
 
             return redirect()->back()->with('success', 'Frais Edité');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Oups une erreur s\'est produite : !!',$e->getMessage());
+            return redirect()->back()->with('error', 'Oups une erreur s\'est produite : !!'.$e->getMessage());
         }
     }
 
@@ -144,8 +144,9 @@ class ScolariteController extends Controller
     {
         try {
             $scolarite->delete();
+            return redirect()->back()->with('success','Scolarité Supprimé !! ');
         } catch (\Exception $e) {
-            return redirect()->back()->with('message', 'Erreur innatendue !!');
+            return redirect()->back()->with('danger', 'Erreur innatendue !!');
         }
     }
 }

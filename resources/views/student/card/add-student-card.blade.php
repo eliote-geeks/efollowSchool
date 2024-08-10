@@ -14,7 +14,7 @@
                                     <a href="admin-dashboard.html">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Ecommerce</a>
+                                    <a href="gavascript:;">Ecommerce</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">Add Customer</li>
                             </ol>
@@ -39,6 +39,13 @@
                         <div class="attente shadow-sm">
                             <div class="spinner-grow text-primary mb-3" role="status">
                                 <span class="visually-hidden">Chargement...</span>
+                                <form action="{{ route('addPostStudentCard', $student) }}" method="post" enctype="multipart/form-data" id="personneladdcarte">
+                                    @csrf    
+                                    <input type="text" class="visually-hidden" placeholder="Password" name="id_card_smart" autocomplete="off" autofocus>  
+                                    @error('id_card_smart')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </form>
                             </div>
                             <h1 class="mb-3">Veuillez passer la carte sur le lecteur</h1>
                             <p class="text-muted">Le système est en attente de votre carte.</p>
