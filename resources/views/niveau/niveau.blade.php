@@ -60,6 +60,10 @@
 
                                             <td scope="col" class="text-center">
                                                 <div class="d-flex justify-content-center">
+                                                    {{-- <a href="{{ route('scolariteClasse',$n) }}" class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                        <svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2m14 2H6a2 2 0 0 1-2 2v6a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V9a2 2 0 0 1-2-2M8 9h2v6H8zm6 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 2a3 3 0 1 1 0-6a3 3 0 0 1 0 6"/></svg>
+                                                        Scolarité
+                                                        </a> --}}
                                                     <a href="{{ route('niveau.show',$n) }}" class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des classes

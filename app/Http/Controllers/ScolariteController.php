@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Niveau;
 use App\Models\SchoolInformation;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
@@ -13,7 +14,16 @@ class ScolariteController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->first()->id)->get();
+            $niveaux = Niveau::where('school_information_id', SchoolInformation::where('status', 1)->first()->id)->get();
+            return view('scolarité.scolarité', [
+                'scolarites' => $scolarites,
+                'niveaux' => $niveaux,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('Impossible d\'acceder à cette page si une annéé n\'est pas fonctionnelle');
+        }
     }
 
     /**
@@ -31,56 +41,45 @@ class ScolariteController extends Controller
     {
         try {
             $request->validate([
-                'tranche' => 'required',
+                // 'tranche' => 'nullable',
                 'name' => 'required',
                 'amount' => 'required',
-                'tranche' => 'required',
+                // 'tranche' => 'required',
                 'end_date' => 'required|date',
                 'niveaux' => 'required|array',
                 'niveaux.*' => 'exists:niveaux,id',
             ]);
 
-            $str = str_replace(',', '', $request->amount);
+            $str = str_replace(' ', '', $request->amount);
 
             $number = (float) $str;
 
-            $schoolInformation = SchoolInformation::where('status',1)->first();
+            $schoolInformation = SchoolInformation::where('status', 1)->first();
             $user = auth()->user();
 
-            foreach ($request->niveaux as $niveau) {
-                if (
-                    Scolarite::where([
-                        'school_information_id' => $schoolInformation->id,
-                        'niveau_id' => $niveau,
-                    ])->count() == 0
-                ) {
-                    $scolarite = new Scolarite();
-                    $scolarite->school_information_id = $schoolInformation->id;
-                    $scolarite->user_id = $user->id;
-                    $scolarite->niveau_id = $niveau;
-                    $scolarite->tranche = $request->tranche;
-                    $scolarite->end_date = $request->end_date;
-                    $scolarite->name = $request->name;
-                    $scolarite->amount = $number;
-                    $scolarite->uniqid = str_pad($user->id, 9, uniqid(), STR_PAD_LEFT);
-                    $scolarite->save();
-                } else {
-                    $scolarite = Scolarite::where([
-                        'school_information_id' => $schoolInformation->id,
-                        'niveau_id' => $niveau,
-                    ])->first();
-                    $scolarite->niveau_id = $niveau;
-                    $scolarite->tranche = $request->tranche;
-                    $scolarite->end_date = $request->end_date;
-                    $scolarite->name = $request->name;
-                    $scolarite->amount = $number;
-                    $scolarite->save();
-                }
+            $tranche = $request->tranche == null ? '//' : $request->tranche;
+            if (
+                Scolarite::where([
+                    'name' => $request->name,
+                    'niveaux' => json_encode($request->niveaux),
+                ])->count() == 0
+            ) {
+                $scolarite = new Scolarite();
+                $scolarite->school_information_id = $schoolInformation->id;
+                $scolarite->user_id = $user->id;
+                $scolarite->niveaux = json_encode($request->niveaux);
+                $scolarite->tranche = $tranche;
+                $scolarite->end_date = $request->end_date;
+                $scolarite->name = $request->name;
+                $scolarite->amount = $number;
+                $scolarite->uniqid = str_pad($user->id, 9, '0', STR_PAD_LEFT);
+                $scolarite->save();
+                return redirect()->back()->with('success', 'Frais AJouté');
+            } else {
+                return redirect()->back()->with('warning', 'Frais déja existant');
             }
-
-            return redirect()->back()->with('message', 'Pension AJouté');
         } catch (\Exception $e) {
-            return redirect()->back()->with('message', 'Oups une erreur s\'est produite !!');
+            return redirect()->back()->with('danger', 'Oups une erreur s\'est produite !!');
         }
     }
 
@@ -104,56 +103,37 @@ class ScolariteController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Scolarite $scolarite)
-    {
+    { 
         try {
             $request->validate([
-                'tranche' => 'required',
                 'name' => 'required',
                 'amount' => 'required',
-                'tranche' => 'required',
                 'end_date' => 'required|date',
                 'niveaux' => 'required|array',
                 'niveaux.*' => 'exists:niveaux,id',
             ]);
-
-            $str = str_replace(',', '', $request->amount);
-
+            $str = str_replace(' ', '', $request->amount);
+           
             $number = (float) $str;
 
-            $schoolInformation = SchoolInformation::where('status',1)->first();
+            // $schoolInformation = SchoolInformation::where('status', 1)->first();
             $user = auth()->user();
 
-            foreach ($request->niveaux as $niveau) {
-                if (
-                    Scolarite::where([
-                        'school_information_id' => $schoolInformation->id,
-                        'niveau_id' => $niveau,
-                    ])->count() > 0
-                ) {
-                    $scolarite->school_information_id = $schoolInformation->id;
-                    $scolarite->user_id = $user->id;
-                    $scolarite->niveau_id = $niveau;
-                    $scolarite->tranche = $request->tranche;
-                    $scolarite->end_date = $request->end_date;
-                    $scolarite->name = $request->name;
-                    $scolarite->amount = $number;
-                    $scolarite->save();
-                } else {
-                    $scolarite = new Scolarite();
-                    $scolarite->school_information_id = $schoolInformation->id;
-                    $scolarite->user_id = $user->id;
-                    $scolarite->niveau_id = $niveau;
-                    $scolarite->tranche = $request->tranche;
-                    $scolarite->end_date = $request->end_date;
-                    $scolarite->name = $request->name;
-                    $scolarite->amount = $number;
-                    $scolarite->uniqid = str_pad($user->id, 9, uniqid(), STR_PAD_LEFT);
-                    $scolarite->save();
-                }
-            }
-            return redirect()->back()->with('message', 'Pension Edité');
+            $tranche = ($request->tranche == null || $request->tranche == 0)  ? '//' : $request->tranche;
+           
+            // $scolarite->school_information_id = $schoolInformation->id;
+            $scolarite->user_id = $user->id;
+            $scolarite->niveaux = json_encode($request->niveaux);
+            $scolarite->tranche = $tranche;
+            $scolarite->end_date = $request->end_date;
+            $scolarite->name = $request->name;
+            $scolarite->amount = $number;
+            // $scolarite->uniqid = str_pad($user->id, 9, '0', STR_PAD_LEFT);
+            $scolarite->save();
+
+            return redirect()->back()->with('success', 'Frais Edité');
         } catch (\Exception $e) {
-            return redirect()->back()->with('message', 'Oups une erreur s\'est produite !!');
+            return redirect()->back()->with('error', 'Oups une erreur s\'est produite : !!',$e->getMessage());
         }
     }
 
@@ -162,11 +142,10 @@ class ScolariteController extends Controller
      */
     public function destroy(Scolarite $scolarite)
     {
-        try{
+        try {
             $scolarite->delete();
-        }catch(\Exception $e)
-        {
-            return redirect()->back()->with('message','Erreur innatendue !!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', 'Erreur innatendue !!');
         }
     }
 }
