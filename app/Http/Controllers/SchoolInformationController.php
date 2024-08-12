@@ -174,10 +174,6 @@ class SchoolInformationController extends Controller
             }
 
             if ($request->fillPath == 'on') {
-                // $request->validate([
-                //     'verso_path' => 'required|image',
-                //     'recto_path' => 'required|image',
-                // ]);
                 $schoolInformation->fillPath = 1;
             }
             $schoolInformation->save();

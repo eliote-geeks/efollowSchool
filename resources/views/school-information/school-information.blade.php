@@ -244,7 +244,7 @@
                                                                                 <input
                                                                                     class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100"
                                                                                     type="file" accept="image/*"
-                                                                                    id="cardRecto" name="cardRecto"
+                                                                                    id="cardRecto" name="recto_path"
                                                                                     onchange="previewRectoEdit(this)" />
                                                                             </label>
                                                                         </div>
@@ -263,7 +263,7 @@
                                                                                 <input
                                                                                     class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100"
                                                                                     type="file" accept="image/*"
-                                                                                    id="cardVerso" name="cardVerso"
+                                                                                    id="cardVerso" name="verso_path"
                                                                                     onchange="previewVersoEdit(this)" />
                                                                             </label>
                                                                         </div>
