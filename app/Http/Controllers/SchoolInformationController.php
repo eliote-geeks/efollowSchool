@@ -72,7 +72,7 @@ class SchoolInformationController extends Controller
             }
 
             if ($start->diffInMonths($end) >= 11) {
-                return redirect()->with('error', 'L\'intervalle entre les dates ne doit pas dépasser 11 mois');
+                return redirect()->back()->with('error', 'L\'intervalle entre les dates ne doit pas dépasser 11 mois');
             }
 
             $school = new SchoolInformation();

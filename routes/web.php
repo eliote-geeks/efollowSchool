@@ -7,6 +7,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SchoolInformationController;
+use App\Http\Controllers\ScolariteController;
+use App\Http\Controllers\SmartCardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +35,20 @@ Route::resource('schoolInformation', SchoolInformationController::class);
 Route::resource('student', StudentController::class);
 Route::resource('classe', ClasseController::class);
 Route::resource('niveau', NiveauController::class);
+Route::resource('scolarite',ScolariteController::class);
 
 Route::get('card-view', function () {
     return view('student.card-view');
 });
 
+
+// Route::get('scolarite/classe/{niveau}',[NiveauController::class,'scolarite'])->name('scolariteClasse');
 Route::get('print/card/{student}/{schoolInformation}', [StudentController::class, 'printCard'])->name('print.card');
 Route::get('import-students/{classe}', [StudentController::class, 'showImportForm'])->name('showImportForm');
 Route::post('importS/{classe}', [StudentController::class, 'importStudentClase'])->name('importStudentClase');
 Route::get('createStudentClass/{classe}', [StudentController::class, 'createStudentClass'])->name('createStudentClass');
-
+Route::get('add-student-card/{student}',[SmartCardController::class,'addStudentCard'])->name('addStudentCard');
+Route::post('add-student-card/{student}',[SmartCardController::class,'addPostStudentCard'])->name('addPostStudentCard');
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');
 
@@ -59,9 +65,9 @@ Route::get('export-students', function () {
 
 //to do
 
-Route::get('scolarité', function () {
-    return view('scolarité.scolarité');
-});
+// Route::get('scolarité', function () {
+    
+// });
 
 Route::get('student-view', function () {
     return view('student.student-view');

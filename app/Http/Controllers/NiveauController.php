@@ -6,6 +6,7 @@ use App\Models\Classe;
 use App\Models\Niveau;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
+use App\Models\Scolarite;
 
 class NiveauController extends Controller
 {
@@ -61,6 +62,15 @@ class NiveauController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Une erreur s\' est produite !!');
         }
+    }
+
+    public function scolarite(Niveau $niveau)
+    {
+        $scolarites = Scolarite::where('niveau_id',$niveau->id)->get();
+        return view('scolarité.scolarité',[
+            'scolarites' => $scolarites,
+            'niveau' => $niveau
+        ]);
     }
 
     /**

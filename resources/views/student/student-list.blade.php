@@ -106,6 +106,11 @@
                                                                 <i class="fe fe-eye dropdown-item-icon"></i>
                                                                 Voir plus d'informations
                                                             </a>
+                                                            <a class="dropdown-item" 
+                                                                href="{{ route('addStudentCard',$student) }}" role="button">
+                                                                <i class="fe fe-plus dropdown-item-icon"></i>
+                                                                Ajouter une carte
+                                                            </a>
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                                 href="#editStudent{{ $student->student->id }}"
                                                                 role="button">
