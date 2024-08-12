@@ -28,12 +28,11 @@
                 <div class="card">
                     <!-- card header  -->
                     <div class="card-header">
-                        <div class="d-flex align-items-center">
-                            <h2 class="mb-1">Liste des classes pour le niveau <b>{{ $niveau->name }}</b></h2>
-                            <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addClassroom"
-                                role="button">
-                                <i class="fas fa-plus me-2"></i>
-                                Créer une classe
+                        <div class="d-flex flex-column flex-sm-row align-items-center">
+                            <h2 class="mb-1 me-auto">Liste des classes du niveau <b>{{ $niveau->name }}</b></h2>
+                            <a class="btn btn-primary rounded-pill" data-bs-toggle="modal" href="#addClassroom" role="button">
+                            <i class="fe fe-plus me-2"></i>
+                            Créer une classe
                             </a>
                         </div>
                         <p class="mb-0">
@@ -60,15 +59,15 @@
                                             <td>{{ $c->niveau->name }}</td>
                                             <td>{{ $c->prof_titulaire ? $c->prof_titulaire : '// ' }}</td>
                                             <td scope="col" class="text-center d-flex justify-content-center">
-                                                <a href="{{ route('classe.show',$c) }}" class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                <a href="{{ route('classe.show',$c) }}" class="btn btn-ghost btn-sm me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des élèves
                                                 </a>
-                                                 <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editSchoolYear{{ $c->id }}" role="button">
+                                                 <a class="btn btn-ghost btn-sm me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editSchoolYear{{ $c->id }}" role="button">
                                                     <i class="fe fe-edit me-1"></i>
                                                     Modifier
                                                 </a>
-                                                <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="#deleteClassroom{{ $c->id }}" role="button">
+                                                <a class="btn btn-ghost btn-sm d-flex align-items-center" data-bs-toggle="modal" href="#deleteClassroom{{ $c->id }}" role="button">
                                                     <i class="fe fe-trash me-1"></i>
                                                     Supprimer
                                                 </a>

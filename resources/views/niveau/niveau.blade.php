@@ -29,13 +29,15 @@
                 <div class="card">
                     <!-- card header  -->
                     <div class="card-header">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
                             <h2 class="mb-1">Liste des niveaux</h2>
-                            <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addLevel"
-                                role="button">
-                                <i class="fas fa-plus me-2"></i>
-                                Créer un niveau
-                            </a>
+                            <div class="ms-auto">
+                                <a class="btn btn-primary rounded-pill ms-auto mt-3 mt-md-0" data-bs-toggle="modal" href="#addLevel"
+                                    role="button">
+                                    <i class="fe fe-plus me-2"></i>
+                                    Créer un niveau
+                                </a>
+                            </div>
                         </div>
                         <p class="mb-0">
                             Sur cette page vous pouvez créer, visualiser ou modifier des niveaux
@@ -64,15 +66,15 @@
                                                         <svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2m14 2H6a2 2 0 0 1-2 2v6a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V9a2 2 0 0 1-2-2M8 9h2v6H8zm6 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 2a3 3 0 1 1 0-6a3 3 0 0 1 0 6"/></svg>
                                                         Scolarité
                                                         </a> --}}
-                                                    <a href="{{ route('niveau.show',$n) }}" class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" role="button">
+                                                    <a href="{{ route('niveau.show',$n) }}" class="btn btn-ghost btn-sm  me-2 d-flex align-items-center" role="button">
                                                     <i class="fe fe-eye me-1"></i>
                                                     Liste des classes
                                                     </a>
-                                                    <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
+                                                    <a class="btn btn-ghost btn-sm me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-edit me-1"></i>
                                                     Modifier le niveau
                                                     </a>
-                                                    <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="#deleteLevel{{ $n->id }}" role="button">
+                                                    <a class="btn btn-ghost btn-sm d-flex align-items-center" data-bs-toggle="modal" href="#deleteLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-trash me-1"></i>
                                                     Supprimer le niveau
                                                     </a>

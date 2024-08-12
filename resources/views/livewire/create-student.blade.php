@@ -1,7 +1,7 @@
 <section class="container-fluid p-4">
     <style>
         .student-card {
-            background-image: url({!! $schoolInformation->verso_path !!});
+            background-image: url({!! $schoolInformation->recto_path !!});
             z-index: -1;
             background-repeat: no-repeat;
             background-position: center;
@@ -42,7 +42,7 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
-            opacity: 0.8;
+            opacity: 0.4;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -236,57 +236,74 @@
     </div>
 
     @if ($this->step == 1)
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-
-                <div class="student-card" >
-                    <div class="row text-warning">
-                        <div class="col-6 text-start">
-                            <p class="mb-0 text-center">République du Cameroun</p>
-                            <p class="mb-0 text-center">Paix-Travail-Patrie</p>
-                            <p class="mb-0 text-center">Ministère de l'Enseignement Secondaire</p>
-                            <p class="mb-0 text-center">BP: {{ $schoolInformation->poBox }}</p>
-                            <p class="mb-0 text-center">TEL: {{ $schoolInformation->tel_school }}</p>
-                        </div>
-                        <div class="col-6 text-end">
-                            <p class="mb-0 text-center">Republic of Cameroon</p>
-                            <p class="mb-0 text-center">Peace-Work-Fatherland</p>
-                            <p class="mb-0 text-center">Ministry of Secondary Education</p>
-                            <p class="mb-0 text-center">PO BOX: {{ $schoolInformation->poBox }}</p>
-                            <p class="mb-0 text-center">Ph: {{ $schoolInformation->tel_school }}</p>
+        <div class="col-md-12 col-12 mb-5">
+                <div class="card none">
+                    <!-- card header  -->
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h3 class="mb-1">Visualiser la carte de  <b>{{ $student->first_name }} </b></h3>
                         </div>
                     </div>
-                    <div class="row my-5 student-card-infos">
-                        <div class="col-6">
-                            <p class="mb-0"><span class="me-5 text-primary">Nom :</span>{{ $student->first_name }}
-                            </p>
-                            <p class="mb-0"><span class="me-4 text-primary">Prénom :</span>{{ $student->last_name }}
-                            </p>
-                            <p class="mb-0"><span class="me-4 text-primary">Né(e) le
-                                    :</span>{{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
-                            <p class="mb-0"><span class="me-3 text-primary">Matricule
-                                    :</span>{{ $student->matricular }}</p>
-                            <p class="mb-0"><span class="me-5 text-primary">Classe
-                                    :</span>{{ $student->studentClasse->classe->niveau->name }}&nbsp;{{ $student->studentClasse->classe->name }}</p>
-                        </div>
-                        <div class="col-6 text-end">
-                            <img src="{{ $student->user->profile_photo_url }}" class="student-photo">
-                        </div>
-                    </div>
-                    <div class="logo"></div>
-                    <h4 class="text-center text-success" style="font-weight: bold;">
-                        {{ $schoolInformation->tel_school }}</h4>
-
-
                 </div>
-
-
-            </div>
-            <div class="d-flex justify-content-start">
-                <!-- buttons -->
-                <button class="btn btn-primary me-2" wire:click='dec(1)' type="button">Imprimer</button>
-                <button class="btn btn-danger" wire:click='dec(0)' type="button"
-                    wire:loading.attr='disabled'>Passer</button>
+                    <!-- table  -->
+                    <div class="container my-5">
+                        <div class="row justify-content-center">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="student-card mb-3">
+                                        <div class="row text-warning mb-6">
+                                            <div class="col-6 text-start">
+                                            <p class="mb-0 text-center">République du Cameroun</p>
+                                            <p class="mb-0 text-center">Paix-Travail-Patrie</p>
+                                            <p class="mb-0 text-center">Ministère de l'Enseignement Secondaire</p>
+                                            <p class="mb-0 text-center">BP: {{ $schoolInformation->poBox }}</p>
+                                            <p class="mb-0 text-center">TEL: {{ $schoolInformation->tel_school }}</p>
+                                            </div>
+                                            <div class="col-6 text-end">
+                                            <p class="mb-0 text-center">Republic of Cameroon</p>
+                                            <p class="mb-0 text-center">Peace-Work-Fatherland</p>
+                                            <p class="mb-0 text-center">Ministry of Secondary Education</p>
+                                            <p class="mb-0 text-center">PO BOX: {{ $schoolInformation->poBox }}</p>
+                                            <p class="mb-0 text-center">Ph: {{ $schoolInformation->tel_school }}</p>
+                                            </div>
+                                        </div>
+                                    <div class="row my-3">
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-6 mb-0">
+                                                <p class="text-primary" style="margin-bottom: 1px;">Nom (Name) :</p>
+                                                <p class="text-primary" style="margin-bottom: 1px;">Prénom (FirstName) :</p>
+                                                <p class="text-primary" style="margin-bottom: 1px;">Né(e) le (Born at) :</p>
+                                                <p class="text-primary" style="margin-bottom: 1px;">Matricule (Identifiant):</p>
+                                                <p class="text-primary" style="margin-bottom: 1px;">Classe (Class):</p>
+                                                <p class="text-primary" style="margin-bottom: 1px;">Sexe (sex):</p>
+                                                </div>
+                                                <div class="col-6">
+                                                <p class="ms-" style="margin-bottom: 1px;">{{ $student->first_name }}</p>
+                                                <p class="ms-" style="margin-bottom: 1px;">{{ $student->last_name }}</p>
+                                                <p class="ms-" style="margin-bottom: 1px;">{{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
+                                                <p class="ms-" style="margin-bottom: 1px;">{{ $student->matricular }}</p>
+                                                <p class="ms-" style="margin-bottom: 1px;">{{ $student->studentClasse->classe->name }}</p>
+                                                <p class="ms-" style="margin-bottom: 1px;">Masculin</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <img src="{{ $student->user->profile_photo_url }}" alt="Photo de l'étudiant" class="student-photo">
+                                        </div>
+                                        <div class="mb-3"></div>
+                                        <h4 class="text-center text-success" style="font-weight: bold;">Lycée Bilingue de Yaoundé</h4>
+                                    </div>
+                                    <div class="logo"></div>
+                                    </div>
+                                    <button class="btn btn-primary me-2" wire:click='dec(1)' type="button">Imprimer</button>
+                                    <button class="btn btn-danger" wire:click='dec(0)' type="button"
+                                        wire:loading.attr='disabled'>Ignorer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     @endif
