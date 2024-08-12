@@ -29,22 +29,34 @@ class PaymentController extends Controller
     public function paymentStudent(Student $student)
     {
         $niveau = $student->studentClasse->classe->niveau->id;
+        // Récupérer les scolarités correspondantes au niveau de l'étudiant
         $scolarites = Scolarite::whereRaw("JSON_CONTAINS(niveaux, '\"{$niveau}\"')")->get();
 
-        // Calculer le montant total à payer
-        $totalAmount = $scolarites->sum('amount');
+        // Calculer le montant total des scolarités
+        $totalScolariteAmount = $scolarites->sum('amount');
 
-        // Récupérer les paiements effectués par l'étudiant pour ces scolarités
+        // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
         $payments = Payment::where('student_id', $student->id)
             ->whereIn('scolarite_id', $scolarites->pluck('id'))
-            ->sum('amount');
+            ->get();
 
-        // Calculer le montant restant à payer
-        $remainingAmount = $totalAmount - $payments;
+        // Calculer le montant total des paiements effectués
+        $totalPaymentsAmount = $payments->sum('amount');
 
-        // Vérifier si l'étudiant est à jour
-        $isUpToDate = $remainingAmount <= 0;
-        dd($niveau);
+        // Calculer la balance restante
+        $balance = $totalScolariteAmount - $totalPaymentsAmount;
+
+        // Vérifier si l'étudiant est à jour ou non
+        if ($balance > 0) {
+            $status = "L'étudiant doit encore payer $balance.";
+        } else {
+            $status = "L'étudiant est à jour avec ses paiements.";
+        }
+
+        // Retourner le statut
+       dd($status);
+
+        dd($scolarites);
         return view('payment.payment', [
             'payments' => $payments,
             'totalAmount' => $totalAmount,
