@@ -66,11 +66,11 @@
                                                     </a>
                                                     <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center" data-bs-toggle="modal" href="#editLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-edit me-1"></i>
-                                                    Modifier
+                                                    Modifier le niveau
                                                     </a>
                                                     <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center" data-bs-toggle="modal" href="#deleteLevel{{ $n->id }}" role="button">
                                                     <i class="fe fe-trash me-1"></i>
-                                                    Supprimer
+                                                    Supprimer le niveau
                                                     </a>
                                                 </div>
                                             </td>

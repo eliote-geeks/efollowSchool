@@ -49,7 +49,7 @@
                             </a>
                         </div>
                         <p class="mb-0">
-                            Sur cette page vous pouvez créer; visualiser ou modifier des années scolaires
+                            Sur cette page vous pouvez créer, visualiser ou modifier des années scolaires
                         </p>
                     </div>
                     <!-- table  -->
@@ -59,25 +59,23 @@
                                 style="width: 100%">
                                 <thead class="table-light">
                                     <tr>
-                                        <th scope="col">Id</th>
                                         <th scope="col">Nom de l'école</th>
                                         <th scope="col">Numéro de téléphone</th>
                                         <th>Masque du matricule</th>
                                         <th>Début de l'année scolaire</th>
                                         <th>Fin de l'année scolaire</th>
-                                        <th></th>
+                                        <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($schoolInformations as $school)
                                         <tr @if ($school->status == 0) class="disabled-row" @endif>
-                                            <td>{{ $school->id }}</td>
                                             <td>{{ $school->name }}</td>
                                             <td>{{ $school->tel_school }}</td>
                                             <td>{{ $school->matricular . '-' }}</td>
                                             <td>{{ \Carbon\Carbon::parse($school->start)->format('d, M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($school->end)->format('d, M Y') }}</td>
-                                            <td scope="col">
+                                            <td scope="col" class="text-center">
                                                 <span class="dropdown dropstart">
                                                     <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
                                                         href="#" role="button" id="courseDropdown2"
@@ -92,8 +90,14 @@
                                                             <i class="fe fe-eye dropdown-item-icon"></i>
                                                             Voir plus d'informations
                                                         </a>
-
-
+                                                            <!-- Vérification de l'année scolaire pour afficher le bouton Modifier -->
+                                                        @if (\Carbon\Carbon::parse($school->end)->format('Y') > date('Y'))
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                            href="#editSchoolYear{{ $school->id }}" role="button">
+                                                            <i class="fe fe-edit dropdown-item-icon"></i>
+                                                            Modifier
+                                                        </a>
+                                                        @endif
                                                     </span>
                                                 </span>
                                             </td>
@@ -285,7 +289,7 @@
 
                                         <div class="modal fade" id="seeMore{{ $school->id }}" aria-hidden="true"
                                             aria-labelledby="seeMore" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h3 class="modal-title" id="seeMoreLabel">Informations sur
@@ -383,15 +387,6 @@
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Fermer</button>
 
-                                                        <!-- Vérification de l'année scolaire pour afficher le bouton Modifier -->
-                                                        @if (\Carbon\Carbon::parse($school->end)->format('Y') > date('Y'))
-                                                            <a class="btn btn-primary" data-bs-toggle="modal"
-                                                                href="#editSchoolYear{{ $school->id }}"
-                                                                role="button">
-                                                                <i class="fe fe-edit"></i> Modifier
-                                                            </a>
-                                                        @endif
-
                                                         <!-- Formulaire pour désactiver/activer -->
                                                         <form
                                                             action="{{ route('schoolInformation.destroy', $school) }}"
@@ -400,7 +395,7 @@
                                                             @csrf
                                                             <button type="submit"
                                                                 class="btn {{ $school->status == 1 ? 'btn-danger' : 'btn-success' }}">
-                                                                <i class="fe fe-edit"></i>
+                                                                <i class="fe fe-{{ $school->status == 1 ? '' : 'check' }}"></i>
                                                                 {{ $school->status == 1 ? 'Désactiver' : 'Activer' }}
                                                             </button>
                                                         </form>
@@ -421,7 +416,7 @@
     </section>
 
     <div class="modal fade" id="addSchoolYear" aria-hidden="true" aria-labelledby="addSchoolYear" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="addSchoolYearLabel">Créer une année scolaire</h3>
