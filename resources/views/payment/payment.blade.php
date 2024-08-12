@@ -5,7 +5,11 @@
     <p>{{ $status }}</p>
 </div>
 <div class="alert alert-info">
-    <h4>Balance Totale</h4>
+    <h4>Totale à payer: </h4>
+    <p>{{ number_format($totalScolariteAmount) }} FCFA</p>
+</div>
+<div class="alert alert-info">
+    <h4>Reste à payer Totale</h4>
     <p>{{ number_format($balance) }} FCFA</p>
 </div>
 <div class="alert alert-info">
@@ -24,6 +28,7 @@
     @csrf
 
     <input type="hidden" name="student" value="{{ $student->id }}">
+    <input type="hidden" name="totalPaymentsAmount" value="{{ $totalPaymentsAmount }}">
 
     <div class="mb-3">
         <label for="scolarite_id" class="form-label">Tranche</label>
@@ -42,5 +47,6 @@
     </div>
 
     <button type="submit" class="btn btn-success btn-block">Effectuer le Paiement</button>
+    <a href="{{ route('searchByname') }}" class="btn btn-info">retour </a>
 </form>
 </x-layouts>

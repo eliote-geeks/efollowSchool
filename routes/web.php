@@ -53,6 +53,8 @@ Route::get('add-student-card/{student}',[SmartCardController::class,'addStudentC
 Route::post('add-student-card/{student}',[SmartCardController::class,'addPostStudentCard'])->name('addPostStudentCard');
 Route::get('searchByname',[StudentController::class,'searchByname'])->name('searchByname');
 Route::get('payment/student/{student}',[PaymentController::class,'paymentStudent'])->name('payment.student');
+Route::get('receipt-payment/{student}/{payment}',[PaymentController::class,'receiptPayment'])->name('receiptPayment');
+
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
+use PDF;
 
 class PaymentController extends Controller
 {
@@ -31,7 +32,7 @@ class PaymentController extends Controller
         if ($student->status != 1) {
             return redirect()
                 ->back()
-                ->with('message', 'Paiement impossible pour l\' etudiant: ' . $student->name . 'car desactivé');
+                ->with('message', 'Paiement impossible pour l\' etudiant: ' . $student->first_name . ' ' . $student->last_name . 'car il est desactivé');
         }
         $status = '';
         $niveau = $student->studentClasse->classe->niveau->id;
@@ -73,6 +74,7 @@ class PaymentController extends Controller
             'student' => $student,
             'scolarites' => $scolarites,
             'status' => $status,
+            'totalScolariteAmount' => $totalScolariteAmount,
         ]);
     }
 
@@ -92,21 +94,56 @@ class PaymentController extends Controller
         $request->validate([
             'student' => 'required',
             'amount' => 'required',
-            'scolarite' => 'required'
+            'scolarite' => 'required',
         ]);
+
+        $scolarite = Scolarite::find($request->scolarite);
 
         $str = str_replace(' ', '', $request->amount);
 
         $number = (float) $str;
 
+        if ($request->totalPaymentsAmount + $number > $scolarite->amount) {
+            return redirect()->back()->with('warning', 'Le montant entré excede celui du frais scolaire en cours !!');
+        }
+
         $payment = new Payment();
         $payment->school_information_id = $this->schoolInformation->id;
-        $payment->student_id = $request->student_id;
-        $payment->scolarite_id = $request->scolarite_id;
+        $payment->student_id = $request->student;
+        $payment->scolarite_id = $request->scolarite;
+        $payment->user_id = auth()->user()->id;
         $payment->amount = $number;
         $payment->save();
-        // return redirect()->route('searchByname')->with('succe');
+        return redirect()->route('receiptPayment', [
+            'student' => $payment->student,
+            'payment' => $payment,
+            'balance' => $payment->scolarite->amount - $request->totalPaymentsAmount,
+            'totalPaymentsAmount' => $request->totalPaymentsAmount,
+        ])->with('success','Paiement Reussi !! reçu téléchargé !!');
+    }
 
+    public function receiptPayment(Student $student, Payment $payment)
+    {
+        $niveau = $student->studentClasse->classe->niveau->id;
+        $scolarites = Scolarite::all()->filter(function ($scolarite) use ($niveau) {
+            $niveaux = json_decode($scolarite->niveaux, true);
+            return in_array($niveau, $niveaux);
+        });
+
+        // Calculer le montant total des scolarités
+        $totalScolariteAmount = $scolarites->sum('amount');
+
+        $payments = Payment::where('student_id', $student->id)
+            ->whereIn('scolarite_id', $scolarites->pluck('id'))
+            ->get();
+
+        // Calculer le montant total des paiements effectués
+        $totalPaymentsAmount = $payments->sum('amount');
+
+        $balance = $totalScolariteAmount - $totalPaymentsAmount;
+
+        $pdf = PDF::loadView('payment.receipt', compact('payment', 'student','totalPaymentsAmount','balance'));
+        return $pdf->download('reçu-paiement.pdf');
     }
 
     /**
