@@ -28,9 +28,21 @@ class PaymentController extends Controller
 
     public function paymentStudent(Student $student)
     {
+        if ($student->status != 1) {
+            return redirect()
+                ->back()
+                ->with('message', 'Paiement impossible pour l\' etudiant: ' . $student->name . 'car desactivé');
+        }
+        $status = '';
         $niveau = $student->studentClasse->classe->niveau->id;
         // Récupérer les scolarités correspondantes au niveau de l'étudiant
-        $scolarites = Scolarite::whereRaw("JSON_CONTAINS(niveaux, '\"{$niveau}\"')")->get();
+        // $scolarites = Scolarite::whereRaw("JSON_CONTAINS(niveaux, '\"{$niveau}\"')")->get();
+        // $scolarites = Scolarite::whereRaw("JSON_SEARCH(niveaux, 'one', '{$niveau}') IS NOT NULL")->get();
+        // $scolarites = Scolarite::whereJsonContains('niveaux', $niveau)->get();
+        $scolarites = Scolarite::all()->filter(function ($scolarite) use ($niveau) {
+            $niveaux = json_decode($scolarite->niveaux, true);
+            return in_array($niveau, $niveaux);
+        });
 
         // Calculer le montant total des scolarités
         $totalScolariteAmount = $scolarites->sum('amount');
@@ -48,18 +60,19 @@ class PaymentController extends Controller
 
         // Vérifier si l'étudiant est à jour ou non
         if ($balance > 0) {
-            $status = "L'étudiant doit encore payer $balance.";
+            $status = "L'étudiant doit encore payer " . number_format($balance) . ' FCFA.';
         } else {
             $status = "L'étudiant est à jour avec ses paiements.";
         }
 
         // Retourner le statut
-       dd($status);
 
-        dd($scolarites);
         return view('payment.payment', [
-            'payments' => $payments,
-            'totalAmount' => $totalAmount,
+            'totalPaymentsAmount' => $totalPaymentsAmount,
+            'balance' => $balance,
+            'student' => $student,
+            'scolarites' => $scolarites,
+            'status' => $status,
         ]);
     }
 
@@ -76,7 +89,24 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'student' => 'required',
+            'amount' => 'required',
+            'scolarite' => 'required'
+        ]);
+
+        $str = str_replace(' ', '', $request->amount);
+
+        $number = (float) $str;
+
+        $payment = new Payment();
+        $payment->school_information_id = $this->schoolInformation->id;
+        $payment->student_id = $request->student_id;
+        $payment->scolarite_id = $request->scolarite_id;
+        $payment->amount = $number;
+        $payment->save();
+        // return redirect()->route('searchByname')->with('succe');
+
     }
 
     /**
