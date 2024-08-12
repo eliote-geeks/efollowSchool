@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\Niveau;
 use App\Models\SchoolInformation;
 use App\Models\Scolarite;
@@ -15,14 +16,21 @@ class ScolariteController extends Controller
     public function index()
     {
         try {
-            $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->first()->id)->get();
-            $niveaux = Niveau::where('school_information_id', SchoolInformation::where('status', 1)->first()->id)->get();
+            $scolarites = Scolarite::where([
+                'school_information_id' => SchoolInformation::where('status', 1)->first()->id,
+                // 'status' => 1
+                ])->get();
+            $niveaux = Niveau::where([
+                'school_information_id' => SchoolInformation::where('status', 1)->first()->id,
+                'status' => 1
+                ])->get();
+            
             return view('scolarité.scolarité', [
                 'scolarites' => $scolarites,
                 'niveaux' => $niveaux,
             ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('Impossible d\'acceder à cette page si une annéé n\'est pas fonctionnelle');
+            return redirect()->back()->with('danger','Impossible d\'acceder à cette page si une annéé n\'est pas fonctionnelle');
         }
     }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Niveau;
+use App\Models\Payment;
 use App\Models\Student;
 use App\Models\SpecialScolarite;
 use App\Models\SchoolInformation;
@@ -12,6 +13,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Scolarite extends Model
 {
+    protected $casts = [
+        'niveaux' => 'array',
+    ];
     use HasFactory;
 
     public function schoolInformation()
@@ -37,5 +41,10 @@ class Scolarite extends Model
     public function specialScolarite()
     {
         return $this->hasMany(SpecialScolarite::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Niveau;
+use App\Models\Payment;
 use App\Models\Student;
 use App\Models\ClasseCours;
 use App\Models\StudentClasse;
@@ -26,4 +27,6 @@ class Classe extends Model
     {
         return $this->hasOne(StudentClasse::class);
     }
+
+ 
 }

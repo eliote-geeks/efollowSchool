@@ -44,4 +44,9 @@ class SchoolInformation extends Model
     {
         return $this->hasMany(SpecialScolarite::class);
     }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

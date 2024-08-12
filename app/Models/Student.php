@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Classe;
+use App\Models\Payment;
 use App\Models\Moratoire;
 use App\Models\Scolarite;
 use App\Models\SmartCard;
@@ -46,5 +47,10 @@ class Student extends Model
     public function specialScolarite()
     {
         return $this->hasMany(SpecialScolarite::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

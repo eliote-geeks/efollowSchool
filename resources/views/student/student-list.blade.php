@@ -99,6 +99,66 @@
                                                                 data-bs-toggle="dropdown" data-bs-offset="-20,20"
                                                                 aria-expanded="false">
                                                                 <i class="fe fe-more-vertical"></i>
+                            <table id="dataTableBasic" class="table table-hover align-middle table-responsive"
+                                style="width: 100%">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Nom complet de l'élève</th>
+                                        <th scope="col">Matricule</th>
+                                        <th>Classe</th>
+                                        <th>Nom du père</th>
+                                        <th>Numero du père</th>
+                                        <th>Nom de la mère</th>
+                                        <th>Numero de la mère</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($students as $student)
+                                        @if ($student->student->status != 2)
+                                            <tr @if ($student->student->status == 0)
+                                                class="bg-warning text-dark"
+                                            @endif>
+                                                <td>{{ $student->student->first_name . ' ' . $student->student->last_name }}
+                                                </td>
+                                                <td>{{ $student->student->matricular }}</td>
+                                                <td><b>{{ $student->classe->niveau->name }}&nbsp;</b>{{ $student->classe->name }}
+                                                </td>
+                                                <td>{{ $student->student->name_father }}</td>
+                                                <td>{{ $student->student->phone_father }}</td>
+                                                <td>{{ $student->student->name_mother }}</td>
+                                                <td>{{ $student->student->phone_mother }}</td>
+                                                <td scope="col">
+                                                    <span class="dropdown dropstart">
+                                                        <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                            href="#" role="button" id="courseDropdown2"
+                                                            data-bs-toggle="dropdown" data-bs-offset="-20,20"
+                                                            aria-expanded="false">
+                                                            <i class="fe fe-more-vertical"></i>
+                                                        </a>
+                                                        <span class="dropdown-menu" aria-labelledby="courseDropdown2">
+                                                            <span class="dropdown-header">Action</span>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#" role="button">
+                                                                <i class="fe fe-eye dropdown-item-icon"></i>
+                                                                Voir plus d'informations
+                                                            </a>
+                                                            <a class="dropdown-item" 
+                                                                href="{{ route('addStudentCard',$student) }}" role="button">
+                                                                <i class="fe fe-plus dropdown-item-icon"></i>
+                                                                Ajouter une carte
+                                                            </a>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#editStudent{{ $student->student->id }}"
+                                                                role="button">
+                                                                <i class="fe fe-edit dropdown-item-icon"></i>
+                                                                Modifier
+                                                            </a>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#deleteStudent{{ $student->student->id }}"
+                                                                role="button">
+                                                                <i class="fe fe-trash dropdown-item-icon"></i>
+                                                                Supprimer
                                                             </a>
                                                             <span class="dropdown-menu" aria-labelledby="courseDropdown2">
                                                                 <span class="dropdown-header">Action</span>

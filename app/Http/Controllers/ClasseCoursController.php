@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\ClasseCours;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class ClasseCoursController extends Controller
@@ -69,6 +71,8 @@ class ClasseCoursController extends Controller
     {
         //
     }
+
+   
 
     /**
      * Show the form for editing the specified resource.
