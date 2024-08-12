@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\Niveau;
 use App\Models\SchoolInformation;
 use App\Models\Scolarite;
@@ -17,6 +18,7 @@ class ScolariteController extends Controller
         try {
             $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->first()->id)->get();
             $niveaux = Niveau::where('school_information_id', SchoolInformation::where('status', 1)->first()->id)->get();
+            $classes = Classe::all();
             return view('scolarité.scolarité', [
                 'scolarites' => $scolarites,
                 'niveaux' => $niveaux,

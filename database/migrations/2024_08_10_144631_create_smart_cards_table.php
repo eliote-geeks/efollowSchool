@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('smart_cards', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_card_smart');
+            $table->foreignId('user_id')->references('id')->on('students')->onDelete('cascade');
+            $table->string('id_card_smart');
             $table->string('status')->default('false');
             $table->timestamps();
         });

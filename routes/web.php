@@ -3,6 +3,7 @@
 use App\Exports\StudentsExport;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\PaymentController;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -36,6 +37,7 @@ Route::resource('student', StudentController::class);
 Route::resource('classe', ClasseController::class);
 Route::resource('niveau', NiveauController::class);
 Route::resource('scolarite',ScolariteController::class);
+Route::resource('payment',PaymentController::class);
 
 Route::get('card-view', function () {
     return view('student.card-view');
@@ -49,10 +51,9 @@ Route::post('importS/{classe}', [StudentController::class, 'importStudentClase']
 Route::get('createStudentClass/{classe}', [StudentController::class, 'createStudentClass'])->name('createStudentClass');
 Route::get('add-student-card/{student}',[SmartCardController::class,'addStudentCard'])->name('addStudentCard');
 Route::post('add-student-card/{student}',[SmartCardController::class,'addPostStudentCard'])->name('addPostStudentCard');
+
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');
-
-    
     $filePath = storage_path('app/students.xlsx');
 
     // Vérifiez si le fichier existe
@@ -63,11 +64,7 @@ Route::get('export-students', function () {
     }
 })->name('exportModel');
 
-//to do
 
-// Route::get('scolarité', function () {
-    
-// });
 
 Route::get('student-view', function () {
     return view('student.student-view');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\Student;
 use App\Models\SmartCard;
-use App\Models\StudentClasse;
 use Illuminate\Http\Request;
+use App\Models\StudentClasse;
 
 class SmartCardController extends Controller
 {
@@ -63,8 +64,9 @@ class SmartCardController extends Controller
                     $student->status = 1;
                     $student->save();
                     $class = StudentClasse::where('student_id', $student->id)->first();
+                    $classe = Classe::find($class->classe_id);
                     return redirect()
-                        ->route('classe.show', $class->id)
+                        ->route('classe.show', $classe)
                         ->with('success', 'Reussie !! L\'étudiant: ' . $student->first_name . ' dispose d\'une nouvelle carte!');
                 } else {
                     $card = SmartCard::where([
@@ -83,8 +85,9 @@ class SmartCardController extends Controller
                     $student->status = 1;
                     $student->save();
                     $class = StudentClasse::where('student_id', $student->id)->first();
+                    $classe = Classe::find($class->classe_id);
                     return redirect()
-                        ->route('classe.show', $class->id)
+                        ->route('classe.show', $classe)
                         ->with('success', 'Reussie !! L\'étudiant: ' . $student->first_name . ' dispose d\'une nouvelle carte! Ancienne Carte retirée');
                 }
             } else {

@@ -81,7 +81,9 @@
                                 <tbody>
                                     @foreach ($students as $student)
                                         @if ($student->student->status != 2)
-                                            <tr>
+                                            <tr @if ($student->student->status == 0)
+                                                class="bg-warning text-dark"
+                                            @endif>
                                                 <td>{{ $student->student->first_name . ' ' . $student->student->last_name }}
                                                 </td>
                                                 <td>{{ $student->student->matricular }}</td>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Niveau;
+use App\Models\Payment;
 use App\Models\Student;
 use App\Models\ClasseCours;
 use App\Models\StudentClasse;
@@ -25,5 +26,10 @@ class Classe extends Model
     public function studentClasse()
     {
         return $this->hasOne(StudentClasse::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
     }
 }
