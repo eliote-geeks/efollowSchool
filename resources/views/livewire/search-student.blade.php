@@ -16,6 +16,7 @@
                     <th>Date de Naissance</th>
                   
                     <th>Matricule</th>
+                    <td>Classe</td>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,8 +26,9 @@
                         <td>{{ $student->first_name }}</td>
                         <td>{{ $student->last_name }}</td>
                         <td>{{ \Carbon\Carbon::parse($student->date_birth)->format('d M, Y') }}</td>
-                        
                         <td>{{ $student->matricular }}</td>
+                        
+                        <td>{{ $student->studentClasse->classe->niveau->name }}&nbsp;{{ $student->studentClasse->classe->name }}</td>
                         <td>
                             <!-- Boutons d'action -->
                             <div class="btn-group" role="group">
