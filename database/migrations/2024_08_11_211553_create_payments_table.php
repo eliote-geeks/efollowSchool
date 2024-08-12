@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('school_information_id')->references('id')->on('school_information')->onDelete('cascade');
             $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreignId('classe_id')->references('id')->on('classes')->onDelete('cascade');
+            $table->foreignId('scolarite_id')->references('id')->on('scolarites')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->float('amount');
             $table->timestamps();

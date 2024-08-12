@@ -28,8 +28,5 @@ class Classe extends Model
         return $this->hasOne(StudentClasse::class);
     }
 
-    public function payment()
-    {
-        return $this->hasMany(Payment::class);
-    }
+ 
 }

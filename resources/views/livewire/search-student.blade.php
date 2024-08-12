@@ -35,7 +35,7 @@
                                 <a href="" class="btn btn-info btn-sm">
                                     <i class="fas fa-user"></i> Profil
                                 </a>
-                                <a href="" class="btn btn-success btn-sm">
+                                <a href="{{ route('payment.student',$student) }}" class="btn btn-success btn-sm">
                                     <i class="fas fa-money-bill-wave"></i> Paiement
                                 </a>
                                 <a href="" class="btn btn-warning btn-sm">
