@@ -41,69 +41,39 @@
                 <div class="card">
                     <!-- card header  -->
                     <div class="card-header">
-    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-        <h2 class="mb-1">Liste des élèves de la <b>{{ $classe->name }}</b></h2>
-        <div class="ms-auto mt-3 mt-md-0">
-            <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0" data-bs-toggle="modal" href="#addSchoolYear"
-                role="button" wire:click="backClass">
-                <i class="fe fe-arrow-left me-2"></i>
-                Retour
-            </a>
-            <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
-                href="{{ route('createStudentClass', $classe) }}" role="button">
-                <i class="fe fe-user-plus me-2"></i>
-                Créer un élève
-            </a>
-            <a class="btn btn-success rounded-pill" href="{{ route('showImportForm', $classe->id) }}"
-                role="button">
-                <i class="fe fe-upload me-2"></i>
-                Importer des élèves
-            </a>
-        </div>
-    </div>
-    <p class="mb-0">
-        Sur cette page vous pouvez créer, visualiser ou modifier des élèves
-    </p>
-</div>
+                        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                            <h2 class="mb-1">Liste des élèves de la <b>{{ $classe->name }}</b></h2>
+                            <div class="ms-auto mt-3 mt-md-0">
+                                <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0" data-bs-toggle="modal" href="#addSchoolYear"
+                                    role="button" wire:click="backClass">
+                                    <i class="fe fe-arrow-left me-2"></i>
+                                    Retour
+                                </a>
+                                <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
+                                    href="{{ route('createStudentClass', $classe) }}" role="button">
+                                    <i class="fe fe-user-plus me-2"></i>
+                                    Créer un élève
+                                </a>
+                                <a class="btn btn-success rounded-pill" href="{{ route('showImportForm', $classe->id) }}"
+                                    role="button">
+                                    <i class="fe fe-upload me-2"></i>
+                                    Importer des élèves
+                                </a>
+                            </div>
+                        </div>
+                        <p class="mb-0">
+                            Sur cette page vous pouvez créer, visualiser ou modifier des élèves
+                        </p>
+                    </div>
                     <!-- table  -->
                     <div class="card-body">
                         <div class="table-card">
-                            <div class="table-responsive">
-                                <table id="dataTableBasic" class="table table-hover align-middle table-responsive"
-                                    style="width: 100%">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">Nom complet de l'élève</th>
-                                            <th scope="col">Matricule</th>
-                                            <th>Classe</th>
-                                            <th>Date de naissance</th>
-                                            <th>Sexe</th>
-                                            <th class="text-center">Options</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($students as $student)
-                                            @if ($student->student->status != 2)
-                                                <tr>
-                                                    <td>{{ $student->student->first_name . ' ' . $student->student->last_name }}
-                                                    </td>
-                                                    <td>{{ $student->student->matricular }}</td>
-                                                    <td>{{ $student->classe->name }}
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($student->student->date_birth)->format('d, M Y') }}</td>
-                                                    <td>Masculin</td>
-                                                    <td scope="col" class="text-center">
-                                                        <span class="dropdown dropstart">
-                                                            <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                                                href="#" role="button" id="courseDropdown2"
-                                                                data-bs-toggle="dropdown" data-bs-offset="-20,20"
-                                                                aria-expanded="false">
-                                                                <i class="fe fe-more-vertical"></i>
                             <table id="dataTableBasic" class="table table-hover align-middle table-responsive"
                                 style="width: 100%">
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Nom complet de l'élève</th>
+                                        <th scope="col">Date de naissance</th>
                                         <th scope="col">Matricule</th>
                                         <th>Classe</th>
                                         <th>Nom du père</th>
