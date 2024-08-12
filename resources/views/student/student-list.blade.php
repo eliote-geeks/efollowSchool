@@ -76,28 +76,26 @@
                                         <th scope="col">Date de naissance</th>
                                         <th scope="col">Matricule</th>
                                         <th>Classe</th>
-                                        <th>Nom du père</th>
-                                        <th>Numero du père</th>
-                                        <th>Nom de la mère</th>
-                                        <th>Numero de la mère</th>
+                                        <th>Sexe</th>
                                         <th>Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($students as $student)
                                         @if ($student->student->status != 2)
-                                            <tr @if ($student->student->status == 0)
-                                                class="bg-warning text-dark"
-                                            @endif>
+                                            <tr>
                                                 <td>{{ $student->student->first_name . ' ' . $student->student->last_name }}
-                                                </td>
+                                                @if ($student->student->status == 0)
+                                                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" 
+                                                    data-bs-content="Cet élève est désactivé, veuillez lui attribuer une carte pour l'activer." style="cursor:pointer;">
+                                                    <i class="bi bi-exclamation text-danger" style="font-size: 40px;"></i>
+                                                </span>
+                                                @endif</td>
+                                                <td>{{ \Carbon\Carbon::parse($student->student->date_birth)->format('d, M Y') }}</td>
                                                 <td>{{ $student->student->matricular }}</td>
-                                                <td><b>{{ $student->classe->niveau->name }}&nbsp;</b>{{ $student->classe->name }}
+                                                <td><b>{{ $student->classe->name }}
                                                 </td>
-                                                <td>{{ $student->student->name_father }}</td>
-                                                <td>{{ $student->student->phone_father }}</td>
-                                                <td>{{ $student->student->name_mother }}</td>
-                                                <td>{{ $student->student->phone_mother }}</td>
+                                                <td>Masculin</td>
                                                 <td scope="col">
                                                     <span class="dropdown dropstart">
                                                         <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
