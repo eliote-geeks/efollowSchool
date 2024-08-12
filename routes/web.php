@@ -51,6 +51,8 @@ Route::post('importS/{classe}', [StudentController::class, 'importStudentClase']
 Route::get('createStudentClass/{classe}', [StudentController::class, 'createStudentClass'])->name('createStudentClass');
 Route::get('add-student-card/{student}',[SmartCardController::class,'addStudentCard'])->name('addStudentCard');
 Route::post('add-student-card/{student}',[SmartCardController::class,'addPostStudentCard'])->name('addPostStudentCard');
+Route::get('searchByname',[StudentController::class,'searchByname'])->name('searchByname');
+
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

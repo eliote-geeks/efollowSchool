@@ -85,6 +85,11 @@ class StudentController extends Controller
         //
     }
 
+    public function searchByname()
+    {
+        return view('student.searchByname');
+    }
+
     /**
      * Update the specified resource in storage.
      */
