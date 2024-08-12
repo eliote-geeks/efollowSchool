@@ -80,17 +80,14 @@
             <!-- Page header -->
             <div class="border-bottom pb-3 mb-3">
                 <div class="mb-2 mb-lg-0">
-                    <h1 class="mb-0 h2 fw-bold">Créer un élève Pour le niveau <b>{{ $this->classe->niveau->name }} : {{ $this->classe->name }}</b></h1>
+                    <h1 class="mb-0 h2 fw-bold">Créer un élève pour la classe : {{ $this->classe->name }}</b></h1>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="offset-xl-2 col-xl-8 col-12">
-            <button class="btn btn-info" wire:click="backClasse">
-                <i class="fe fe-arrow-left"></i> Retour à la classe
-            </button>
+        <div class="offset-xl-1 col-xl-10 col-12">
             
             @if ($this->step == 0)
                 <!-- card -->
@@ -99,7 +96,14 @@
                     <div class="card mb-4">
                         <!-- card body -->
                         <div class="card-body">
-                            <h2 class="mb-4 text-secondary">Remplir le formulaire</h2>
+                            <div class="d-flex align-items-center mb-3">
+                                <h2 class="mb-1 text-secondary" style="font-weight: bold;">Remplir le formulaire</h2>
+                                <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addSchoolYear"
+                                    role="button" wire:click="backClasse">
+                                    <i class="fe fe-arrow-left me-2  ms-auto"></i>
+                                    Retour
+                                </a>
+                            </div>
 
                             <!-- row -->
                             <div class="row gx-3">
