@@ -47,7 +47,7 @@
                                         <th scope="col">Frais exigible concerné</th>
                                         <th>Date d'expiration</th>
                                         <th>Nom de l'élève</th>
-                                        <th>CLasse de l'élève</th>
+                                        <th>Classe de l'élève</th>
                                         <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
