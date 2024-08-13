@@ -106,6 +106,7 @@ class StudentController extends Controller
             'phone_father' => 'required',
             'name_mother' => 'required',
             'phone_mother' => 'required',
+            'sexe' => 'required',
         ]);
 
         if (isset($request->avatar)) {
@@ -117,6 +118,8 @@ class StudentController extends Controller
         $student->date_birth = $validatedData['date_birth'];
         $student->place_birth = $validatedData['place_birth'];
         $student->matricular = $validatedData['matricular'];
+        $student->sexe = $validatedData['sexe'];
+        $student->discount = $validatedData['discount'];
 
         Classe::find($validatedData['classe']);
         $sc = StudentClasse::where([

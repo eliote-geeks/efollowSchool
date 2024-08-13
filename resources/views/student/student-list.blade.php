@@ -77,6 +77,7 @@
                                         <th scope="col">Matricule</th>
                                         <th>Classe</th>
                                         <th>Sexe</th>
+                                        <th>Remise</th>
                                         <th>Options</th>
                                     </tr>
                                 </thead>
@@ -100,7 +101,8 @@
                                                 <td>{{ $student->student->matricular }}</td>
                                                 <td><b>{{ $student->classe->name }}
                                                 </td>
-                                                <td>Masculin</td>
+                                                <td>{{ $student->sexe }}</td>
+                                                <td>{{ number_format($student->discount) }}%</td>
                                                 <td scope="col">
                                                     <span class="dropdown dropstart">
                                                         <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
