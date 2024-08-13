@@ -237,7 +237,7 @@
 
                                 <div class="d-flex justify-content-start">
                                     <!-- buttons -->
-                                    <button wire:loading.attr='disabled' wire:click='save' class="btn btn-primary"
+                                    <button  wire:confirm="Vous etes sur le point de creer un élève avez-vous correctement rempli les informations de cet elève ?" wire:loading.attr='disabled' wire:click='save' class="btn btn-primary"
                                         type="button">Suivant</button>
                                 </div>
                             </div>
