@@ -77,12 +77,9 @@ Route::get('student-view', function () {
     return view('student.student-view');
 });
 
-<<<<<<< Updated upstream
-=======
 Route::get('moratoire', function(){
     return view('moratoire.moratoire');
 });
->>>>>>> Stashed changes
 
 Route::get('reduction', function(){
     return view('reduction.reduction');

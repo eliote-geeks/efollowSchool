@@ -47,6 +47,7 @@
                                         <th>Classe de l'élève</th>
                                         <th scope="col">Montant de la réduction</th>
                                         <th>Frais exigibles concernés</th>
+                                        <th>Statut</th>
                                         <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
@@ -56,6 +57,9 @@
                                             <td>6eme</td>
                                             <td>10000FCFA</td>
                                             <td>Inscription</td>
+                                            <td><button class="btn btn-primary">Appliquer la réduction</button>
+                                                {{-- <button class="btn btn-danger">Retirer la réduction</button> --}}
+                                            </td>
                                             <td scope="col" class="text-center">
                                                 <span class="dropdown dropstart">
                                                     <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
