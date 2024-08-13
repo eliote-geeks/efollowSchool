@@ -101,7 +101,7 @@
                                                 <td>{{ $student->student->matricular }}</td>
                                                 <td><b>{{ $student->classe->name }}
                                                 </td>
-                                                <td>{{ $student->sexe }}</td>
+                                                <td>{{ $student->student->sexe }}</td>
                                                 {{-- <td>{{ number_format($student->discount) }} FCFA</td> --}}
                                                 <td scope="col" class="text-center">
                                                     <span class="dropdown dropstart">
@@ -258,65 +258,65 @@
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">
                                                                         <label class="form-label" for="fatherName">Nom
-                                                                            complet du père</label>
+                                                                            complet du père ou tuteur</label>
                                                                         <input type="text" class="form-control"
-                                                                            placeholder="Entrez le nom complet du père"
+                                                                            placeholder="Entrez le nom complet du  ou tuteur"
                                                                             id="fatherName"
                                                                             value="{{ $student->student->name_father }}"
                                                                             name="name_father" required>
                                                                         <div class="invalid-feedback">Veuillez entrer
-                                                                            le nom complet du père</div>
+                                                                            le nom complet du père ou tuteur</div>
                                                                     </div>
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">
                                                                         <label class="form-label"
                                                                             for="fatherPhone">Numero de téléphone du
-                                                                            père</label>
+                                                                            père ou tuteur</label>
                                                                         <input type="text" class="form-control"
-                                                                            placeholder="Entrez le numero de téléphone du père"
+                                                                            placeholder="Entrez le numero de téléphone du père ou tuteur"
                                                                             value="{{ $student->student->phone_father }}"
                                                                             id="fatherPhone" name="phone_father"
                                                                             required>
                                                                         <div class="invalid-feedback">Veuillez entrer
-                                                                            le numero de téléphone du père</div>
+                                                                            le numero de téléphone du père ou tuteur</div>
                                                                     </div>
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">
                                                                         <label class="form-label" for="motherName">Nom
-                                                                            complet de la mère</label>
+                                                                            complet de la mère ou tutrice</label>
                                                                         <input type="text" class="form-control"
-                                                                            placeholder="Entrez le nom complet de la mère"
+                                                                            placeholder="Entrez le nom complet de la mère ou tutrice"
                                                                             id="motherName"
                                                                             value="{{ $student->student->name_mother }}"
                                                                             name="name_mother" required>
                                                                         <div class="invalid-feedback">Veuillez entrer
-                                                                            le nom complet de la mère</div>
+                                                                            le nom complet de la mère ou tutrice</div>
                                                                     </div>
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">
                                                                         <label class="form-label"
                                                                             for="motherPhone">Numero de téléphone de la
-                                                                            mère</label>
+                                                                            mère ou tutrice</label>
                                                                         <input type="text" class="form-control"
-                                                                            placeholder="Entrez le numero de téléphone du mère"
+                                                                            placeholder="Entrez le numero de téléphone du mère ou tutrice"
                                                                             value="{{ $student->student->phone_mother }}"
                                                                             id="motherPhone" name="phone_mother"
                                                                             required>
                                                                         <div class="invalid-feedback">Veuillez entrer
-                                                                            le numero de téléphone de la mère</div>
+                                                                            le numero de téléphone de la mère ou tutrice</div>
                                                                     </div>
-
-
-
+                                                                    
                                                                     <div class="mb-5 col-md-6">
                                                                         <label class="form-label"
                                                                             for="motherPhone">Sexe</label>
-                                                                        <input type="text" class="form-control"
-                                                                            placeholder="Mesculin ou Feminin"
-                                                                            value="{{ $student->student->sexe }}"
-                                                                            id="motherPhone" name="sexe" required>
-                                                                        <div class="invalid-feedback">Veuillez entrer
-                                                                            le sexe</div>
+                                                                        <select class="form-control" name='sexe' required>
+                                                                            <option>{{ $student->student->sexe }}</option>
+                                                                            @if ($student->student->sexe == "Masculin")
+                                                                                <option value="Feminin">Feminin</option>
+                                                                            @else
+                                                                                <option value="Masculin">Masculin</option>
+                                                                            @endif
+                                                                        </select>  
                                                                     </div>
 
                                                                     {{-- <div class="mb-5 col-md-6">

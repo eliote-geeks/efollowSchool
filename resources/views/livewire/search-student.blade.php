@@ -125,6 +125,11 @@
                                                         moratoire en activité
                                                     </a>
                                                         @endif
+                                                            <a class="dropdown-item" data-bs-toggle="modal" href="#addReduction"
+                                                                role="button">
+                                                                <i class="bi bi-cash-stack dropdown-item-icon"></i>
+                                                                Ajouter une réduction
+                                                            </a>    
                                                     </span>
                                                 </span>
                                             @endif
@@ -137,7 +142,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="addMoratoireLabel">Ajouter
-                                                        un moratoire</h3>
+                                                        un moratoire à l'élève <b>{{ $student->first_name . ' ' . $student->last_name }}</b></h3>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -224,6 +229,66 @@
                                                             data-bs-dismiss="modal">Annuler</button>
                                                         <button type="submit"
                                                             class="btn btn-primary">Ajouter</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="addReduction"
+                                        aria-hidden="true" aria-labelledby="addReduction" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="addReductionLabel">Ajouter une réduction
+                                                    à l'élève <b>{{ $student->first_name . ' ' . $student->last_name }}</b></h3>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form method="post" class="needs-validation" method="POST"
+                                                    action="#"
+                                                    enctype="multipart/form-data">
+                                                    @method('PATCH')
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            @if ($errors->any())
+                                                                <div class="alert alert-danger">
+                                                                    <ul>
+                                                                        @foreach ($errors->all() as $error)
+                                                                            <li>{{ $error }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
+                                                            <!-- input -->
+                                                            <div class="mb-5 col-md-12">
+                                                                <label class="form-label" for="schoolName">Montant de la réduction en FCFA</label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Entrez le montant de la réduction"
+                                                                    id="amount" name="amount" onInput="formatAmountCosts(this)"
+                                                                    onkeypress="return formatAmountCosts(this, event)" required>
+                                                                <div class="invalid-feedback">Veuillez entrer le montant de la réduction</div>
+                                                            </div>
+                                                            <!-- input -->
+                                                            <div class="mb-5 col-md-12">
+                                                                <label class="form-label" for="phone">Frais exigibles auxquels 
+                                                                sera appliqué la Réduction</label>
+                                                                <select class="form-control"
+                                                                    id="frais" name="frais" required>
+                                                                    <option value="">Veuillez selectionner les frais exigibles</option>
+                                                                    <option>Inscription</option>
+                                                                    <option>Première tranche</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">Veuillez selectionner les frais exigibles auxquels 
+                                                                sera appliqué le moratoire</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Annuler</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary">Créer</button>
                                                     </div>
                                                 </form>
                                             </div>
