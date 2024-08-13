@@ -24,7 +24,8 @@
             <!-- Search Input -->
     <div class="row mb-4">
         <div class="col-md-6 mx-auto">
-            <input type="text" wire:model.live="search" placeholder="Rechercher..." class="form-control rounded-pill shadow-sm py-2 px-4">
+            <input type="text" wire:model.live="search" placeholder="Rechercher..."
+                class="form-control rounded-pill shadow-sm py-2 px-4">
         </div>
     </div>
             <!-- basic table -->
