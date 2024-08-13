@@ -44,7 +44,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Nom du moratoire</th>
-                                        <th scope="col">Frais exigible concerné</th>
+                                        <th scope="col">Frais exigibles concernés</th>
                                         <th>Date d'expiration</th>
                                         <th>Nom de l'élève</th>
                                         <th>Classe de l'élève</th>
@@ -131,6 +131,18 @@
                                                                     <div class="invalid-feedback">Veuillez entrer la durée de 
                                                                     validité du moratoire</div>
                                                                 </div>
+                                                                <!-- input -->
+                                                                <div class="mb-5 col-md-12">
+                                                                    <label class="form-label" for="phone">Frais exigibles auxquels 
+                                                                    sera appliqué le moratoire</label>
+                                                                    <select class="form-control"
+                                                                        id="frais" name="frais" required>
+                                                                        <option>Inscription</option>
+                                                                        <option>Première tranche</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">Veuillez selectionner les frais exigibles auxquels 
+                                                                    sera appliqué le moratoire</div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -166,7 +178,7 @@
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="phone">Frais exigible concerné : <label
+                                                                    <label class="form-label" for="phone">Frais exigibles concernés : <label
                                                                             style="font-weight: bold; color: black;">Inscription</label></label>
                                                                 </div>
                                                                 <!-- input -->

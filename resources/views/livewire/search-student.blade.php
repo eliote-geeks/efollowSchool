@@ -182,16 +182,16 @@
                                 </div>
                                 <!-- input -->
                                 <div class="mb-5 col-md-12">
-                                    <label class="form-label" for="phone">Frais exigibles auquels 
-                                    seront appliqué le moratoire</label>
+                                    <label class="form-label" for="phone">Frais exigibles auxquels 
+                                    sera appliqué le moratoire</label>
                                     <select class="form-control"
                                         id="frais" name="frais" required>
                                         <option value="">Veuillez selectionner les frais exigibles</option>
                                         <option>Inscription</option>
                                         <option>Première tranche</option>
                                     </select>
-                                    <div class="invalid-feedback">Veuillez selectionner les frais exigibles auquels 
-                                    seront appliqué le moratoire</div>
+                                    <div class="invalid-feedback">Veuillez selectionner les frais exigibles auxquels 
+                                    sera appliqué le moratoire</div>
                                 </div>
                                 <!-- input -->
                                 <div class="mb-5 col-md-12">
