@@ -119,7 +119,7 @@ class StudentController extends Controller
         $student->place_birth = $validatedData['place_birth'];
         $student->matricular = $validatedData['matricular'];
         $student->sexe = $validatedData['sexe'];
-        // $student->discount = $validatedData['discount'];
+        $student->discount = $validatedData['discount'];
 
         Classe::find($validatedData['classe']);
         $sc = StudentClasse::where([

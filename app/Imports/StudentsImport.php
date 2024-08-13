@@ -56,6 +56,7 @@ class StudentsImport implements ToModel, WithHeadingRow
         $student->name_father = $row['nom_mere'];
         $student->name_mother = $row['nom_pere'];
         $student->sexe = $row['sexe'];
+        $student->remise = $row['remise'];
         $student->matricular = $matricule;
         $student->save();
 

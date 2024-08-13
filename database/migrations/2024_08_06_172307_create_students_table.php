@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('matricular');
             $table->integer('status')->default(0);
             $table->string('sexe');
-            $table->boolean('discount')->default(0);
+            $table->double('discount')->default(0);
             $table->timestamps();
         });
     }

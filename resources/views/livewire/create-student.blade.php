@@ -160,7 +160,7 @@
                                     @enderror
                                 </div>
                                 <!-- input -->
-                                <div class="mb-5 col-md-12">
+                                <div class="mb-5 col-md-6">
                                     <label class="form-label" for="matricule">Sexe de l'élève</label>
                                     <select class="form-control" wire:model.live='sexe' required>
                                         <option value="">Sélectionnez le sexe de l'élève</option>
@@ -173,12 +173,12 @@
                                 </div>
 
                                 <!-- input -->
-                                {{-- <div class="mb-5 col-md-6">
-                                    <label class="form-label" for="matricule">Remise de la pension en pourcentage (%)</label>
-                                    <input type="number" class="form-control" placeholder="remise pension"
+                                <div class="mb-5 col-md-6">
+                                    <label class="form-label" for="matricule">Montant de la remise de la pension</label>
+                                    <input type="text" class="form-control" placeholder="montant en fcfa"
                                         wire:model.live='discount' >
                                     
-                                </div> --}}
+                                </div>
 
                                 <!-- input -->
                                 {{-- <div class="mb-5 col-md-6">

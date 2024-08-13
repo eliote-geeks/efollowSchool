@@ -38,12 +38,6 @@ class Student extends Model
         return $this->hasOne(StudentClasse::class);
     }
 
-
-    public function moratoire()
-    {
-        return $this->hasMany(Moratoire::class);
-    }
-
     public function specialScolarite()
     {
         return $this->hasMany(SpecialScolarite::class);
