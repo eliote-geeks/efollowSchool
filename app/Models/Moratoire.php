@@ -22,4 +22,9 @@ class Moratoire extends Model
         return $this->belongsTo(SchoolInformation::class);
     }
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
 }

@@ -78,42 +78,56 @@
                                         <td>{{ $student->sexe }}</td>
                                         {{-- <td>{{ number_format($student->discount) }}%</td> --}}
                                         <td scope="col" class="text-center">
-                                            <span class="dropdown dropstart">
-                                                <a class="btn-icon btn btn-ghost btn-sm rounded-circle" href="#"
-                                                    role="button" id="courseDropdown2" data-bs-toggle="dropdown"
-                                                    data-bs-offset="-20,20" aria-expanded="false">
-                                                    <i class="fe fe-list fs-3"></i>
-                                                </a>
-                                                <span class="dropdown-menu" aria-labelledby="courseDropdown2">
-                                                    <span class="dropdown-header">Action</span>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#"
-                                                        role="button">
-                                                        <i class="fe fe-eye dropdown-item-icon"></i>
-                                                        Voir plus d'informations
+                                            @if ($student->status == 1)
+                                                <span class="dropdown dropstart">
+                                                    <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                        href="#" role="button" id="courseDropdown2"
+                                                        data-bs-toggle="dropdown" data-bs-offset="-20,20"
+                                                        aria-expanded="false">
+                                                        <i class="fe fe-list fs-3"></i>
                                                     </a>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('payment.student', $student) }}" role="button">
-                                                        <i class="fe fe-credit-card dropdown-item-icon"></i>
-                                                        Effectuer un paiement
-                                                    </a>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#"
-                                                        role="button">
-                                                        <i class="bi bi-calendar-check dropdown-item-icon"></i>
-                                                        Présence
-                                                    </a>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#"
-                                                        role="button">
-                                                        <i class="bi bi-currency-dollar dropdown-item-icon"></i>
-                                                        Scolarité
-                                                    </a>
-                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#addMoratoire{{ $student->id }}"
-                                                        role="button">
+                                                    <span class="dropdown-menu" aria-labelledby="courseDropdown2">
+                                                        <span class="dropdown-header">Action</span>
+                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#"
+                                                            role="button">
+                                                            <i class="fe fe-eye dropdown-item-icon"></i>
+                                                            Voir plus d'informations
+                                                        </a>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('payment.student', $student) }}"
+                                                            role="button">
+                                                            <i class="fe fe-credit-card dropdown-item-icon"></i>
+                                                            Effectuer un paiement
+                                                        </a>
+                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#"
+                                                            role="button">
+                                                            <i class="bi bi-calendar-check dropdown-item-icon"></i>
+                                                            Présence
+                                                        </a>
+                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#"
+                                                            role="button">
+                                                            <i class="bi bi-currency-dollar dropdown-item-icon"></i>
+                                                            Scolarité
+                                                        </a>
+                                                        @if (
+                                                            \App\Models\Moratoire::where(
+                                                                'school_information_id',
+                                                                \App\Models\SchoolInformation::where('status', 1)->latest()->first()->id)->where('student_id', $student->id)->where('end_date', '>', now())->count() == 0)
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#addMoratoire{{ $student->id }}" role="button">
+                                                                <i class="bi bi-pause-circle dropdown-item-icon"></i>
+                                                                Ajouter un moratoire
+                                                            </a>
+                                                        @else
+                                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                                        href="javascript:;" role="button">
                                                         <i class="bi bi-pause-circle dropdown-item-icon"></i>
-                                                        Ajouter un moratoire
+                                                        moratoire en activité
                                                     </a>
+                                                        @endif
+                                                    </span>
                                                 </span>
-                                            </span>
-                                            </span>
+                                            @endif
                                         </td>
                                     </tr>
 
@@ -128,7 +142,8 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <form class="needs-validation" method="POST"
-                                                    action="{{ route('moratoire.store') }}" enctype="multipart/form-data">
+                                                    action="{{ route('moratoire.store') }}"
+                                                    enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="modal-body">
                                                         <div class="row">
@@ -151,6 +166,9 @@
                                                                 <div class="invalid-feedback">Veuillez entrer le nom
                                                                     du moratoire</div>
                                                             </div>
+
+                                                            <input type="hidden" name="student"
+                                                                value="{{ $student->id }}">
                                                             <!-- input -->
                                                             <div class="mb-5 col-md-12">
                                                                 <label class="form-label" for="phone">Durée de la
@@ -169,11 +187,13 @@
                                                                     exigibles auxquels
                                                                     sera appliqué le moratoire</label>
                                                                 <select class="form-control" id="frais"
-                                                                    name="frais" required>
+                                                                    name="scolarite" required>
                                                                     <option value="">Veuillez selectionner les
                                                                         frais exigibles</option>
-                                                                    <option>Inscription</option>
-                                                                    <option>Première tranche</option>
+                                                                    @foreach ($scolarites as $sc)
+                                                                        <option value="{{ $sc->id }}">
+                                                                            {{ $sc->name }}</option>
+                                                                    @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les
                                                                     frais exigibles auxquels
@@ -189,7 +209,7 @@
                                                                     <div class="custom-file">
                                                                         <input type="file"
                                                                             class="custom-file-input form-control"
-                                                                            id="decision" name="decision"
+                                                                            id="decision" name="reason"
                                                                             accept="image/*,application/pdf" required>
                                                                         <div class="invalid-feedback">Veuillez
                                                                             sélectionner un fichier image ou PDF.

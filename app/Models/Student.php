@@ -53,4 +53,9 @@ class Student extends Model
     {
         return $this->hasMany(remiseDue::class);
     }
+
+    public function moratoire()
+    {
+        return $this->hasMany(Moratoire::class);
+    }
 }

@@ -76,6 +76,3 @@ Route::get('student-view', function () {
     return view('student.student-view');
 });
 
-Route::get('moratoire', function(){
-    return view('moratoire.moratoire');
-});

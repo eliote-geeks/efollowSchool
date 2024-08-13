@@ -1,8 +1,8 @@
 <base href="/">
 <x-layouts>
 
-  
-     <section class="container-fluid p-4">
+
+    <section class="container-fluid p-4">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
                 <!-- Page header -->
@@ -52,12 +52,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($moratoires as $mo)
                                         <tr>
-                                            <td>Moratoire pour l'inscription</td>
-                                            <td>Inscription</td>
-                                            <td>27/11/2024</td>
-                                            <td>PAULAIN BRICE</td>
-                                            <td>6eme</td>
+                                            <td>{{ $mo->name }}</td>
+                                            <td>{{ $mo->scolarite->name }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($mo->end_date)->format('d, M Y') }}</td>
+                                            <td>{{ $mo->student->first_name . ' ' . $mo->student->last_name }}</td>
+                                            <td>{{ $mo->student->studentClasse->classe->niveau->name . ' ' . $mo->student->studentClasse->classe->name }}
+                                            </td>
                                             <td scope="col" class="text-center">
                                                 <span class="dropdown dropstart">
                                                     <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
@@ -69,22 +71,24 @@
                                                     <span class="dropdown-menu" aria-labelledby="courseDropdown2">
                                                         <span class="dropdown-header">Action</span>
                                                         <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#seeMore" role="button">
+                                                            href="#seeMore{{ $mo->id }}" role="button">
                                                             <i class="fe fe-eye dropdown-item-icon"></i>
                                                             Voir plus d'informations
                                                         </a>
                                                         <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#editMoratoire" role="button">
+                                                            href="#editMoratoire{{ $mo->id }}" role="button">
                                                             <i class="fe fe-edit dropdown-item-icon"></i>
                                                             Modifier
                                                         </a>
+
+
                                                     </span>
                                                 </span>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="editMoratoire"
-                                            aria-hidden="true" aria-labelledby="editMoratoire" tabindex="-1">
+                                        <div class="modal fade" id="editMoratoire{{ $mo->id }}" aria-hidden="true"
+                                            aria-labelledby="editMoratoire" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -94,7 +98,7 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <form method="post" class="needs-validation" method="POST"
-                                                        action="#"
+                                                        action="{{ route('moratoire.update', $mo) }}"
                                                         enctype="multipart/form-data">
                                                         @method('PATCH')
                                                         @csrf
@@ -116,32 +120,37 @@
                                                                     <input type="text" class="form-control"
                                                                         placeholder="Entrez le nom du moratoire"
                                                                         id="name" name="name"
-                                                                        value="Première tranche" required>
+                                                                        value="{{ $mo->name }}" required>
                                                                     <div class="invalid-feedback">Veuillez entrer le nom
                                                                         du moratoire</div>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="durée">Durée de la validité du moratoire 
-                                                                    en nombre de jours</label>
-                                                                    <input type="number" class="form-control"
+                                                                    <label class="form-label" for="durée">Durée de la
+                                                                        validité du moratoire
+                                                                        en nombre de jours</label>
+                                                                    <input type="date" class="form-control"
                                                                         placeholder="Entrez la durée de validité du moratoire"
-                                                                        value="15"
-                                                                        id="durée" name="durée" required>
-                                                                    <div class="invalid-feedback">Veuillez entrer la durée de 
-                                                                    validité du moratoire</div>
+                                                                        value="{{ \Carbon\Carbon::parse($mo->end_date)->format('Y-m-d') }}"
+                                                                        id="durée" name="duree" required>
+                                                                    <div class="invalid-feedback">Veuillez entrer la
+                                                                        date de fin du moratoire</div>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="phone">Frais exigibles auxquels 
-                                                                    sera appliqué le moratoire</label>
-                                                                    <select class="form-control"
-                                                                        id="frais" name="frais" required>
-                                                                        <option>Inscription</option>
-                                                                        <option>Première tranche</option>
+                                                                    <label class="form-label" for="phone">Frais
+                                                                        exigibles auxquels
+                                                                        sera appliqué le moratoire</label>
+                                                                    <select class="form-control" id="frais"
+                                                                        name="scolarite" required>
+                                                                        @foreach ($scolarites as $scolarite)
+                                                                            <option value="{{ $scolarite->id }}">{{ $scolarite->name }}</option>
+                                                                        @endforeach
+
                                                                     </select>
-                                                                    <div class="invalid-feedback">Veuillez selectionner les frais exigibles auxquels 
-                                                                    sera appliqué le moratoire</div>
+                                                                    <div class="invalid-feedback">Veuillez selectionner
+                                                                        les frais exigibles auxquels
+                                                                        sera appliqué le moratoire</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -157,7 +166,7 @@
                                         </div>
 
 
-                                        <div class="modal fade" id="seeMore" aria-hidden="true"
+                                        <div class="modal fade" id="seeMore{{ $mo->id }}" aria-hidden="true"
                                             aria-labelledby="seeMore" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
@@ -174,35 +183,44 @@
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="name">Nom du
                                                                         moratoire : <label
-                                                                            style="font-weight: bold; color: black;">Première tranche</label></label>
+                                                                            style="font-weight: bold; color: black;">Première
+                                                                            tranche</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="phone">Frais exigibles concernés : <label
+                                                                    <label class="form-label" for="phone">Frais
+                                                                        exigibles concernés : <label
                                                                             style="font-weight: bold; color: black;">Inscription</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="poBox">Date d'expiration du délai de validité : <label
+                                                                    <label class="form-label" for="poBox">Date
+                                                                        d'expiration du délai de validité : <label
                                                                             style="font-weight: bold; color: black;">27/11/2024</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="masque">Nom de l'élève : <label
-                                                                            style="font-weight: bold; color: black;">PAUMAIN BRICE</label></label>
+                                                                    <label class="form-label" for="masque">Nom de
+                                                                        l'élève : <label
+                                                                            style="font-weight: bold; color: black;">PAUMAIN
+                                                                            BRICE</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="masque">Classe l'élève : <label
+                                                                    <label class="form-label" for="masque">Classe
+                                                                        l'élève : <label
                                                                             style="font-weight: bold; color: black;">6eme</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
-                                                                    <label class="form-label" for="masque">Image/document de la décision administrative : 
-                                                                    <a href="assets/images/blank_image.jpg" download="nom_fichier.jpg" 
-                                                                        style="margin-left: 6px; font-weight: bold;">
-                                                                        <i class="bi bi-download"></i> Télécharger
-                                                                    </a></label>
+                                                                    <label class="form-label"
+                                                                        for="masque">Image/document de la décision
+                                                                        administrative :
+                                                                        <a href="assets/images/blank_image.jpg"
+                                                                            download="nom_fichier.jpg"
+                                                                            style="margin-left: 6px; font-weight: bold;">
+                                                                            <i class="bi bi-download"></i> Télécharger
+                                                                        </a></label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -216,6 +234,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

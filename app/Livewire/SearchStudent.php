@@ -4,12 +4,22 @@ namespace App\Livewire;
 
 use App\Models\Student;
 use Livewire\Component;
+use App\Models\Scolarite;
+use App\Models\SchoolInformation;
 
 class SearchStudent extends Component
 {
     public $search = '';
+    protected $schoolInformation;
+
+    public function mount()
+    {
+        $this->schoolInformation = SchoolInformation::where('status', 1)->first();
+    }
+
     public function render()
     {
+        $this->schoolInformation = SchoolInformation::where('status', 1)->first(); 
         $students = Student::query()
             ->where('first_name', 'like', '%' . $this->search . '%')
             ->orWhere('last_name', 'like', '%' . $this->search . '%')
@@ -21,6 +31,11 @@ class SearchStudent extends Component
             ->orWhere('name_mother', 'like', '%' . $this->search . '%')
             ->orWhere('matricular', 'like', '%' . $this->search . '%')
             ->get();
-        return view('livewire.search-student', ['students' => $students]);
+        return view('livewire.search-student', [
+            'students' => $students,
+            'scolarites' => Scolarite::where('school_information_id', $this->schoolInformation->id)
+                ->where('end_date', '>', now())
+                ->get(),
+        ]);
     }
 }
