@@ -21,21 +21,54 @@
 
 <body>
 
-
-
-
     <div id="db-wrappe">
         <main id="page-conten">
             <div class="header">
                 <nav class="navbar-default navbar navbar-expand-lg">
-                    <div class="ms-lg-3 d-none d-md-none d-lg-block">
+                    <div class="ms-lg-3 d-none d-md-none d-lg-block navbar-icon">
                         <!-- Form -->
-                        <form class="d-flex align-items-center">
-                            <span class="position-absolute ps-3 search-icon">
-                                <i class="fe fe-search"></i>
-                            </span>
-                            <input type="search" class="form-control ps-6" placeholder="Search Entire Dashboard" />
-                        </form>
+                        <div class="popup-menu">
+                            <div class="menu-item">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-search"></i>
+                            <span>Search</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Cart</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-star"></i>
+                            <span>Favorites</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>Messages</span>
+                            </div>
+                            <div class="menu-item">
+                            <i class="fas fa-download"></i>
+                            <span>Downloads</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center"
+                            type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                            aria-label="Toggle theme (auto)">
+                            <i class="bi bi-grid-3x3-gap"></i>
+                            <span class="visually-hidden bs-theme-text">Menu</span>
+                        </button>
+                        
                     </div>
                     <!--Navbar nav -->
                     <div class="ms-auto d-flex">

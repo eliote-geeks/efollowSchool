@@ -19,3 +19,20 @@ function formatAmountCosts(input, event) {
   // Retourner true pour permettre la saisie
   return true;
 }
+
+const navbarIcon = document.querySelector('.navbar-icon');
+const popupMenu = document.querySelector('.popup-menu');
+
+navbarIcon.addEventListener('click', () => {
+  popupMenu.classList.toggle('show');
+});
+
+const menuItems = document.querySelectorAll('.menu-item');
+menuItems.forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    item.style.setProperty('--menu-item-scale', 1.1);
+  });
+  item.addEventListener('mouseleave', () => {
+    item.style.setProperty('--menu-item-scale', 1);
+  });
+});

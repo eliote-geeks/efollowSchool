@@ -154,8 +154,9 @@
                                                                 </a>
                                                             </span>
                                                         </span>
+                                                    </span>
                                                     </td>
-                                                </tr>
+                                            </tr>
                                                 <div class="modal fade" id="editStudent{{ $student->student->id }}"
                                                     aria-hidden="true" aria-labelledby="editStudent" tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">

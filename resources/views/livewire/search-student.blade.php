@@ -1,59 +1,123 @@
-<div class="container mt-4">
-    <!-- Search Input -->
+
+    <section class="container-fluid p-4">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <!-- Page header -->
+                <div class="border-bottom pb-3 mb-3">
+                    <!-- Breadcrumb -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="admin-dashboard.html">Dashboard</a>
+                            </li>
+
+                            <li class="breadcrumb-item active" aria-current="page">
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <!-- Search Input -->
     <div class="row mb-4">
         <div class="col-md-6 mx-auto">
             <input type="text" wire:model.live="search" placeholder="Rechercher..." class="form-control rounded-pill shadow-sm py-2 px-4">
         </div>
     </div>
+            <!-- basic table -->
+             <div class="col-md-12 col-12 mb-5">
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header">
 
-    <!-- Table -->
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered shadow-sm" id="dataTableBasic">
-            <thead class="table-primary text-center">
-                <tr>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Date de Naissance</th>
-                  
-                    <th>Matricule</th>
-                    <td>Classe</td>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($students as $student)
-                    <tr class="text-center align-middle">
-                        <td>{{ $student->first_name }}</td>
-                        <td>{{ $student->last_name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($student->date_birth)->format('d M, Y') }}</td>
-                        <td>{{ $student->matricular }}</td>
-                        
-                        <td>{{ $student->studentClasse->classe->niveau->name }}&nbsp;{{ $student->studentClasse->classe->name }}</td>
-                        <td>
-                            <!-- Boutons d'action -->
-                            <div class="btn-group" role="group">
-                                <a href="" class="btn btn-info btn-sm">
-                                    <i class="fas fa-user"></i> Profil
-                                </a>
-                                <a href="{{ route('payment.student',$student) }}" class="btn btn-success btn-sm">
-                                    <i class="fas fa-money-bill-wave"></i> Paiement
-                                </a>
-                                <a href="" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-check-circle"></i> Présence
-                                </a>
-                                <a href="" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-school"></i> Scolarité
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="9" class="text-center text-muted">Aucun étudiant trouvé</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
+                        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                            <h2 class="mb-1">Rechercher des élèves</b></h2>
+                        </div>
+                        <p class="mb-0">
+                            Sur cette page, vous pouvez rechercher un élève par son nom, sa classe ou son matricule
+                        </p>
+                    </div>
+                    <!-- table  -->
+                    <div class="card-body">
 
+                        <!-- Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered shadow-sm" id="dataTableBasic">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th scope="col">Nom complet de l'élève</th>
+                                        <th scope="col">Date de naissance</th>
+                                        <th scope="col">Matricule</th>
+                                        <th>Classe</th>
+                                        <th>Sexe</th>
+                                        <th class="text-center">Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($students as $student)
+                                        <tr class="align-middle">
+                                            <td>{{ $student->first_name . ' ' . $student->last_name}} </td>
+                                            <td>{{ \Carbon\Carbon::parse($student->date_birth)->format('d M, Y') }}</td>
+                                            <td>{{ $student->matricular }}</td>
+                                            
+                                            <td>{{ $student->studentClasse->classe->name }}</td>
+                                            <td>Masculin</td>
+                                            <td scope="col" class="text-center">
+                                                <span class="dropdown dropstart">
+                                                    <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                        href="#" role="button" id="courseDropdown2"
+                                                        data-bs-toggle="dropdown" data-bs-offset="-20,20"
+                                                        aria-expanded="false">
+                                                        <i class="fe fe-list fs-3"></i>
+                                                    </a>
+                                                    <span class="dropdown-menu" aria-labelledby="courseDropdown2">
+                                                            <span class="dropdown-header">Action</span>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#" role="button">
+                                                                <i class="fe fe-eye dropdown-item-icon"></i>
+                                                                Voir plus d'informations
+                                                            </a>
+                                                            <a class="dropdown-item" 
+                                                                href="{{ route('payment.student',$student) }}" role="button">
+                                                                <i class="fe fe-credit-card dropdown-item-icon"></i>
+                                                                Effectuer un paiement
+                                                            </a>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#"
+                                                                role="button">
+                                                                <i class="fe fe-edit dropdown-item-icon"></i>
+                                                                Présence
+                                                            </a>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#"
+                                                                role="button">
+                                                                <i class="fe fe-trash dropdown-item-icon"></i>
+                                                                Scolarité
+                                                            </a>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="9" class="text-center text-muted">Aucun étudiant trouvé</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+        
