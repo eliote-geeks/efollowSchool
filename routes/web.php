@@ -2,6 +2,7 @@
 
 use App\Exports\StudentsExport;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\MoratoireController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\PaymentController;
 use Maatwebsite\Excel\Facades\Excel;
@@ -38,6 +39,7 @@ Route::resource('classe', ClasseController::class);
 Route::resource('niveau', NiveauController::class);
 Route::resource('scolarite',ScolariteController::class);
 Route::resource('payment',PaymentController::class);
+Route::resource('moratoire',MoratoireController::class);
 
 Route::get('card-view', function () {
     return view('student.card-view');
