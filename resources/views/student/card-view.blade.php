@@ -154,7 +154,7 @@
                                                 <p class="ms-" style="margin-bottom: 1px;">{{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
                                                 <p class="ms-" style="margin-bottom: 1px;">{{ $student->matricular }}</p>
                                                 <p class="ms-" style="margin-bottom: 1px;">{{ $student->studentClasse->classe->name }}</p>
-                                                <p class="ms-" style="margin-bottom: 1px;">Masculin</p>
+                                                <p class="ms-" style="margin-bottom: 1px;">{{ $student->sexe }}</p>
                                                 </div>
                                             </div>
                                         </div>
