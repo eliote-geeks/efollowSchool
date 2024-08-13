@@ -119,6 +119,8 @@
                                             class="form-control border-0 opacity-0 position-absolute top-0 left-0 w-100 h-100"
                                             type="file" accept="image/*" id="img" wire:model='avatar' />
                                     </label>
+                                    <p class="mb-0">Cliquez sur la zone ci-dessus</p>
+                                    <p>pour enregistrer l'image de l'élève</p>
                                 </div>
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
@@ -160,16 +162,19 @@
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
                                     <label class="form-label" for="matricule">Sexe de l'élève</label>
-                                    <input type="string" class="form-control" placeholder="masculin ou feminin"
-                                        wire:model.live='sexe' >
+                                    <select class="form-control" wire:model.live='sexe' required>
+                                        <option value="">Sélectionnez le sexe de l'élève</option>
+                                        <option value="Masculin">Masculin</option>
+                                        <option value="Feminin">Feminin</option>
+                                    </select>
                                     @error('sexe')
-                                        <div class="text-danger">Veuillez entrer le matricule de l'élève</div>
+                                        <div class="text-danger">Veuillez entrer le sexe de l'élève</div>
                                     @enderror
                                 </div>
 
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
-                                    <label class="form-label" for="matricule">Remise pension(%)</label>
+                                    <label class="form-label" for="matricule">Remise de la pension en pourcentage (%)</label>
                                     <input type="number" class="form-control" placeholder="remise pension"
                                         wire:model.live='discount' >
                                     
@@ -190,42 +195,42 @@
                                 </div> --}}
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
-                                    <label class="form-label" for="FatherName">Nom complet du père</label>
+                                    <label class="form-label" for="FatherName">Nom complet du père ou tuteur</label>
                                     <input type="text" class="form-control"
-                                        placeholder="Entrez le nom complet du père" id="FatherName"
+                                        placeholder="Entrez le nom complet du père ou tuteur" id="FatherName"
                                         wire:model.live='name_father' required>
                                     @error('name_father')
-                                        <div class="text-danger">Veuillez entrer le nom complet du père</div>
+                                        <div class="text-danger">Veuillez entrer le nom complet du père ou tuteur</div>
                                     @enderror
                                 </div>
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
-                                    <label class="form-label" for="fatherPhone">Numero de téléphone du père</label>
+                                    <label class="form-label" for="fatherPhone">Numero de téléphone du père ou tuteur</label>
                                     <input type="string" class="form-control"
-                                        placeholder="Entrez le numero de téléphone du père" id="fatherPhone"
+                                        placeholder="Entrez le numero de téléphone du père ou tuteur" id="fatherPhone"
                                         wire:model.live='phone_father' required>
                                     @error('phone_father')
-                                        <div class="text-danger">Veuillez entrer le numero de téléphone du père</div>
+                                        <div class="text-danger">Veuillez entrer le numero de téléphone du père ou tuteur</div>
                                     @enderror
                                 </div>
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
-                                    <label class="form-label" for="motherName">Nom complet de la mère</label>
+                                    <label class="form-label" for="motherName">Nom complet de la mère ou tutrice</label>
                                     <input type="text" class="form-control"
-                                        placeholder="Entrez le nom complet de la mère" id="motherName"
+                                        placeholder="Entrez le nom complet de la mère ou tutrice" id="motherName"
                                         wire:model.live='name_mother' required>
                                     @error('name_mother')
-                                        <div class="text-danger">Veuillez entrer le nom complet de la mère</div>
+                                        <div class="text-danger">Veuillez entrer le nom complet de la mère ou tutrice</div>
                                     @enderror
                                 </div>
                                 <!-- input -->
                                 <div class="mb-5 col-md-6">
-                                    <label class="form-label" for="motherPhone">Numero de téléphone de la mère</label>
+                                    <label class="form-label" for="motherPhone">Numero de téléphone de la mère ou tutrice</label>
                                     <input type="string" class="form-control"
-                                        placeholder="Entrez le numero de téléphone de la mère" id="motherPhone"
+                                        placeholder="Entrez le numero de téléphone de la mère ou tutrice" id="motherPhone"
                                         wire:model.live='phone_mother' required>
                                     @error('phone_mother')
-                                        <div class="text-danger">Veuillez entrer le numero de téléphone de la mère
+                                        <div class="text-danger">Veuillez entrer le numero de téléphone de la mère ou tutrice
                                         @enderror
                                     </div>
                                 </div>

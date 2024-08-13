@@ -465,12 +465,11 @@
                             </div>
                             <!-- input -->
                             <div class="mb-5 col-md-12">
-                                <label class="form-label" for="masque">Masque du matricule des élèves</label>
+                                <label class="form-label" for="masque">Masque du matricule des élèves (au maximum 4 caractèreS)</label>
                                 <input type="text" class="form-control"
-                                    placeholder="Entrez le masque du matricule" id="masque" name="matricular"
+                                    placeholder="Entrez le masque du matricule" id="masque" name="matricular"  maxlength="4"
                                     required>
                                 <div class="invalid-feedback">Veuillez entrer le masque du matricule</div>
-                                <small>limit: 4 caractères</small>
                             </div>
                             <!-- input -->
                             <div class="mb-5 col-md-6">

@@ -172,8 +172,8 @@
                                                                                 id="img" name="avatar"
                                                                                 onchange="previewEditStudentImage(this)" />
                                                                         </label>
-                                                                        <small>Cliquez sur la photo pour la
-                                                                            modifier</small>
+                                                                        <p class="mb-0">Cliquez sur l'image ci-dessus</p>
+                                                                        <p>pour la modifier</p>
                                                                     </div>
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">

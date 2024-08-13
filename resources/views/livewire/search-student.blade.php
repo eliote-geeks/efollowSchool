@@ -60,7 +60,17 @@
                                 <tbody>
                                     @forelse ($students as $student)
                                         <tr class="align-middle">
-                                            <td>{{ $student->first_name . ' ' . $student->last_name}} </td>
+                                            <td>{{ $student->first_name . ' ' . $student->last_name}} 
+                                            @if ($student->status == 0)
+                                                <span class="d-inline-block" tabindex="0"
+                                                    data-bs-toggle="popover" data-bs-trigger="hover focus"
+                                                    data-bs-content="Cet élève est désactivé, veuillez lui attribuer une carte pour l'activer."
+                                                    style="cursor:pointer;">
+                                                    <i class="bi bi-exclamation text-danger"
+                                                        style="font-size: 40px;"></i>
+                                                </span>
+                                            @endif
+                                            </td>
                                             <td>{{ \Carbon\Carbon::parse($student->date_birth)->format('d M, Y') }}</td>
                                             <td>{{ $student->matricular }}</td>
                                             
@@ -89,13 +99,13 @@
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                                 href="#"
                                                                 role="button">
-                                                                <i class="fe fe-edit dropdown-item-icon"></i>
+                                                                <i class="bi bi-calendar-check dropdown-item-icon"></i>
                                                                 Présence
                                                             </a>
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                                 href="#"
                                                                 role="button">
-                                                                <i class="fe fe-trash dropdown-item-icon"></i>
+                                                                <i class="bi bi-currency-dollar dropdown-item-icon"></i>
                                                                 Scolarité
                                                             </a>
                                                         </span>
