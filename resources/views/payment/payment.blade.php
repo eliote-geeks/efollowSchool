@@ -14,6 +14,7 @@
 
         <!-- Informations financières -->
         <div class="row mb-4">
+
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-header bg-success text-white">
@@ -24,6 +25,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-header bg-warning text-dark">
@@ -34,6 +36,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-header bg-info text-white">
@@ -41,6 +44,18 @@
                     </div>
                     <div class="card-body">
                         <p class="mb-0">{{ number_format($totalPaymentsAmount) }} FCFA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Remise</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">{{ number_format($student->discount) }} FCFA</p>
+                        
                     </div>
                 </div>
             </div>

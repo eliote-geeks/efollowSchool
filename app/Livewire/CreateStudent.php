@@ -50,7 +50,7 @@ class CreateStudent extends Component
     #[Validate('required')]
     public $sexe;
 
-    public $discount;
+    // public $discount;
 
     // #[Validate('required')]
     public $name_father;
@@ -103,8 +103,8 @@ class CreateStudent extends Component
                 $student->sexe = $this->sexe;
                 $str = str_replace(' ', '', $this->discount);
 
-                $number = (float) $str;
-                $student->discount = $number;
+                // $number = (float) $str;
+                // $student->discount = $number;
 
                 $student->matricular = $matricule;
                 $student->school_information_id = $this->schoolInformation->id;

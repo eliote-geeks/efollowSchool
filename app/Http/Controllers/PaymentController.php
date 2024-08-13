@@ -65,9 +65,13 @@ class PaymentController extends Controller
         } else {
             $status = "L'étudiant est à jour avec ses paiements.";
         }
-
+        
+        
+        $discount = 0;
+        if($student->discount > 0 ){
+            $discount = $student->discount;     
+        }      
         // Retourner le statut
-        // Payment::statusDiscount(,);
 
         return view('payment.payment', [
             'totalPaymentsAmount' => $totalPaymentsAmount,

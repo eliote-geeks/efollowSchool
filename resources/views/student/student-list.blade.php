@@ -77,7 +77,7 @@
                                         <th scope="col">Matricule</th>
                                         <th>Classe</th>
                                         <th>Sexe</th>
-                                        <th>Remise</th>
+                                        {{-- <th>Remise</th> --}}
                                         <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
@@ -102,7 +102,7 @@
                                                 <td><b>{{ $student->classe->name }}
                                                 </td>
                                                 <td>{{ $student->sexe }}</td>
-                                                <td>{{ number_format($student->discount) }} FCFA</td>
+                                                {{-- <td>{{ number_format($student->discount) }} FCFA</td> --}}
                                                 <td scope="col" class="text-center">
                                                     <span class="dropdown dropstart">
                                                         <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
@@ -319,16 +319,17 @@
                                                                             le sexe</div>
                                                                     </div>
 
-                                                                    <div class="mb-5 col-md-6">
+                                                                    {{-- <div class="mb-5 col-md-6">
                                                                         <label class="form-label"
                                                                             for="motherPhone">Remise</label>
                                                                         <input type="text" class="form-control"
                                                                             placeholder="Entrez le pourcentage de remise de la pension"
                                                                             value="{{ $student->student->discount }}"
                                                                             id="motherPhone" name="discount">
-                                                                        {{-- <div class="invalid-feedback">Veuillez entrer
-                                                                            le sexe</div> --}}
-                                                                    </div>
+                                                                         <div class="invalid-feedback">Veuillez entrer
+                                                                            le sexe</div> 
+                                                                    </div> --}}
+
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">

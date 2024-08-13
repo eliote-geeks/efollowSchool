@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Classe;
 use App\Models\Payment;
 use App\Models\Moratoire;
+use App\Models\remiseDue;
 use App\Models\Scolarite;
 use App\Models\SmartCard;
 use App\Models\StudentClasse;
@@ -46,5 +47,10 @@ class Student extends Model
     public function payment()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function remiseDue()
+    {
+        return $this->hasMany(remiseDue::class);
     }
 }
