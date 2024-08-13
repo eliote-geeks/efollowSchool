@@ -52,7 +52,7 @@
                                     <th scope="col">Date de naissance</th>
                                     <th scope="col">Matricule</th>
                                     <th>Classe</th>
-                                    <th>Sexe</th>
+                                    {{-- <th>Sexe</th> --}}
                                     {{-- <th>Remise Scolarite</th> --}}
                                     <th class="text-center">Options</th>
                                 </tr>
@@ -74,8 +74,9 @@
                                         <td>{{ \Carbon\Carbon::parse($student->date_birth)->format('d M, Y') }}</td>
                                         <td>{{ $student->matricular }}</td>
 
-                                        <td>{{ $student->studentClasse->classe->name }}</td>
-                                        <td>{{ $student->sexe }}</td>
+                                        <td>{{ $student->studentClasse->classe->niveau->name . ' ' . $student->studentClasse->classe->name }}
+                                        </td>
+                                        {{-- <td>{{ $student->sexe }}</td> --}}
                                         {{-- <td>{{ number_format($student->discount) }}%</td> --}}
                                         <td scope="col" class="text-center">
                                             @if ($student->status == 1)
@@ -119,17 +120,17 @@
                                                                 Ajouter un moratoire
                                                             </a>
                                                         @else
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                        href="javascript:;" role="button">
-                                                        <i class="bi bi-pause-circle dropdown-item-icon"></i>
-                                                        moratoire en activité
-                                                    </a>
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="javascript:;" role="button">
+                                                                <i class="bi bi-pause-circle dropdown-item-icon"></i>
+                                                                moratoire en activité
+                                                            </a>
                                                         @endif
-                                                            <a class="dropdown-item" data-bs-toggle="modal" href="#addReduction"
-                                                                role="button">
-                                                                <i class="bi bi-cash-stack dropdown-item-icon"></i>
-                                                                Ajouter une réduction
-                                                            </a>    
+                                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                                            href="#addReduction{{ $student->id }}" role="button">
+                                                            <i class="bi bi-cash-stack dropdown-item-icon"></i>
+                                                            Ajouter une réduction
+                                                        </a>
                                                     </span>
                                                 </span>
                                             @endif
@@ -142,7 +143,9 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="addMoratoireLabel">Ajouter
-                                                        un moratoire à l'élève <b>{{ $student->first_name . ' ' . $student->last_name }}</b></h3>
+                                                        un moratoire à l'élève
+                                                        <b>{{ $student->first_name . ' ' . $student->last_name }}</b>
+                                                    </h3>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -234,20 +237,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal fade" id="addReduction"
-                                        aria-hidden="true" aria-labelledby="addReduction" tabindex="-1">
+                                    <div class="modal fade" id="addReduction{{ $student->id }}" aria-hidden="true"
+                                        aria-labelledby="addReduction" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h3 class="modal-title" id="addReductionLabel">Ajouter une réduction
-                                                    à l'élève <b>{{ $student->first_name . ' ' . $student->last_name }}</b></h3>
+                                                    <h3 class="modal-title" id="addReductionLabel">Ajouter une
+                                                        réduction
+                                                        à l'élève
+                                                        <b>{{ $student->first_name . ' ' . $student->last_name }}</b>
+                                                    </h3>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <form method="post" class="needs-validation" method="POST"
-                                                    action="#"
+                                                    action="{{ route('remiseStore') }}"
                                                     enctype="multipart/form-data">
-                                                    @method('PATCH')
                                                     @csrf
                                                     <div class="modal-body">
                                                         <div class="row">
@@ -262,33 +267,50 @@
                                                             @endif
                                                             <!-- input -->
                                                             <div class="mb-5 col-md-12">
-                                                                <label class="form-label" for="schoolName">Montant de la réduction en FCFA</label>
+                                                                <label class="form-label" for="schoolName">Montant de
+                                                                    la réduction en FCFA</label>
                                                                 <input type="text" class="form-control"
                                                                     placeholder="Entrez le montant de la réduction"
-                                                                    id="amount" name="amount" onInput="formatAmountCosts(this)"
-                                                                    onkeypress="return formatAmountCosts(this, event)" required>
-                                                                <div class="invalid-feedback">Veuillez entrer le montant de la réduction</div>
+                                                                    id="amount" name="amount"
+                                                                    onInput="formatAmountCosts(this)"
+                                                                    onkeypress="return formatAmountCosts(this, event)"
+                                                                    required>
+                                                                <div class="invalid-feedback">Veuillez entrer le
+                                                                    montant de la réduction</div>
                                                             </div>
+                                                            <input type="hidden" name="student"
+                                                                value="{{ $student->id }}">
                                                             <!-- input -->
                                                             <div class="mb-5 col-md-12">
-                                                                <label class="form-label" for="phone">Frais exigibles auxquels 
-                                                                sera appliqué la Réduction</label>
-                                                                <select class="form-control"
-                                                                    id="frais" name="frais" required>
-                                                                    <option value="">Veuillez selectionner les frais exigibles</option>
-                                                                    <option>Inscription</option>
-                                                                    <option>Première tranche</option>
+                                                                <label class="form-label" for="phone">Frais
+                                                                    exigibles auxquels
+                                                                    sera appliqué la Réduction</label>
+                                                                <select class="form-control" id="frais"
+                                                                    name="scolarite" required>
+                                                                    <option value="">Veuillez selectionner les
+                                                                        frais exigibles</option>
+                                                                    @foreach ($scolarites as $sc)
+                                                                        @if (
+                                                                            \App\Models\remiseDue::where([
+                                                                                'scolarite_id' => $reduction->scolarite_id,
+                                                                                'student_id' => $reduction->student_id,
+                                                                                'school_information_id' => $this->schoolInformation->id,
+                                                                            ])->count() == 0)
+                                                                        @endif
+                                                                        <option value="{{ $sc->id }}">
+                                                                            {{ $sc->name }}</option>
+                                                                    @endforeach
                                                                 </select>
-                                                                <div class="invalid-feedback">Veuillez selectionner les frais exigibles auxquels 
-                                                                sera appliqué le moratoire</div>
+                                                                <div class="invalid-feedback">Veuillez selectionner les
+                                                                    frais exigibles auxquels
+                                                                    sera appliqué le moratoire</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Annuler</button>
-                                                        <button type="submit"
-                                                            class="btn btn-primary">Créer</button>
+                                                        <button type="submit" class="btn btn-primary">Créer</button>
                                                     </div>
                                                 </form>
                                             </div>

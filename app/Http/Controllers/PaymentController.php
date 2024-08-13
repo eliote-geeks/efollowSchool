@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Classe;
 use App\Models\Niveau;
 use App\Models\Payment;
 use App\Models\Student;
+use App\Models\Moratoire;
+use App\Models\remiseDue;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
-use PDF;
 
 class PaymentController extends Controller
 {
@@ -65,12 +67,11 @@ class PaymentController extends Controller
         } else {
             $status = "L'étudiant est à jour avec ses paiements.";
         }
-        
-        
+
         $discount = 0;
-        if($student->discount > 0 ){
-            $discount = $student->discount;     
-        }      
+        if ($student->discount > 0) {
+            $discount = $student->discount;
+        }
         // Retourner le statut
 
         return view('payment.payment', [
@@ -81,6 +82,128 @@ class PaymentController extends Controller
             'status' => $status,
             'totalScolariteAmount' => $totalScolariteAmount,
         ]);
+    }
+
+    public function getRemise()
+    {
+        $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
+        $remises = remiseDue::where('school_information_id',$this->schoolInformation->id)->get();
+        return view('reduction.reduction',[
+            'remises' => $remises,
+            'moratoires' => $moratoires
+        ]);
+    }
+
+    public function remiseStore(request $request)
+    {
+        try {
+            $request->validate([
+                'amount' => 'required',
+                'student' => 'required',
+                'scolarite' => 'required',
+            ]);
+
+            $str = str_replace(' ', '', $request->amount);
+
+            $number = (float) $str;
+
+            $remise = new remiseDue();
+            $remise->rest = $number;
+            $remise->student_id = $request->student;
+            $remise->scolarite_id = $request->scolarite;
+            $remise->save();
+            return redirect()->route('getRemise')->with('success', 'Nouvelle reduction ajoutée!!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Oups une erreur innatendue s\'est produite: ' . $e->getMessage());
+        }
+    }
+
+    public function remiseEdit(request $request, remiseDue $reduction)
+    {
+        try {
+            $request->validate([
+                'amount' => 'required',
+                'student' => 'required',
+                'scolarite' => 'required',
+            ]);
+
+            $str = str_replace(' ', '', $request->amount);
+
+            $number = (float) $str;
+
+            $reduction->rest = $number;
+            $reduction->student_id = $request->student;
+            $reduction->scolarite_id = $request->scolarite;
+            $reduction->save();
+            return redirect()->route('reductions')->with('success', 'Nouvelle reduction ajoutée!!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Oups une erreur innatendue s\'est produite: ' . $e->getMessage());
+        }
+    }
+
+    public function delRemise(remiseDue $reduction)
+    {
+        if ($reduction->status == 0) {
+            $reduction->delete();
+            return redirect()->back()->with('success', 'suppression reussie!!');
+        } else {
+            return redirect()->back()->with('warning', 'Impossible de supprimer cette reduction car actif!!');
+        }
+    }
+
+    public function statusRemise(remiseDue $reduction)
+    {
+        try {
+            $sumPayment = Payment::where([
+                'scolarite_id' => $reduction->scolarite_id,
+                'student_id' => $reduction->student_id,
+                'school_information_id' => $this->schoolInformation->id,
+            ])->sum('amount');
+
+            $scolariteAmount = Scolarite::find($reduction->scolarite_id)->amount;
+
+            if ($reduction->status == 0) {
+                if ($sumPayment + $reduction->rest <= $scolariteAmount) {
+                    $payment = new Payment();
+                    $payment->school_information_id = $this->schoolInformation->id;
+                    $payment->student_id = $reduction->student_id;
+                    $payment->scolarite_id = $reduction->scolarite_id;
+                    $payment->user_id = auth()->user()->id;
+                    $payment->amount = $reduction->rest;
+                    $payment->save();
+
+                    $reduction->status = 1;
+                    $reduction->save();
+                    return redirect()->back()->with('warning', 'Reussie remise active !!');
+                } else {
+                    return redirect()->back()->with('warning', 'Le montant entré associé au precedent paiement excede celui du frais scolaire en cours !!');
+                }
+            } else {
+                $payment = Payment::where([
+                    'scolarite_id' => $reduction->scolarite_id,
+                    'student_id' => $reduction->student_id,
+                    'school_information_id' => $this->schoolInformation->id,
+                ])->first();
+                $payment->school_information_id = $this->schoolInformation->id;
+                $payment->student_id = $reduction->student_id;
+                $payment->scolarite_id = $reduction->scolarite_id;
+                $payment->user_id = auth()->user()->id;
+                $payment->amount -= $reduction->rest;
+                $payment->save();
+
+                $reduction->status = 0;
+                $reduction->save();
+                return redirect()->back()->with('warning', 'Reussie remise désactive !!');
+            }
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Erreur innatendue: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -119,12 +242,14 @@ class PaymentController extends Controller
         $payment->user_id = auth()->user()->id;
         $payment->amount = $number;
         $payment->save();
-        return redirect()->route('receiptPayment', [
-            'student' => $payment->student,
-            'payment' => $payment,
-            'balance' => $payment->scolarite->amount - $request->totalPaymentsAmount,
-            'totalPaymentsAmount' => $request->totalPaymentsAmount,
-        ])->with('success','Paiement Reussi !! reçu téléchargé !!');
+        return redirect()
+            ->route('receiptPayment', [
+                'student' => $payment->student,
+                'payment' => $payment,
+                'balance' => $payment->scolarite->amount - $request->totalPaymentsAmount,
+                'totalPaymentsAmount' => $request->totalPaymentsAmount,
+            ])
+            ->with('success', 'Paiement Reussi !! reçu téléchargé !!');
     }
 
     public function receiptPayment(Student $student, Payment $payment)
@@ -147,7 +272,7 @@ class PaymentController extends Controller
 
         $balance = $totalScolariteAmount - $totalPaymentsAmount;
 
-        $pdf = PDF::loadView('payment.receipt', compact('payment', 'student','totalPaymentsAmount','balance'));
+        $pdf = PDF::loadView('payment.receipt', compact('payment', 'student', 'totalPaymentsAmount', 'balance'));
         return $pdf->download('reçu-paiement.pdf');
     }
 

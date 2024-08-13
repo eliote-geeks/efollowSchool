@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('remise_dues', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('school_information_id')->references('id')->on('school_information')->onDelete('cascade');
             $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreignId('scolarite_id')->references('id')->on('scolarites')->onDelete('cascade');
             $table->boolean('status')->default(0);

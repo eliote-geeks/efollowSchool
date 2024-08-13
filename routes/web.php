@@ -58,6 +58,12 @@ Route::get('searchByname',[StudentController::class,'searchByname'])->name('sear
 Route::get('payment/student/{student}',[PaymentController::class,'paymentStudent'])->name('payment.student');
 Route::get('receipt-payment/{student}/{payment}',[PaymentController::class,'receiptPayment'])->name('receiptPayment');
 Route::get('moratoire/print/{moratoire}',[MoratoireController::class,'downloadMoratoire'])->name('downloadMoratoire');
+Route::post('remise/store',[PaymentController::class,'remiseStore'])->name('remiseStore');
+Route::post('remise/edit/{reduction}',[PaymentController::class,'remiseEdit'])->name('remiseEdit');
+Route::get('remise/delete/{reduction}',[PaymentController::class,'delRemise'])->name('delRemise');
+Route::get('remise/status/{reduction}',[PaymentController::class,'statusRemise'])->name('statusRemise');
+Route::get('get/remise',[PaymentController::class,'getRemise'])->name('getRemise');
+
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

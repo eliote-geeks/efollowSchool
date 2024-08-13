@@ -47,4 +47,9 @@ class Scolarite extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function remiseDue()
+    {
+        return $this->hasMany(remiseDue::class);
+    }
 }
