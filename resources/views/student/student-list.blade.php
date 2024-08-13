@@ -78,7 +78,7 @@
                                         <th>Classe</th>
                                         <th>Sexe</th>
                                         <th>Remise</th>
-                                        <th>Options</th>
+                                        <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,13 +103,13 @@
                                                 </td>
                                                 <td>{{ $student->sexe }}</td>
                                                 <td>{{ number_format($student->discount) }}%</td>
-                                                <td scope="col">
+                                                <td scope="col" class="text-center">
                                                     <span class="dropdown dropstart">
                                                         <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
                                                             href="#" role="button" id="courseDropdown2"
                                                             data-bs-toggle="dropdown" data-bs-offset="-20,20"
                                                             aria-expanded="false">
-                                                            <i class="fe fe-more-vertical"></i>
+                                                            <i class="fe fe-list fs-3"></i>
                                                         </a>
                                                         <span class="dropdown-menu" aria-labelledby="courseDropdown2">
                                                             <span class="dropdown-header">Action</span>
@@ -136,33 +136,6 @@
                                                                 <i class="fe fe-trash dropdown-item-icon"></i>
                                                                 Supprimer
                                                             </a>
-                                                            <span class="dropdown-menu"
-                                                                aria-labelledby="courseDropdown2">
-                                                                <span class="dropdown-header">Action</span>
-                                                                <a class="dropdown-item" data-bs-toggle="modal"
-                                                                    href="#" role="button">
-                                                                    <i class="fe fe-eye dropdown-item-icon"></i>
-                                                                    Voir plus d'informations
-                                                                </a>
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('addStudentCard', $student) }}"
-                                                                    role="button">
-                                                                    <i class="fe fe-credit-card dropdown-item-icon"></i>
-                                                                    Attribuer une carte
-                                                                </a>
-                                                                <a class="dropdown-item" data-bs-toggle="modal"
-                                                                    href="#editStudent{{ $student->student->id }}"
-                                                                    role="button">
-                                                                    <i class="fe fe-edit dropdown-item-icon"></i>
-                                                                    Modifier
-                                                                </a>
-                                                                <a class="dropdown-item" data-bs-toggle="modal"
-                                                                    href="#deleteStudent{{ $student->student->id }}"
-                                                                    role="button">
-                                                                    <i class="fe fe-trash dropdown-item-icon"></i>
-                                                                    Supprimer
-                                                                </a>
-                                                            </span>
                                                         </span>
                                                 </td>
                                             </tr>
