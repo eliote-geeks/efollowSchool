@@ -144,7 +144,10 @@
                                                                     <select class="form-control" id="frais"
                                                                         name="scolarite" required>
                                                                         @foreach ($scolarites as $scolarite)
-                                                                            <option value="{{ $scolarite->id }}">{{ $scolarite->name }}</option>
+                                                                            <option
+                                                                                @if ($scolarite->id == $mo->scolarite_id) selected @endif
+                                                                                value="{{ $scolarite->id }}">
+                                                                                {{ $scolarite->name }}</option>
                                                                         @endforeach
 
                                                                     </select>
@@ -183,41 +186,39 @@
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="name">Nom du
                                                                         moratoire : <label
-                                                                            style="font-weight: bold; color: black;">Première
-                                                                            tranche</label></label>
+                                                                            style="font-weight: bold; color: black;">{{ $mo->name }}</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="phone">Frais
                                                                         exigibles concernés : <label
-                                                                            style="font-weight: bold; color: black;">Inscription</label></label>
+                                                                            style="font-weight: bold; color: black;">{{ $mo->scolarite->name }}</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="poBox">Date
                                                                         d'expiration du délai de validité : <label
-                                                                            style="font-weight: bold; color: black;">27/11/2024</label></label>
+                                                                            style="font-weight: bold; color: black;">{{ \Carbon\Carbon::parse($mo->end_date)->format('d, M Y') }}</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="masque">Nom de
                                                                         l'élève : <label
-                                                                            style="font-weight: bold; color: black;">PAUMAIN
-                                                                            BRICE</label></label>
+                                                                            style="font-weight: bold; color: black;">{{ $mo->student->first_name . ' ' . $mo->student->last_name }}</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="masque">Classe
                                                                         l'élève : <label
-                                                                            style="font-weight: bold; color: black;">6eme</label></label>
+                                                                            style="font-weight: bold; color: black;">{{ $mo->student->studentClasse->classe->niveau->name . ' ' . $mo->student->studentClasse->classe->name }}</label></label>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label"
                                                                         for="masque">Image/document de la décision
                                                                         administrative :
-                                                                        <a href="assets/images/blank_image.jpg"
-                                                                            download="nom_fichier.jpg"
+                                                                        <a href="{{ '/storage/' . $mo->file_path }}"
+                                                                            download="{{ $mo->name }}"
                                                                             style="margin-left: 6px; font-weight: bold;">
                                                                             <i class="bi bi-download"></i> Télécharger
                                                                         </a></label>
@@ -227,6 +228,9 @@
                                                     </form>
                                                     <div class="modal-footer">
                                                         <!-- Bouton Fermer -->
+                                                        <a  class="btn btn-secondary" href="{{ route('downloadMoratoire',$mo) }}" >Imprimer</a>
+
+
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Fermer</button>
                                                     </div>

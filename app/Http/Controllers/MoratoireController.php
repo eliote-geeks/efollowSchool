@@ -7,6 +7,7 @@ use App\Models\Moratoire;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
+Use PDF;
 
 class MoratoireController extends Controller
 {
@@ -23,6 +24,13 @@ class MoratoireController extends Controller
             'moratoires' => $moratoires,
             'scolarites' => $scolarites
         ]);
+    }
+
+    public function downloadMoratoire(Moratoire $moratoire)
+    {
+        $pdf = Pdf::loadView('moratoire.pdf', compact('moratoire'));
+
+        return $pdf->download('moratoire_' . $moratoire->name . '.pdf');
     }
 
     /**

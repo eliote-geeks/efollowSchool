@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SchoolInformationController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
+use App\Models\Moratoire;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,7 @@ Route::post('add-student-card/{student}',[SmartCardController::class,'addPostStu
 Route::get('searchByname',[StudentController::class,'searchByname'])->name('searchByname');
 Route::get('payment/student/{student}',[PaymentController::class,'paymentStudent'])->name('payment.student');
 Route::get('receipt-payment/{student}/{payment}',[PaymentController::class,'receiptPayment'])->name('receiptPayment');
-
+Route::get('moratoire/print/{moratoire}',[MoratoireController::class,'downloadMoratoire'])->name('downloadMoratoire');
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');
