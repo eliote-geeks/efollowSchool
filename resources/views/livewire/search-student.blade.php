@@ -54,6 +54,7 @@
                                         <th scope="col">Matricule</th>
                                         <th>Classe</th>
                                         <th>Sexe</th>
+                                        <th>Remise Scolarite</th>
                                         <th class="text-center">Options</th>
                                     </tr>
                                 </thead>
@@ -65,7 +66,8 @@
                                             <td>{{ $student->matricular }}</td>
                                             
                                             <td>{{ $student->studentClasse->classe->name }}</td>
-                                            <td>Masculin</td>
+                                            <td>{{ $student->sexe }}</td>
+                                            <td>{{ number_format($student->discount) }}%</td>
                                             <td scope="col" class="text-center">
                                                 <span class="dropdown dropstart">
                                                     <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
