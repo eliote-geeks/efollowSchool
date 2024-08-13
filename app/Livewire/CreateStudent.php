@@ -41,11 +41,16 @@ class CreateStudent extends Component
     #[Validate('required|date')]
     public $date_birth;
 
-    #[Validate('required')]
+    // #[Validate('required')]
     public $phone_father;
 
-    #[Validate('required')]
+    // #[Validate('required')]
     public $phone_mother;
+
+    #[Validate('required')]
+    public $sexe;
+
+    public $discount = 0;
 
     // #[Validate('required')]
     public $name_father;
@@ -53,7 +58,6 @@ class CreateStudent extends Component
     // #[Validate('required')]
     public $name_mother;
 
-    
     public $classe;
 
     public $matricular;
@@ -96,12 +100,13 @@ class CreateStudent extends Component
                 $student->phone_mother = $this->phone_mother;
                 $student->name_father = $this->name_father;
                 $student->name_mother = $this->name_mother;
+                $student->sexe = $this->sexe;
+                $student->discount = $this->discount;
                 $student->matricular = $matricule;
                 $student->school_information_id = $this->schoolInformation->id;
                 $student->user_id = $user->id;
                 $student->save();
 
-               
                 $studentClass = new StudentClasse();
                 $studentClass->classe_id = $this->classe->id;
                 $studentClass->student_id = $student->id;
@@ -118,7 +123,7 @@ class CreateStudent extends Component
 
     public function backClasse()
     {
-        return redirect()->route('classe.show',$this->classe); 
+        return redirect()->route('classe.show', $this->classe);
     }
 
     public function dec($dec)
@@ -126,7 +131,7 @@ class CreateStudent extends Component
         if ($dec == 1) {
             $student = $this->student;
             $schoolInformation = $this->schoolInformation;
-            return redirect()->route('print.card',[
+            return redirect()->route('print.card', [
                 'student' => $student,
                 'schoolInformation' => $schoolInformation,
             ]);
