@@ -20,6 +20,14 @@ function formatAmountCosts(input, event) {
   return true;
 }
 
+// Appliquer le formatage lors de l'initialisation de l'input
+window.addEventListener('DOMContentLoaded', function() {
+  var inputsToFormat = document.querySelectorAll('input[onkeypress*="formatAmountCosts"]');
+  inputsToFormat.forEach(function(input) {
+    formatAmountCosts(input);
+  });
+});
+
 const navbarIcon = document.querySelector('.navbar-icon');
 const popupMenu = document.querySelector('.popup-menu');
 
