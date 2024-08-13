@@ -332,6 +332,30 @@
                                                                         <div class="invalid-feedback">Veuillez entrer
                                                                             le numero de téléphone de la mère</div>
                                                                     </div>
+
+
+
+                                                                    <div class="mb-5 col-md-6">
+                                                                        <label class="form-label"
+                                                                            for="motherPhone">Sexe</label>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="Mesculin ou Feminin"
+                                                                            value="{{ $student->student->sexe }}"
+                                                                            id="motherPhone" name="sexe" required>
+                                                                        <div class="invalid-feedback">Veuillez entrer
+                                                                            le sexe</div>
+                                                                    </div>
+
+                                                                    <div class="mb-5 col-md-6">
+                                                                        <label class="form-label"
+                                                                            for="motherPhone">Remise(%)</label>
+                                                                        <input type="text" class="form-control"
+                                                                            placeholder="Entrez le pourcentage de remise de la pension"
+                                                                            value="{{ $student->student->discount }}"
+                                                                            id="motherPhone" name="discount">
+                                                                        {{-- <div class="invalid-feedback">Veuillez entrer
+                                                                            le sexe</div> --}}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
