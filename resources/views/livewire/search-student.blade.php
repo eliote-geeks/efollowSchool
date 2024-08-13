@@ -110,6 +110,12 @@
                                                                 <i class="bi bi-currency-dollar dropdown-item-icon"></i>
                                                                 Scolarité
                                                             </a>
+                                                             <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#addMoratoire"
+                                                                role="button">
+                                                                <i class="bi bi-pause-circle dropdown-item-icon"></i>
+                                                                Ajouter un moratoire
+                                                            </a>
                                                         </span>
                                                     </span>
                                                 </span>
@@ -128,7 +134,90 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addMoratoire"
+        aria-hidden="true" aria-labelledby="addMoratoire" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addMoratoireLabel">Ajouter
+                            un moratoire</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <form method="post" class="needs-validation" method="POST"
+                        action="#"
+                        enctype="multipart/form-data">
+                        @method('PATCH')
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                <!-- input -->
+                                <div class="mb-5 col-md-12">
+                                    <label class="form-label" for="schoolName">Nom du
+                                        moratoire</label>
+                                    <input type="text" class="form-control"
+                                        placeholder="Entrez le nom du moratoire"
+                                        id="name" name="name" required>
+                                    <div class="invalid-feedback">Veuillez entrer le nom
+                                        du moratoire</div>
+                                </div>
+                                <!-- input -->
+                                <div class="mb-5 col-md-12">
+                                    <label class="form-label" for="phone">Durée de la validité du moratoire 
+                                    en nombre de jours</label>
+                                    <input type="number" class="form-control"
+                                        placeholder="Entrez la durée de validité du moratoire"
+                                        id="durée" name="durée" required>
+                                    <div class="invalid-feedback">Veuillez entrer la durée de 
+                                    validité du moratoire</div>
+                                </div>
+                                <!-- input -->
+                                <div class="mb-5 col-md-12">
+                                    <label class="form-label" for="phone">Frais exigibles auquels 
+                                    seront appliqué le moratoire</label>
+                                    <select class="form-control"
+                                        id="frais" name="frais" required>
+                                        <option value="">Veuillez selectionner les frais exigibles</option>
+                                        <option>Inscription</option>
+                                        <option>Première tranche</option>
+                                    </select>
+                                    <div class="invalid-feedback">Veuillez selectionner les frais exigibles auquels 
+                                    seront appliqué le moratoire</div>
+                                </div>
+                                <!-- input -->
+                                <div class="mb-5 col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="decision">Sélectionnez l'image ou le fichier PDF de la décision administrative</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input form-control" id="decision" name="decision" accept="image/*,application/pdf" required>
+                                            <div class="invalid-feedback">Veuillez sélectionner un fichier image ou PDF.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit"
+                                class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
+
+
 
 
 
