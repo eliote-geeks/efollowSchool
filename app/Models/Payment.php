@@ -27,4 +27,10 @@ class Payment extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public static function statusDiscount($student, $scolarite)
+    {
+        $discountedAmount = $scolarite->amount - $scolarite->amount * ($student->discount / 100);
+        return $discountedAmount;
+    }
 }

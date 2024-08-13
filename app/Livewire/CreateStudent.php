@@ -50,7 +50,7 @@ class CreateStudent extends Component
     #[Validate('required')]
     public $sexe;
 
-    public $discount = 0;
+    // public $discount = 0;
 
     // #[Validate('required')]
     public $name_father;
@@ -101,7 +101,7 @@ class CreateStudent extends Component
                 $student->name_father = $this->name_father;
                 $student->name_mother = $this->name_mother;
                 $student->sexe = $this->sexe;
-                $student->discount = $this->discount;
+                // $student->discount = $this->discount;
                 $student->matricular = $matricule;
                 $student->school_information_id = $this->schoolInformation->id;
                 $student->user_id = $user->id;

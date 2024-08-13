@@ -67,6 +67,7 @@ class PaymentController extends Controller
         }
 
         // Retourner le statut
+        // Payment::statusDiscount(,);
 
         return view('payment.payment', [
             'totalPaymentsAmount' => $totalPaymentsAmount,
