@@ -50,6 +50,12 @@ class PaymentController extends Controller
         // Calculer le montant total des scolarités
         $totalScolariteAmount = $scolarites->sum('amount');
 
+        $studentRemise = 0;
+        if(remiseDue::where('student_id',$student->id)->count() > 0){
+            $studentRemise = remiseDue::where('student_id',$student->id)->first()->rest;
+        }
+        
+
         // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
         $payments = Payment::where('student_id', $student->id)
             ->whereIn('scolarite_id', $scolarites->pluck('id'))
@@ -74,6 +80,8 @@ class PaymentController extends Controller
         }
         // Retourner le statut
 
+        $payments =  Payment::where('student_id',$student->id)->orderByDesc('id')->get();
+
         return view('payment.payment', [
             'totalPaymentsAmount' => $totalPaymentsAmount,
             'balance' => $balance,
@@ -81,6 +89,8 @@ class PaymentController extends Controller
             'scolarites' => $scolarites,
             'status' => $status,
             'totalScolariteAmount' => $totalScolariteAmount,
+            'studentRemise' => $studentRemise,
+            'payments' => $payments
         ]);
     }
 
@@ -265,8 +275,6 @@ class PaymentController extends Controller
             ->route('receiptPayment', [
                 'student' => $payment->student,
                 'payment' => $payment,
-                'balance' => $payment->scolarite->amount - $request->totalPaymentsAmount,
-                'totalPaymentsAmount' => $request->totalPaymentsAmount,
             ])
             ->with('success', 'Paiement Reussi !! reçu téléchargé !!');
     }
