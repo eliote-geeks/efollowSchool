@@ -200,7 +200,7 @@
                                                                         frais exigibles</option>
                                                                     @foreach ($scolarites as $sc)
                                                                         <option value="{{ $sc->id }}">
-                                                                            {{ $sc->name }}</option>
+                                                                            {{ $sc->name }} ({{ number_format($sc->amount) }})FCFA</option>
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les
@@ -298,7 +298,7 @@
                                                                             ])->count() == 0)
                                                                         @endif
                                                                         <option value="{{ $sc->id }}">
-                                                                            {{ $sc->name }}</option>
+                                                                            {{ $sc->name }} ({{ number_format($sc->amount) }})FCFA</option>
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les

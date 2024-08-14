@@ -110,6 +110,10 @@ class PaymentController extends Controller
 
             $number = (float) $str;
 
+            if($number > Scolarite::find($request->scolarite)->amount)
+            {
+                return redirect()->back()->with('danger','le montant de la remise est superieure au frais scolaire');
+            }
             $remise = new remiseDue();
             $remise->school_information_id = $this->schoolInformation->id;
             $remise->rest = $number;
@@ -137,11 +141,17 @@ class PaymentController extends Controller
 
             $number = (float) $str;
 
+
+            if($number > $reduction->scolarite->amount)
+            {
+                return redirect()->back()->with('danger','le montant de la remise est superieure au frais scolaire');
+            }
+
             $reduction->rest = $number;
             $reduction->student_id = $request->student;
             $reduction->scolarite_id = $request->scolarite;
             $reduction->save();
-            return redirect()->route('reductions')->with('success', 'Nouvelle reduction ajoutée!!');
+            return redirect()->route('getRemise')->with('success', 'Reduction editée !!');
         } catch (\Exception $e) {
             return redirect()
                 ->back()
