@@ -32,7 +32,7 @@
                             <h2 class="mb-1">Liste des frais exigibles </h2>
                             <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addCosts"
                                 role="button">
-                                <i class="fas fa-plus me-2"></i>
+                                <i class="fe fe-plus me-2"></i>
                                 Ajouter des frais exigibles
                             </a>
                         </div>
@@ -75,13 +75,13 @@
                                             <td>{{ \Carbon\Carbon::parse($sc->end_date)->format('d, M Y') }}</td>
                                             <td>{{ $sc->user->name }}</td>
                                             <td scope="col" class="text-center d-flex justify-content-center">
-                                                <a class="btn btn-ghost btn-sm rounded-circle me-2 d-flex align-items-center"
+                                                <a class="btn btn-ghost btn-sm me-2 d-flex align-items-center"
                                                     data-bs-toggle="modal" href="#editCosts{{ $sc->id }}"
                                                     role="button">
                                                     <i class="fe fe-edit me-1"></i>
                                                     Modifier
                                                 </a>
-                                                <a class="btn btn-ghost btn-sm rounded-circle d-flex align-items-center"
+                                                <a class="btn btn-ghost btn-sm d-flex align-items-center"
                                                     data-bs-toggle="modal" href="#deleteCosts{{ $sc->id }}"
                                                     role="button">
                                                     <i class="fe fe-trash me-1"></i>

@@ -89,3 +89,11 @@ Route::get('student-view', function () {
 // Route::get('reduction', function(){
 //     return view('reduction.reduction');
 // });
+
+Route::get('enseignant', function(){
+    return view('enseignant.enseignant');
+});
+
+Route::get('sequence', function(){
+    return view('sequence.sequence');
+});
