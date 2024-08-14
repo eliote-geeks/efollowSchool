@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Student;
 use App\Models\Moratoire;
 use App\Models\remiseDue;
+use App\Models\RequestPayment;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
@@ -26,7 +27,14 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view('payment.payment');
+        $payments = Payment::where('school_information_id', $this->schoolInformation->id)->get();
+        $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->latest()->first()->id)
+            // ->where('end_date', '>', now())
+            ->get();
+        return view('payment.payment-list', [
+            'payments' => $payments,
+            'scolarites' => $scolarites,
+        ]);
     }
 
     public function paymentStudent(Student $student)
@@ -51,10 +59,9 @@ class PaymentController extends Controller
         $totalScolariteAmount = $scolarites->sum('amount');
 
         $studentRemise = 0;
-        if(remiseDue::where('student_id',$student->id)->count() > 0){
-            $studentRemise = remiseDue::where('student_id',$student->id)->first()->rest;
+        if (remiseDue::where('student_id', $student->id)->count() > 0) {
+            $studentRemise = remiseDue::where('student_id', $student->id)->first()->rest;
         }
-        
 
         // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
         $payments = Payment::where('student_id', $student->id)
@@ -80,7 +87,9 @@ class PaymentController extends Controller
         }
         // Retourner le statut
 
-        $payments =  Payment::where('student_id',$student->id)->orderByDesc('id')->get();
+        $payments = Payment::where('student_id', $student->id)
+            ->orderByDesc('id')
+            ->get();
 
         return view('payment.payment', [
             'totalPaymentsAmount' => $totalPaymentsAmount,
@@ -90,7 +99,7 @@ class PaymentController extends Controller
             'status' => $status,
             'totalScolariteAmount' => $totalScolariteAmount,
             'studentRemise' => $studentRemise,
-            'payments' => $payments
+            'payments' => $payments,
         ]);
     }
 
@@ -149,28 +158,28 @@ class PaymentController extends Controller
     {
         try {
             if ($reduction->status == 0) {
-            $request->validate([
-                'amount' => 'required',
-                'student' => 'required',
-                'scolarite' => 'required',
-            ]);
+                $request->validate([
+                    'amount' => 'required',
+                    'student' => 'required',
+                    'scolarite' => 'required',
+                ]);
 
-            $str = str_replace(' ', '', $request->amount);
+                $str = str_replace(' ', '', $request->amount);
 
-            $number = (float) $str;
+                $number = (float) $str;
 
-            if ($number > $reduction->scolarite->amount) {
-                return redirect()->back()->with('danger', 'le montant de la remise est superieure au frais scolaire');
+                if ($number > $reduction->scolarite->amount) {
+                    return redirect()->back()->with('danger', 'le montant de la remise est superieure au frais scolaire');
+                }
+
+                $reduction->rest = $number;
+                $reduction->student_id = $request->student;
+                $reduction->scolarite_id = $request->scolarite;
+                $reduction->save();
+                return redirect()->route('getRemise')->with('success', 'Reduction editée !!');
+            } else {
+                return redirect()->back()->with('warning', 'Impossible d\'editer cette reduction car actif!!');
             }
-
-            $reduction->rest = $number;
-            $reduction->student_id = $request->student;
-            $reduction->scolarite_id = $request->scolarite;
-            $reduction->save();
-            return redirect()->route('getRemise')->with('success', 'Reduction editée !!');
-        } else {
-            return redirect()->back()->with('warning', 'Impossible d\'editer cette reduction car actif!!');
-        }
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -324,7 +333,72 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        $request->validate([
+            'student' => 'required',
+            'amount' => 'required',
+            'scolarite' => 'required',
+            'reason' => 'required',
+        ]);
+
+        $str = str_replace(' ', '', $request->amount);
+
+        $number = (float) $str;
+        $scolarite = Scolarite::find($request->scolarite);
+
+        $payments = Payment::where([
+            'student_id' => $request->student,
+            'scolarite_id' => $scolarite->id,
+        ])->get();
+
+        // Calculer le montant total des paiements effectués
+        $totalPaymentsAmount = $payments->sum('amount');
+
+        if (($totalPaymentsAmount + $number - $payment->amount) > $scolarite->amount) {
+            return redirect()->back()->with('warning', 'Nous ne pouvons autoriser cette requete car la somme entrée additionné à celui des precedentes transactions de cet étudiant dépasse le montant des frais concernés !!');
+        }
+
+        $req = new RequestPayment();
+        $req->payment_id = $payment->id;
+        $req->student_id = $payment->student_id;
+        $req->previousAmount = $payment->amount;
+        $req->newAmount = $number;
+        $req->previousScolarite = $payment->scolarite->id;
+        $req->newScolarite = $request->scolarite;
+        $req->reason = $request->reason;
+        $req->user_id = auth()->user()->id;
+        $req->save();
+
+        //not sure
+        $payment->amount = $number;
+        $payment->scolarite_id = $request->scolarite;
+        $payment->save();
+
+        return redirect()
+            ->route('requetesShow', [
+                'payment' => $payment,
+            ])
+            ->with('success', 'nouvelle requete ajoutée !!');
+    }
+
+    public function requetesShow(Payment $payment)
+    {
+        $requetes = RequestPayment::where('payment_id', $payment->id)->get();
+        return view('payment.request', [
+            'requetes' => $requetes,
+            'payment' => $payment,
+        ]);
+    }
+
+    public function statusReq(RequestPayment $requete)
+    {
+        if ($requete->status == 0) {
+            $requete->status = 1;
+            $payment = Payment::find($requete->payment_id);
+            $payment->save();
+        }
+        $requete->save();
+
+        return redirect()->back()->with('success', 'Requete Mise à jour!!');
     }
 
     /**

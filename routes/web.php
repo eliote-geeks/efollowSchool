@@ -63,7 +63,8 @@ Route::post('remise/edit/{reduction}',[PaymentController::class,'remiseEdit'])->
 Route::get('remise/delete/{reduction}',[PaymentController::class,'delRemise'])->name('delRemise');
 Route::get('remise/status/{reduction}',[PaymentController::class,'statusRemise'])->name('statusRemise');
 Route::get('get/remise',[PaymentController::class,'getRemise'])->name('getRemise');
-
+Route::get('get/requetes/{payment}',[PaymentController::class,'requetesShow'])->name('requetesShow');
+Route::get('statusReq/{requete}',[PaymentController::class,'statusReq'])->name('statusReq');
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

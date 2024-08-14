@@ -75,6 +75,7 @@
                         <table class="table table-hover table-lg fs-4" id="dataTableBasic">
                             <thead class="table-light">
                                 <tr>
+                                    <th>Identifiant Paiement</th>
                                     <th scope="col">Frais Scolaire</th>
                                     <th>Montant</th>
                                     <th class="text-center">Options</th>
@@ -83,12 +84,12 @@
                             <tbody>
                                 @foreach ($payments as $p)
                                     <tr>
+                                        <td>{{ $p->id }}</td>
                                         <td>{{ $p->scolarite->name }}</td>
                                         <td>{{ number_format($p->amount) }}</td>
                                         <td class="text-end"><a class="btn btn-info"
-                                                href="{{ route('receiptPayment', [$p->student->id,$p]) }}">Imprimer</a>
+                                                href="{{ route('receiptPayment', [$p->student->id, $p]) }}">Imprimer</a>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>

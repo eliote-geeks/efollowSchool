@@ -58,4 +58,9 @@ class Student extends Model
     {
         return $this->hasMany(Moratoire::class);
     }
+
+    public function request_payment()
+    {
+        return $this->hasMany(RequestPayment::class);
+    }
 }

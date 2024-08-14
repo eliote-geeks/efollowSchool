@@ -3,8 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Payment;
 use App\Models\Student;
 use App\Models\Scolarite;
+use App\Models\RequestPayment;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
@@ -58,5 +60,15 @@ class User extends Authenticatable
     public function scolarite()
     {
         return $this->hasMany(Scolarite::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+        public function request_payment()
+    {
+        return $this->hasMany(RequestPayment::class);
     }
 }
