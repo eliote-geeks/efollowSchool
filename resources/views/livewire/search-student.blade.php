@@ -311,14 +311,17 @@
                                                                 <div class="invalid-feedback">Veuillez selectionner les
                                                                     frais exigibles auxquels
                                                                     sera appliqué le moratoire</div>
+                                                                    <small>Si un frais n'apparait pas dans cette liste alors l'etudiant beneficie deja d'une reduction pour ce frais ou n'a pas encore été ajouté</small>
                                                             </div>
                                                         </div>
+                                                        <small>Veuillez contacter un professionnel pour plus d'informations</small>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Annuler</button>
                                                         <button type="submit" class="btn btn-primary">Créer</button>
                                                     </div>
+                                    
                                                 </form>
                                             </div>
                                         </div>
