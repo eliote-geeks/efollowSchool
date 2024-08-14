@@ -138,6 +138,7 @@ class PaymentController extends Controller
     public function remiseEdit(request $request, remiseDue $reduction)
     {
         try {
+            if ($reduction->status == 0) {
             $request->validate([
                 'amount' => 'required',
                 'student' => 'required',
@@ -157,6 +158,9 @@ class PaymentController extends Controller
             $reduction->scolarite_id = $request->scolarite;
             $reduction->save();
             return redirect()->route('getRemise')->with('success', 'Reduction editée !!');
+        } else {
+            return redirect()->back()->with('warning', 'Impossible d\'editer cette reduction car actif!!');
+        }
         } catch (\Exception $e) {
             return redirect()
                 ->back()
