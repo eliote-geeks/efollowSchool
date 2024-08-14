@@ -200,7 +200,10 @@
                                                                         frais exigibles</option>
                                                                     @foreach ($scolarites as $sc)
                                                                         <option value="{{ $sc->id }}">
-                                                                            {{ $sc->name }}</option>
+                                                                            {{ $sc->name }}
+                                                                            ({{ number_format($sc->amount) }})
+                                                                            FCFA
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les
@@ -292,13 +295,17 @@
                                                                     @foreach ($scolarites as $sc)
                                                                         @if (
                                                                             \App\Models\remiseDue::where([
-                                                                                'scolarite_id' => $reduction->scolarite_id,
-                                                                                'student_id' => $reduction->student_id,
+                                                                                'scolarite_id' => $sc->id,
+                                                                                'student_id' => $student->id,
                                                                                 'school_information_id' => $this->schoolInformation->id,
                                                                             ])->count() == 0)
-                                                                        @endif
+                                                                        
                                                                         <option value="{{ $sc->id }}">
-                                                                            {{ $sc->name }}</option>
+                                                                            {{ $sc->name }}
+                                                                            ({{ number_format($sc->amount) }})
+                                                                            FCFA
+                                                                        </option>
+                                                                        @endif
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les

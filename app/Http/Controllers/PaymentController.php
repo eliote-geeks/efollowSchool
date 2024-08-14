@@ -86,11 +86,14 @@ class PaymentController extends Controller
 
     public function getRemise()
     {
-        $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
-        $remises = remiseDue::where('school_information_id',$this->schoolInformation->id)->get();
-        return view('reduction.reduction',[
+        // $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
+        $remises = remiseDue::where('school_information_id', $this->schoolInformation->id)->get();
+        $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->latest()->first()->id)
+            // ->where('end_date', '>', now())
+            ->get();
+        return view('reduction.reduction', [
             'remises' => $remises,
-            'moratoires' => $moratoires
+            'scolarites' => $scolarites,
         ]);
     }
 
@@ -103,11 +106,23 @@ class PaymentController extends Controller
                 'scolarite' => 'required',
             ]);
 
-            $str = str_replace(' ', '', $request->amount);
+            if (
+                remiseDue::where([
+                    'student_id' => $request->student,
+                    'scolarite_id' => $request->scolarite,
+                ])->count() > 0
+            ) {
+                return redirect()->back()->with('warning', 'une remise Existe deja pour ce frais à cet etudiant');
+            }
 
+            $str = str_replace(' ', '', $request->amount);
             $number = (float) $str;
 
+            if ($number > Scolarite::find($request->scolarite)->amount) {
+                return redirect()->back()->with('danger', 'le montant de la remise est superieure au frais scolaire');
+            }
             $remise = new remiseDue();
+            $remise->school_information_id = $this->schoolInformation->id;
             $remise->rest = $number;
             $remise->student_id = $request->student;
             $remise->scolarite_id = $request->scolarite;
@@ -123,6 +138,7 @@ class PaymentController extends Controller
     public function remiseEdit(request $request, remiseDue $reduction)
     {
         try {
+            if ($reduction->status == 0) {
             $request->validate([
                 'amount' => 'required',
                 'student' => 'required',
@@ -133,11 +149,18 @@ class PaymentController extends Controller
 
             $number = (float) $str;
 
+            if ($number > $reduction->scolarite->amount) {
+                return redirect()->back()->with('danger', 'le montant de la remise est superieure au frais scolaire');
+            }
+
             $reduction->rest = $number;
             $reduction->student_id = $request->student;
             $reduction->scolarite_id = $request->scolarite;
             $reduction->save();
-            return redirect()->route('reductions')->with('success', 'Nouvelle reduction ajoutée!!');
+            return redirect()->route('getRemise')->with('success', 'Reduction editée !!');
+        } else {
+            return redirect()->back()->with('warning', 'Impossible d\'editer cette reduction car actif!!');
+        }
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -186,14 +209,10 @@ class PaymentController extends Controller
                 $payment = Payment::where([
                     'scolarite_id' => $reduction->scolarite_id,
                     'student_id' => $reduction->student_id,
+                    'amount' => $reduction->rest,
                     'school_information_id' => $this->schoolInformation->id,
                 ])->first();
-                $payment->school_information_id = $this->schoolInformation->id;
-                $payment->student_id = $reduction->student_id;
-                $payment->scolarite_id = $reduction->scolarite_id;
-                $payment->user_id = auth()->user()->id;
-                $payment->amount -= $reduction->rest;
-                $payment->save();
+                $payment->delete();
 
                 $reduction->status = 0;
                 $reduction->save();

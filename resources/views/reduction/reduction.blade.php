@@ -61,9 +61,9 @@
                                             <td>{{ $remise->scolarite->name }}</td>
                                             <td>
                                                 @if ($remise->status == 0)
-                                                    <a href="{{ route('delRemise',$remise) }}" class="btn btn-primary">Appliquer la réduction</a>
+                                                    <a href="{{ route('statusRemise',$remise) }}" class="btn btn-primary">Appliquer la réduction</a>
                                                 @else
-                                                    <a href="{{ route('delRemise',$remise) }}" class="btn btn-danger">Retirer la réduction</a>
+                                                    <a href="{{ route('statusRemise',$remise) }}" class="btn btn-danger">Retirer la réduction</a>
                                                 @endif
 
                                             </td>
@@ -122,6 +122,7 @@
                                                                         </ul>
                                                                     </div>
                                                                 @endif
+                                                                <input type="hidden" name="student" value="{{ $remise->student->id }}">
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">
                                                                     <label class="form-label" for="schoolName">Montant
@@ -134,6 +135,7 @@
                                                                         required>
                                                                     <div class="invalid-feedback">Veuillez entrer le
                                                                         montant de la réduction</div>
+                                                                        <small>Montant de la scolarite: {{ $remise->scolarite->amount }}</small>
                                                                 </div>
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-12">

@@ -83,13 +83,11 @@ Route::get('student-view', function () {
     return view('student.student-view');
 });
 
-Route::get('moratoire', function(){
-    return view('moratoire.moratoire');
-});
 
-Route::get('reduction', function(){
-    return view('reduction.reduction');
-});
+
+// Route::get('reduction', function(){
+//     return view('reduction.reduction');
+// });
 
 Route::get('enseignant', function(){
     return view('enseignant.enseignant');

@@ -99,7 +99,7 @@
                                                 <td>{{ \Carbon\Carbon::parse($student->student->date_birth)->format('d, M Y') }}
                                                 </td>
                                                 <td>{{ $student->student->matricular }}</td>
-                                                <td><b>{{ $student->classe->name }}
+                                                <td><b>{{ $student->classe->niveau->name }}&nbsp;{{ $student->classe->name }}
                                                 </td>
                                                 <td>{{ $student->student->sexe }}</td>
                                                 {{-- <td>{{ number_format($student->discount) }} FCFA</td> --}}
