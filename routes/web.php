@@ -92,3 +92,7 @@ Route::get('student-view', function () {
 Route::get('enseignant', function(){
     return view('enseignant.enseignant');
 });
+
+Route::get('sequence', function(){
+    return view('sequence.sequence');
+});
