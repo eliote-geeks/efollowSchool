@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('moratoires', function (Blueprint $table) {
             $table->id();
             $table->foreignId('scolarite_id')->references('id')->on('scolarites')->onDelete('cascade');
-            // $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->string('name');
             $table->timestamp('end_date');
             $table->string('file_path');

@@ -18,7 +18,7 @@ class MoratoireController extends Controller
     {
         $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
         $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->latest()->first()->id)
-        ->where('end_date', '>', now())
+        // ->where('end_date', '>', now())
         ->get();
         return view('moratoire.moratoire',[
             'moratoires' => $moratoires,
@@ -68,9 +68,9 @@ class MoratoireController extends Controller
                 $moratoire->file_path = $request->reason->store('moratoires', 'public');
                 $moratoire->school_information_id = SchoolInformation::where('status', 1)->latest()->first()->id;
                 $moratoire->save();
-                return redirect()->route('moratoire.index');
+                return redirect()->route('moratoire.index')->with('danger', 'Moratoire Crée pour l\'etudiant: '.$moratoire->student->first_name.' '.$moratoire->student->last_name);
             } else {
-                return redirect()->back()->with('message', 'Oups cet etudiant dispose deja d\'un moratoire !!');
+                return redirect()->back()->with('warning', 'Oups cet etudiant dispose deja d\'un moratoire !!');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Oups erreur innatendue !!');

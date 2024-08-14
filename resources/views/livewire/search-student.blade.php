@@ -292,8 +292,8 @@
                                                                     @foreach ($scolarites as $sc)
                                                                         @if (
                                                                             \App\Models\remiseDue::where([
-                                                                                'scolarite_id' => $reduction->scolarite_id,
-                                                                                'student_id' => $reduction->student_id,
+                                                                                'scolarite_id' => $sc->id,
+                                                                                'student_id' => $student->id,
                                                                                 'school_information_id' => $this->schoolInformation->id,
                                                                             ])->count() == 0)
                                                                         @endif

@@ -86,11 +86,14 @@ class PaymentController extends Controller
 
     public function getRemise()
     {
-        $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
+        // $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
         $remises = remiseDue::where('school_information_id',$this->schoolInformation->id)->get();
+        $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->latest()->first()->id)
+        // ->where('end_date', '>', now())
+        ->get();
         return view('reduction.reduction',[
             'remises' => $remises,
-            'moratoires' => $moratoires
+            'scolarites' => $scolarites
         ]);
     }
 
@@ -108,6 +111,7 @@ class PaymentController extends Controller
             $number = (float) $str;
 
             $remise = new remiseDue();
+            $remise->school_information_id = $this->schoolInformation->id;
             $remise->rest = $number;
             $remise->student_id = $request->student;
             $remise->scolarite_id = $request->scolarite;
