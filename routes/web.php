@@ -90,3 +90,7 @@ Route::get('moratoire', function(){
 Route::get('reduction', function(){
     return view('reduction.reduction');
 });
+
+Route::get('enseignant', function(){
+    return view('enseignant.enseignant');
+});
