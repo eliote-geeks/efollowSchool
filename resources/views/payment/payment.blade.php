@@ -53,10 +53,14 @@
                     <div class="card-header bg-info text-white">
                         <h4 class="mb-0">Remise</h4>
                     </div>
-                    <div class="card-body">
-                        <p class="mb-0">{{ number_format($studentRemise) }} FCFA</p>
+                    @foreach ($studentRemises as $rem)
+                        <div class="card-body">
+                            <p>Scolarite: {{ $rem->scolarite->name }}</p>
+                            <p class="mb-0">{{ number_format($rem->rest) }} FCFA</p>
+                            <small>{{ $rem->status == 1 ? 'payé' : 'non payé' }}</small>
+                        </div>
+                    @endforeach
 
-                    </div>
                 </div>
             </div>
         </div>

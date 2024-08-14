@@ -58,10 +58,8 @@ class PaymentController extends Controller
         // Calculer le montant total des scolarités
         $totalScolariteAmount = $scolarites->sum('amount');
 
-        $studentRemise = 0;
-        if (remiseDue::where('student_id', $student->id)->count() > 0) {
-            $studentRemise = remiseDue::where('student_id', $student->id)->first()->rest;
-        }
+        $studentRemises = remiseDue::where('student_id', $student->id)->get();
+            
 
         // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
         $payments = Payment::where('student_id', $student->id)
@@ -98,7 +96,7 @@ class PaymentController extends Controller
             'scolarites' => $scolarites,
             'status' => $status,
             'totalScolariteAmount' => $totalScolariteAmount,
-            'studentRemise' => $studentRemise,
+            'studentRemises' => $studentRemises,
             'payments' => $payments,
         ]);
     }
