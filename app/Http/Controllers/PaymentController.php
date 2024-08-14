@@ -205,14 +205,10 @@ class PaymentController extends Controller
                 $payment = Payment::where([
                     'scolarite_id' => $reduction->scolarite_id,
                     'student_id' => $reduction->student_id,
+                    'amount' => $reduction->rest,
                     'school_information_id' => $this->schoolInformation->id,
                 ])->first();
-                $payment->school_information_id = $this->schoolInformation->id;
-                $payment->student_id = $reduction->student_id;
-                $payment->scolarite_id = $reduction->scolarite_id;
-                $payment->user_id = auth()->user()->id;
-                $payment->amount -= $reduction->rest;
-                $payment->save();
+                $payment->delete();
 
                 $reduction->status = 0;
                 $reduction->save();
