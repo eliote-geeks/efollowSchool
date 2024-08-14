@@ -87,13 +87,13 @@ class PaymentController extends Controller
     public function getRemise()
     {
         // $moratoires = Moratoire::where('school_information_id',SchoolInformation::where('status', 1)->latest()->first()->id)->get();
-        $remises = remiseDue::where('school_information_id',$this->schoolInformation->id)->get();
+        $remises = remiseDue::where('school_information_id', $this->schoolInformation->id)->get();
         $scolarites = Scolarite::where('school_information_id', SchoolInformation::where('status', 1)->latest()->first()->id)
-        // ->where('end_date', '>', now())
-        ->get();
-        return view('reduction.reduction',[
+            // ->where('end_date', '>', now())
+            ->get();
+        return view('reduction.reduction', [
             'remises' => $remises,
-            'scolarites' => $scolarites
+            'scolarites' => $scolarites,
         ]);
     }
 
@@ -106,13 +106,20 @@ class PaymentController extends Controller
                 'scolarite' => 'required',
             ]);
 
-            $str = str_replace(' ', '', $request->amount);
+            if (
+                remiseDue::where([
+                    'student_id' => $request->student,
+                    'scolarite_id' => $request->scolarite,
+                ])->count() > 0
+            ) {
+                return redirect()->back()->with('warning', 'une remise Existe deja pour ce frais à cet etudiant');
+            }
 
+            $str = str_replace(' ', '', $request->amount);
             $number = (float) $str;
 
-            if($number > Scolarite::find($request->scolarite)->amount)
-            {
-                return redirect()->back()->with('danger','le montant de la remise est superieure au frais scolaire');
+            if ($number > Scolarite::find($request->scolarite)->amount) {
+                return redirect()->back()->with('danger', 'le montant de la remise est superieure au frais scolaire');
             }
             $remise = new remiseDue();
             $remise->school_information_id = $this->schoolInformation->id;
@@ -141,10 +148,8 @@ class PaymentController extends Controller
 
             $number = (float) $str;
 
-
-            if($number > $reduction->scolarite->amount)
-            {
-                return redirect()->back()->with('danger','le montant de la remise est superieure au frais scolaire');
+            if ($number > $reduction->scolarite->amount) {
+                return redirect()->back()->with('danger', 'le montant de la remise est superieure au frais scolaire');
             }
 
             $reduction->rest = $number;

@@ -200,7 +200,10 @@
                                                                         frais exigibles</option>
                                                                     @foreach ($scolarites as $sc)
                                                                         <option value="{{ $sc->id }}">
-                                                                            {{ $sc->name }} ({{ number_format($sc->amount) }})FCFA</option>
+                                                                            {{ $sc->name }}
+                                                                            ({{ number_format($sc->amount) }})
+                                                                            FCFA
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les
@@ -296,9 +299,13 @@
                                                                                 'student_id' => $student->id,
                                                                                 'school_information_id' => $this->schoolInformation->id,
                                                                             ])->count() == 0)
-                                                                        @endif
+                                                                        
                                                                         <option value="{{ $sc->id }}">
-                                                                            {{ $sc->name }} ({{ number_format($sc->amount) }})FCFA</option>
+                                                                            {{ $sc->name }}
+                                                                            ({{ number_format($sc->amount) }})
+                                                                            FCFA
+                                                                        </option>
+                                                                        @endif
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">Veuillez selectionner les
