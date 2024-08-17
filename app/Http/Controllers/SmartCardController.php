@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
+use App\Models\Payment;
+use App\Models\Scolarite;
 use App\Models\Student;
 use App\Models\SmartCard;
 use Illuminate\Http\Request;
@@ -135,6 +137,37 @@ class SmartCardController extends Controller
         return view('student.card.add-student-card', [
             'student' => $student,
         ]);
+    }
+
+    public function paymentControlStudent(Request $request, Student $student)
+    {
+        try {
+            $request->validate([
+                'id_card_smart' => 'required|min:10|max:10',
+            ]);
+
+            $id = $this->remplace($request->id_card_smart);
+
+            if (
+                SmartCard::where([
+                    'id_card_smart' => $id,
+                    'status' => 'on',
+                ])->count() > 0
+            ) {
+                $card = SmartCard::where([
+                    'id_card_smart' => $id,
+                    'status' => 'on',
+                ])->firstOrFail();
+                $student = Student::find($card->user_id);
+                $paymentsStudent = Payment::where('student_id',$student->id)->sum('amount');
+                $paymentScolarite = Scolarite::where('end_date' > now())->get();
+
+            } else {
+                return redirect()->back()->with('message', 'Etudiant non repertorié !');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', 'Une erreur s\'est produite');
+        }
     }
 
     /**
