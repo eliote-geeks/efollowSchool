@@ -101,7 +101,7 @@ class CreateStudent extends Component
                 $student->name_father = $this->name_father;
                 $student->name_mother = $this->name_mother;
                 $student->sexe = $this->sexe;
-                $str = str_replace(' ', '', $this->discount);
+                // $str = str_replace(' ', '', $this->discount);
 
                 // $number = (float) $str;
                 // $student->discount = $number;
