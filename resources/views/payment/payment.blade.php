@@ -137,7 +137,9 @@
                 <label for="scolarite_id" class="form-label">Tranche</label>
                 <select name="scolarite" id="scolarite_id" class="form-control">
                     @foreach ($scolarites as $scolarite)
-                        @if ($scolarite->amount > $totalPaymentsAmount)
+                        @if ($scolarite->amount > \App\Models\Payment::where('student_id', $student->id)
+                        ->where('scolarite_id', $scolarite->id)
+                        ->sum('amount'))
                             <option value="{{ $scolarite->id }}">{{ $scolarite->name }} -
                                 {{ number_format($scolarite->amount) }} FCFA</option>
                         @endif

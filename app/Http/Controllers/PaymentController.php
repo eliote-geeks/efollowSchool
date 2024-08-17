@@ -59,7 +59,6 @@ class PaymentController extends Controller
         $totalScolariteAmount = $scolarites->sum('amount');
 
         $studentRemises = remiseDue::where('student_id', $student->id)->get();
-            
 
         // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
         $payments = Payment::where('student_id', $student->id)
@@ -266,8 +265,10 @@ class PaymentController extends Controller
         $str = str_replace(' ', '', $request->amount);
 
         $number = (float) $str;
-
-        if ($request->totalPaymentsAmount + $number > $scolarite->amount) {
+        $sumPay = Payment::where('student_id', $request->student)
+            ->where('scolarite_id', $scolarite->id)
+            ->sum('amount');
+        if ($sumPay + $number > $scolarite->amount) {
             return redirect()->back()->with('warning', 'Le montant entré excede celui du frais scolaire en cours !!');
         }
 
@@ -351,7 +352,7 @@ class PaymentController extends Controller
         // Calculer le montant total des paiements effectués
         $totalPaymentsAmount = $payments->sum('amount');
 
-        if (($totalPaymentsAmount + $number - $payment->amount) > $scolarite->amount) {
+        if ($totalPaymentsAmount + $number - $payment->amount > $scolarite->amount) {
             return redirect()->back()->with('warning', 'Nous ne pouvons autoriser cette requete car la somme entrée additionné à celui des precedentes transactions de cet étudiant dépasse le montant des frais concernés !!');
         }
 
