@@ -32,11 +32,12 @@
 
                 <h4 class="card-title">Détails des Scolarités</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTableBasic">
+                    <table class="table table-bordered" >
                         <thead>
                             <tr>
                                 <th>Tranche</th>
                                 <th>Montant</th>
+                                <th>Date d'echéance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,6 +45,7 @@
                                 <tr>
                                     <td>{{ $scolarite->name }}</td>
                                     <td>{{ number_format($scolarite->amount) }} FCFA</td>
+                                    <td>{{ \Carbon\Carbon::parse($scolarite->end_date)->format('d, M Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
