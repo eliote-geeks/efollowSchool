@@ -86,7 +86,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>>
+                </div>
 
                 <a href="{{ url()->previous() }}" class="btn btn-info mt-3">Retour</a>
             </div>
