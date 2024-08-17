@@ -82,6 +82,7 @@
                                     <th>Identifiant Paiement</th>
                                     <th scope="col">Frais Scolaire</th>
                                     <th>Montant</th>
+                                    <th>Date</th>
                                     <th class="text-center">Options</th>
                                 </tr>
                             </thead>
@@ -91,6 +92,7 @@
                                         <td>{{ $p->id }}</td>
                                         <td>{{ $p->scolarite->name }}</td>
                                         <td>{{ number_format($p->amount) }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d, M Y') }}</td>
                                         <td class="text-end"><a class="btn btn-info"
                                                 href="{{ route('receiptPayment', [$p->student->id, $p]) }}">Imprimer</a>
                                         </td>

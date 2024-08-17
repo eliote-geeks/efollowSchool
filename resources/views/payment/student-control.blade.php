@@ -32,7 +32,7 @@
 
                 <h4 class="card-title">Détails des Scolarités</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="dataTableBasic">
                         <thead>
                             <tr>
                                 <th>Tranche</th>
@@ -60,29 +60,31 @@
 
                 <h4 class="card-title">Détails des Paiements</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+                    <table class="table table-hover table-lg fs-4" id="dataTableBasic">
+                        <thead class="table-light">
                             <tr>
-                                <th>Date</th>
+                                <th>Identifiant Paiement</th>
+                                <th scope="col">Frais Scolaire</th>
                                 <th>Montant</th>
+                                <th>Date</th>
+                                <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($payments as $payment)
+                            @foreach ($payments as $p)
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d, M Y') }}</td>
-                                    <td>{{ number_format($payment->amount) }} FCFA</td>
+                                    <td>{{ $p->id }}</td>
+                                    <td>{{ $p->scolarite->name }}</td>
+                                    <td>{{ number_format($p->amount) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d, M Y') }}</td>
+                                    <td class="text-end"><a class="btn btn-info"
+                                            href="{{ route('receiptPayment', [$p->student->id, $p]) }}">Imprimer</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Total Paiements</th>
-                                <th>{{ number_format($totalPaymentsAmount) }} FCFA</th>
-                            </tr>
-                        </tfoot>
                     </table>
-                </div>
+                </div>>
 
                 <a href="{{ url()->previous() }}" class="btn btn-info mt-3">Retour</a>
             </div>

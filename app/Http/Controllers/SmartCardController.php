@@ -181,7 +181,7 @@ class SmartCardController extends Controller
                 $totalScolariteAmount = $scolarites->sum('amount');
                 // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
                 $payments = Payment::where('student_id', $student->id)
-                    ->whereIn('scolarite_id', $scolarites->pluck('id'))
+                    // ->whereIn('scolarite_id', $scolarites->pluck('id'))
                     ->get();
 
                 // Calculer le montant total des paiements effectués
