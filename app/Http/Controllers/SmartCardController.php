@@ -139,7 +139,12 @@ class SmartCardController extends Controller
         ]);
     }
 
-    public function paymentControlStudent(Request $request, Student $student)
+    public function controlPayment()
+    {
+        return view('student.card.payment');
+    }
+
+    public function paymentControlStudent(Request $request)
     {
         try {
             $request->validate([
@@ -159,9 +164,40 @@ class SmartCardController extends Controller
                     'status' => 'on',
                 ])->firstOrFail();
                 $student = Student::find($card->user_id);
-                $paymentsStudent = Payment::where('student_id',$student->id)->sum('amount');
-                $paymentScolarite = Scolarite::where('end_date' > now())->get();
+                if ($student->status != 1) {
+                    return redirect()
+                        ->back()
+                        ->with('message', 'Controle impossible pour l\' etudiant: ' . $student->first_name . ' ' . $student->last_name . 'car il est desactivé');
+                }
+                $niveau = $student->studentClasse->classe->niveau->id;
+                $scolarites = Scolarite::where('end_date', '<', now())
+                    ->get()
+                    ->filter(function ($scolarite) use ($niveau) {
+                        $niveaux = json_decode($scolarite->niveaux, true);
+                        return in_array($niveau, $niveaux);
+                    });
 
+                // Calculer le m// Calculer le montant total des scolarités
+                $totalScolariteAmount = $scolarites->sum('amount');
+                // Récupérer tous les paiements effectués par l'étudiant pour ces scolarités
+                $payments = Payment::where('student_id', $student->id)
+                    ->whereIn('scolarite_id', $scolarites->pluck('id'))
+                    ->get();
+
+                // Calculer le montant total des paiements effectués
+                $totalPaymentsAmount = $payments->sum('amount');
+
+                // Calculer la balance restante
+                $balance = $totalScolariteAmount - $totalPaymentsAmount;
+
+                // Vérifier si l'étudiant est à jour ou non
+                if ($balance > 0) {
+                    $status = "L'étudiant doit encore payer " . number_format($balance) . ' FCFA.';
+                } else {
+                    $status = "L'étudiant est à jour avec ses paiements.";
+                }
+
+                return view('payment.student-control', compact('scolarites', 'payments', 'totalPaymentsAmount', 'student', 'balance', 'status','totalScolariteAmount'));
             } else {
                 return redirect()->back()->with('message', 'Etudiant non repertorié !');
             }

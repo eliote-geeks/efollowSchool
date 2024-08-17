@@ -87,7 +87,7 @@ class ScolariteController extends Controller
                 return redirect()->back()->with('warning', 'Frais déja existant');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'Oups une erreur s\'est produite !!');
+            return redirect()->back()->with('warning', 'Oups une erreur s\'est produite !!: '.$e->getMessage());
         }
     }
 

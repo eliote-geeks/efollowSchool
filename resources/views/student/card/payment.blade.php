@@ -39,7 +39,7 @@
                         <div class="attente shadow-sm">
                             <div class="spinner-grow text-primary mb-3" role="status">
                                 <span class="visually-hidden">Chargement...</span>
-                                <form action="{{ route('paymentControlStudent', $student) }}" method="post" enctype="multipart/form-data" id="personneladdcarte">
+                                <form action="{{ route('paymentControlStudent') }}" method="post" enctype="multipart/form-data" id="personneladdcarte">
                                     @csrf    
                                     <input type="text" class="visually-hidden" placeholder="Password" name="id_card_smart" autocomplete="off" autofocus>  
                                     @error('id_card_smart')
