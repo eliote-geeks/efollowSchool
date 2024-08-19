@@ -44,16 +44,29 @@
                         <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
                             <h2 class="mb-1">Liste des élèves de la <b>{{ $classe->name }}</b></h2>
                             <div class="ms-auto mt-3 mt-md-0">
-                                <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0" data-bs-toggle="modal"
+                                {{-- <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0" data-bs-toggle="modal"
                                     href="#addSchoolYear" role="button" wire:click="backClass">
                                     <i class="fe fe-arrow-left me-2"></i>
                                     Retour
-                                </a>
+                                </a> --}}
                                 <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
                                     href="{{ route('createStudentClass', $classe) }}" role="button">
                                     <i class="fe fe-user-plus me-2"></i>
                                     Créer un élève
                                 </a>
+
+                                <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
+                                href="{{ route('createStudentClass', $classe) }}" role="button">
+                                <i class="fe fe-time me-2"></i>
+                                Créer un Creneau
+                            </a>
+
+                            <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
+                            href="{{ route('createStudentClass', $classe) }}" role="button">
+                            <i class="fe fe-user-plus me-2"></i>
+                            Créer un emploi de temps
+                        </a>
+
                                 <a class="btn btn-success rounded-pill"
                                     href="{{ route('showImportForm', $classe->id) }}" role="button">
                                     <i class="fe fe-upload me-2"></i>

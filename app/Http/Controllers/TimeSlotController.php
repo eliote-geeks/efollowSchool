@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TimeSlotController extends Controller
 {
@@ -14,7 +15,7 @@ class TimeSlotController extends Controller
     {
         $timeslots = TimeSlot::all();
         return view('creneau.index', compact('timeslots'));
-    }               
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,10 +30,21 @@ class TimeSlotController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
-        ]);
+        $request->validate(
+            [
+                'start_time' => [
+                    'required',
+                    'date_format:H:i',
+                    Rule::unique('time_slots')->where(function ($query) use ($request) {
+                        return $query->where('start_time', $request->start_time)->where('end_time', $request->end_time);
+                    }),
+                ],
+                'end_time' => 'required|date_format:H:i|after:start_time',
+            ],
+            [
+                'start_time.unique' => 'Ce créneau horaire existe déjà.',
+            ],
+        );
 
         $timeslot = new TimeSlot();
         $timeslot->start_time = $request->start_time;
@@ -63,10 +75,24 @@ class TimeSlotController extends Controller
      */
     public function update(Request $request, TimeSlot $timeSlot)
     {
-        $request->validate([
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
-        ]);
+        $request->validate(
+            [
+                'start_time' => [
+                    'required',
+                    'date_format:H:i',
+                    Rule::unique('time_slots')->where(function ($query) use ($request, $timeSlot) {
+                        return $query
+                            ->where('start_time', $request->start_time)
+                            ->where('end_time', $request->end_time)
+                            ->where('id', '!=', $timeSlot->id); // Exclure l'ID actuel de la vérification
+                    }),
+                ],
+                'end_time' => 'required|date_format:H:i|after:start_time',
+            ],
+            [
+                'start_time.unique' => 'Ce créneau horaire existe déjà.',
+            ],
+        );
 
         $timeSlot->update($request->all());
 
