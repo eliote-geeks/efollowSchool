@@ -14,6 +14,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\SchoolInformationController;
+use App\Http\Controllers\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::resource('payment',PaymentController::class);
 Route::resource('moratoire',MoratoireController::class);
 Route::resource('timeslots', TimeSlotController::class);
 Route::resource('schedules',ScheduleController::class);
+Route::resource('teacher',TeacherController::class);
 
 Route::get('card-view', function () {
     return view('student.card-view');
