@@ -21,10 +21,9 @@ class ScheduleController extends Controller
     {
         $schoolInformation = $this->schoolInformation;
         $timeSlots = TimeSlot::all();
-        // $teachers = Teacher::where('school_information_id', $this->schoolInformation->id)
-        //     ->latest()
-        //     ->get();
-        $teachers = Teacher::all();
+        $teachers = Teacher::where('school_information_id', $this->schoolInformation->id)
+            ->latest()
+            ->get();
         $schedules = Schedule::with(['classe', 'timeSlot'])->get();
         return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers','schoolInformation'));
     }
