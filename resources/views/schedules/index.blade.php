@@ -51,7 +51,7 @@
 
                                 @if ($schedule)
                                     <div>
-                                        <strong>{{ Str::limit($schedule->teacher->user->name,5) }}</strong><br>
+                                        <small>{{ Str::limit($schedule->teacher->user->name,10) }}</small><br>
                                         <span class="text-muted">{{ $schedule->subject }}</span>
                                     </div>
                                     <div class="mt-2">
