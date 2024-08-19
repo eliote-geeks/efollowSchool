@@ -1,17 +1,19 @@
 <?php
 
+use App\Models\Moratoire;
 use App\Exports\StudentsExport;
-use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\MoratoireController;
-use App\Http\Controllers\NiveauController;
-use App\Http\Controllers\PaymentController;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SchoolInformationController;
+use App\Http\Controllers\TimeSlotController;
+use App\Http\Controllers\MoratoireController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
-use App\Models\Moratoire;
+use App\Http\Controllers\SchoolInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,8 @@ Route::resource('niveau', NiveauController::class);
 Route::resource('scolarite',ScolariteController::class);
 Route::resource('payment',PaymentController::class);
 Route::resource('moratoire',MoratoireController::class);
+Route::resource('timeslots', TimeSlotController::class);
+Route::resource('schedules',ScheduleController::class);
 
 Route::get('card-view', function () {
     return view('student.card-view');

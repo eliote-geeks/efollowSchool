@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Niveau;
 use App\Models\Payment;
 use App\Models\Student;
+use App\Models\Schedule;
 use App\Models\ClasseCours;
 use App\Models\StudentClasse;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,12 @@ class Classe extends Model
     {
         return $this->hasOne(StudentClasse::class);
     }
+
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
 
  
 }

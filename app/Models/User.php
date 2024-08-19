@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Payment;
 use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\Scolarite;
 use App\Models\RequestPayment;
 use Laravel\Sanctum\HasApiTokens;
@@ -70,5 +71,10 @@ class User extends Authenticatable
         public function request_payment()
     {
         return $this->hasMany(RequestPayment::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasMany(Teacher::class);
     }
 }

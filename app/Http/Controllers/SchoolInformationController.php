@@ -71,9 +71,9 @@ class SchoolInformationController extends Controller
                 return redirect()->back()->with('error', 'Une année est déja active !!');
             }
 
-            if ($start->diffInMonths($end) >= 11) {
-                return redirect()->back()->with('error', 'L\'intervalle entre les dates ne doit pas dépasser 11 mois');
-            }
+            // if ($start->diffInMonths($end) > 12) {
+            //     return redirect()->back()->with('error', 'L\'intervalle entre les dates ne doit pas dépasser 12 mois');
+            // }
 
             $school = new SchoolInformation();
             $school->start = $request->start;
@@ -151,9 +151,9 @@ class SchoolInformationController extends Controller
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
 
-            if ($start->diffInMonths($end) >= 11) {
-                return redirect()->with('error', 'L\'intervalle entre les dates ne doit pas dépasser 11 mois');
-            }
+            // if ($start->diffInMonths($end) > 12) {
+            //     return redirect()->with('error', 'L\'intervalle entre les dates ne doit pas dépasser 12 mois');
+            // }
             $schoolInformation->start = $request->start;
             $schoolInformation->end = $request->end;
             $schoolInformation->name = $request->name;
