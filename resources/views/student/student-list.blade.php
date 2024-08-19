@@ -55,14 +55,14 @@
                                     Créer un élève
                                 </a>
 
-                                <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
+                                {{-- <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
                                 href="{{ route('createStudentClass', $classe) }}" role="button">
                                 <i class="fe fe-time me-2"></i>
                                 Créer un Creneau
-                            </a>
+                            </a> --}}
 
                             <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
-                            href="{{ route('createStudentClass', $classe) }}" role="button">
+                            href="{{ route('scheduleCLass', $classe) }}" role="button">
                             <i class="fe fe-user-plus me-2"></i>
                             Créer un emploi de temps
                         </a>

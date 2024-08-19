@@ -3,21 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
+use App\Models\Teacher;
 use App\Models\Schedule;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
+use App\Models\SchoolInformation;
 
 class ScheduleController extends Controller
 {
+    protected $schoolInformation;
+
+    public function __construct()
+    {
+        $this->schoolInformation = SchoolInformation::where('status', 1)->first();
+    }
+    public function scheduleCLass(Classe $classe)
+    {
+        $schoolInformation = $this->schoolInformation;
+        $timeSlots = TimeSlot::all();
+        // $teachers = Teacher::where('school_information_id', $this->schoolInformation->id)
+        //     ->latest()
+        //     ->get();
+        $teachers = Teacher::all();
+        $schedules = Schedule::with(['classe', 'timeSlot'])->get();
+        return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers','schoolInformation'));
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $classes = Classe::all();
-        $timeSlots = TimeSlot::all();
-        $schedules = Schedule::with(['classe', 'timeSlot'])->get();
-        return view('schedules.index', compact('schedules', 'classes', 'timeSlots'));
     }
 
     /**
@@ -34,21 +49,22 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'class_id' => 'required|exists:classes,id',
-            // 'subject_id' => 'required|exists:subjects,id',
+            // 'class_id' => 'required|exists:classes,id',
+            'subject' => 'required|string',
             'time_slot_id' => 'required|exists:time_slots,id',
             'day_of_week' => 'required|string',
+            'teacher' => 'required',
         ]);
 
         $schedule = new Schedule();
         $schedule->classe_id = $request->class_id;
-        $schedule->time_slot_id = $request->time_slot_id; 
+        $schedule->time_slot_id = $request->time_slot_id;
         $schedule->day_of_week = $request->day_of_week;
-        $schedule->subject = 'mliel';
-        $schedule->teacher_id = 1;
+        $schedule->subject = $request->subject;
+        $schedule->teacher_id = $request->teacher;
         $schedule->save();
 
-        return redirect()->route('schedules.index')->with('success', 'Emploi du temps créé avec succès');
+        return redirect()->back()->with('success', 'Emploi du temps créé avec succès');
     }
 
     /**
@@ -73,15 +89,22 @@ class ScheduleController extends Controller
     public function update(Request $request, Schedule $schedule)
     {
         $validatedData = $request->validate([
-            'class_id' => 'required|exists:classes,id',
-            'subject_id' => 'required|exists:subjects,id',
+            // 'class_id' => 'required|exists:classes,id',
+            // 'subject_id' => 'required|exists:subjects,id',
             'time_slot_id' => 'required|exists:time_slots,id',
             'day_of_week' => 'required|string',
+            'subject' => 'required|string',
+            'teacher' => 'required',
         ]);
 
-        $schedule->update($validatedData);
+        // $schedule->classe_id = $request->class_id;
+        $schedule->time_slot_id = $request->time_slot_id;
+        $schedule->day_of_week = $request->day_of_week;
+        $schedule->subject = $request->subject;
+        $schedule->teacher_id = $request->teacher;
+        $schedule->save();
 
-        return redirect()->route('schedules.index')->with('success', 'Emploi du temps mis à jour avec succès');
+        return redirect()->back()->with('success', 'Emploi du temps mis à jour avec succès');
     }
 
     /**
@@ -90,6 +113,6 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
-        return redirect()->route('schedules.index')->with('success', 'Emploi du temps supprimé avec succès');
+        return redirect()->back()->with('success', 'Emploi du temps supprimé avec succès');
     }
 }

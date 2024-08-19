@@ -1,3 +1,4 @@
+<base href="/">
 <x-layouts>
     <style>
         .table thead th {
@@ -12,12 +13,8 @@
         }
     </style>
     <div class="container">
-        <h1 class="text-center my-4">Emploi du Temps 2024-2025</h1>
-        <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createScheduleModal">
-                <i class="fe fe-plus"></i> Ajouter un emploi du temps
-            </button>
-        </div>
+        <h5 class="text-center my-4">Emploi du Temps  ({{ $classe->niveau->name }}) {{ $classe->name }} {{ \Carbon\Carbon::parse($schoolInformation->start)->format('Y').'-'.\Carbon\Carbon::parse($schoolInformation->end)->format('Y') }}</h5>
+      
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -42,7 +39,7 @@
             <tbody>
                 @foreach ($timeSlots as $timeSlot)
                     <tr>
-                        <td class="align-middle">{{ $timeSlot->start_time }} - {{ $timeSlot->end_time }}</td>
+                        <td class="align-middle">{{ \Carbon\Carbon::parse($timeSlot->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($timeSlot->end_time)->format('H:i') }}</td>
                         @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
                             <td class="align-middle">
                                 @php
@@ -54,7 +51,7 @@
 
                                 @if ($schedule)
                                     <div>
-                                        <strong>{{ $schedule->classe->name }}</strong><br>
+                                        <strong>{{ Str::limit($schedule->teacher->user->name,5) }}</strong><br>
                                         <span class="text-muted">{{ $schedule->subject }}</span>
                                     </div>
                                     <div class="mt-2">
@@ -93,25 +90,30 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="{{ route('schedules.store') }}" method="POST">
+                                                    <form action="{{ route('schedules.store') }}" method="POST" autocomplete="off">
                                                         @csrf
                                                         <input type="hidden" name="time_slot_id"
                                                             value="{{ $timeSlot->id }}">
                                                         <input type="hidden" name="day_of_week"
                                                             value="{{ $day }}">
+                                                        <input type="hidden" name="class_id"
+                                                            value="{{ $classe->id }}">
+
                                                         <div class="form-group">
-                                                            <label for="class_id">Classe</label>
-                                                            <select name="class_id" class="form-control" required>
-                                                                @foreach ($classes as $classe)
-                                                                    <option value="{{ $classe->id }}">
-                                                                        {{ $classe->name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="subject">Matière</label>
+                                                            <label for="subject">code Matière</label>
                                                             <input type="text" name="subject" class="form-control"
                                                                 required>
+                                                        </div>
+
+                                                        <div class="form-group mb-3">
+                                                            <label for="time_slot_id"
+                                                                class="form-label">Enseignant</label>
+                                                            <select name="teacher" class="form-control" required>
+                                                                @foreach ($teachers as $teacher)
+                                                                    <option value="{{ $teacher->id }}">
+                                                                        {{ $teacher->user->name }} </option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <button type="submit"
                                                             class="btn btn-primary mt-3">Ajouter</button>
@@ -129,65 +131,6 @@
         </table>
 
 
-        <!-- Modal pour la création -->
-        <div class="modal fade" id="createScheduleModal" tabindex="-1" aria-labelledby="createScheduleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="createScheduleModalLabel">Créer un Emploi du Temps</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('schedules.store') }}" method="POST">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label for="class_id" class="form-label">Classe</label>
-                                <select name="class_id" class="form-control" required>
-                                    @foreach ($classes as $classe)
-                                        <option value="{{ $classe->id }}">{{ $classe->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="subject_id" class="form-label">Matière</label>
-                                {{-- <select name="subject_id" class="form-control" required>
-                                    @foreach ($subjects as $subject)
-                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                                    @endforeach
-                                </select> --}}
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="time_slot_id" class="form-label">Horaire</label>
-                                <select name="time_slot_id" class="form-control" required>
-                                    @foreach ($timeSlots as $timeSlot)
-                                        <option value="{{ $timeSlot->id }}">{{ $timeSlot->start_time }} -
-                                            {{ $timeSlot->end_time }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="day_of_week" class="form-label">Jour de la Semaine</label>
-                                <select name="day_of_week" class="form-control" required>
-                                    <option value="Monday">Lundi</option>
-                                    <option value="Tuesday">Mardi</option>
-                                    <option value="Wednesday">Mercredi</option>
-                                    <option value="Thursday">Jeudi</option>
-                                    <option value="Friday">Vendredi</option>
-                                    <option value="Saturday">Samedi</option>
-                                    <option value="Sunday">Dimanche</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Créer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Modals pour l'édition -->
         @foreach ($schedules as $schedule)
@@ -205,24 +148,10 @@
                             <form action="{{ route('schedules.update', $schedule->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="class_id" value="{{ $classe->id }}">
                                 <div class="form-group mb-3">
-                                    <label for="class_id" class="form-label">Classe</label>
-                                    <select name="class_id" class="form-control" required>
-                                        @foreach ($classes as $classe)
-                                            <option value="{{ $classe->id }}"
-                                                @if ($classe->id == $schedule->class_id) selected @endif>{{ $classe->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="subject_id" class="form-label">Matière</label>
-                                    {{-- <select name="subject_id" class="form-control" required>
-                                        @foreach ($subjects as $subject)
-                                            <option value="{{ $subject->id }}" @if ($subject->id == $schedule->subject_id) selected @endif>{{ $subject->name }}</option>
-                                        @endforeach
-                                    </select> --}}
+                                    <label for="subject" class="form-label">code Matière</label>
+                                    <input type="text" name="subject" value="{{ $schedule->subject }}" class="form-control" id="">
                                 </div>
 
                                 <div class="form-group mb-3">
@@ -232,6 +161,17 @@
                                             <option value="{{ $timeSlot->id }}"
                                                 @if ($timeSlot->id == $schedule->time_slot_id) selected @endif>
                                                 {{ $timeSlot->start_time }} - {{ $timeSlot->end_time }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="time_slot_id" class="form-label">Enseignant</label>
+                                    <select name="teacher" class="form-control" required>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}"
+                                                @if ($teacher->id == $schedule->teacher_id) selected @endif>
+                                                {{ $schedule->teacher->user->name }} </option>
                                         @endforeach
                                     </select>
                                 </div>
