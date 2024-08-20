@@ -236,6 +236,7 @@ class SmartCardController extends Controller
                     Presence::where([
                         'schedule_id' => $schedule->id,
                         'student_id' => $student->id,
+                        'classe_id' => $schedule->classe->id,
                         'date' => $today,
                     ])->count() == 0
                 ) {
@@ -247,6 +248,7 @@ class SmartCardController extends Controller
                             $presence = new Presence();
                             $presence->schedule_id = $schedule->id;
                             $presence->student_id = $student->id;
+                            $presence->classe_id = $schedule->classe->id;
                             $presence->date = $today;
                             $presence->save();
                             return redirect()->back()->with('success', 'Etudiant Présent enregistré !!');
@@ -291,6 +293,7 @@ class SmartCardController extends Controller
                         Presence::where([
                             'schedule_id' => $schedule->id,
                             'student_id' => $sc->student_id,
+                            'classe_id' => $schedule->classe->id,
                             'date' => $today,
                         ])->count() == 0
                     ) {
@@ -299,6 +302,7 @@ class SmartCardController extends Controller
                         $ab->schedule_id = $schedule->id;
                         $ab->date = $today;
                         $ab->duree = $time;
+                        $ab->classe_id = $schedule->classe->id;
                         $ab->save();
                     }
                 }
@@ -309,9 +313,11 @@ class SmartCardController extends Controller
                 // $endschedule->status = 1;
                 $endschedule->save();
 
-                return redirect()->route('scheduleCLass', [
-                    'classe' => $schedule->classe_id,
-                ])->with('success','Appel Terminé vous pouvez consultez la liste de presence de ce jour !!');
+                return redirect()
+                    ->route('scheduleCLass', [
+                        'classe' => $schedule->classe_id,
+                    ])
+                    ->with('success', 'Appel Terminé vous pouvez consultez la liste de presence de ce jour !!');
             } else {
                 return redirect()->back()->with('error', 'Presence au cours déja terminé');
             }

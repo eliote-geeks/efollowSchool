@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+            $table->foreignId('classe_id')->references('id')->on('classes')->onDelete('cascade');
             $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->timestamp('date');   
             $table->timestamps();

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\Attendance;
+use App\Models\Presence;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -40,6 +43,18 @@ class AttendanceController extends Controller
         $attendances = Attendance::whereBetween('created_at', [$startDate, $endDate])->get();
 
         return view('attendance.print_period', compact('attendances', 'startDate', 'endDate'));
+    }
+
+    public function historiquePresence(Classe $classe)
+    {
+        $courses = Schedule::where('classe_id',$classe->id)->get();
+        $presences = Presence::where('classe_id',$classe->id)->get();
+        return view('historique.appelPresence',compact('classe','courses','presences'));
+    }
+
+    public function historiqueAbsence(Classe $classe)
+    {
+        return view('historique.appelAbsence',compact('classe'));
     }
     /**
      * Display a listing of the resource.

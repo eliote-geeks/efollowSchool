@@ -15,12 +15,10 @@
     <div class="container">
         <h5 class="text-center my-4">Emploi du Temps  ({{ $classe->niveau->name }}) {{ $classe->name }} {{ \Carbon\Carbon::parse($schoolInformation->start)->format('Y').'-'.\Carbon\Carbon::parse($schoolInformation->end)->format('Y') }}</h5>
       
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div>
+            <button>Imprimer</button>
+            <a href="{{ route('historiquePresence',$classe) }}">Historique</a>
+        </div>
 
         <!-- Emploi du Temps -->
         <table class="table table-hover text-center">

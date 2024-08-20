@@ -16,6 +16,7 @@ use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SchoolInformationController;
+use App\Models\Attendance;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,8 +80,8 @@ Route::get('creneauClass/{classe}',[TimeSlotController::class,'creneauClass'])->
 Route::get('attendanceStudent/{schedule}',[ScheduleController::class,'attendanceStudent'])->name('attendanceStudent');
 route::get('carte/etudiant/{schedule}',[SmartCardController::class,'endListCardschedule'])->name('endListCardschedule');
 route::post('carte/shedule/{schedule}',[SmartCardController::class,'scheduleCard'])->name('scheduleCard');
-
-
+route::get('historique/presence/{classe}',[AttendanceController::class,'historiquePresence'])->name('historiquePresence');
+route::get('historique/absence/{classe}',[AttendanceController::class,'historiqueAbsence'])->name('historiqueAbsence');
 
 Route::get('/attendance/print/day', [AttendanceController::class, 'printDay'])->name('attendance.print.day');
 Route::get('/attendance/print/week', [AttendanceController::class, 'printWeek'])->name('attendance.print.week');
