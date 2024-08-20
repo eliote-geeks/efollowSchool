@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Classe;
 use App\Models\Teacher;
 use App\Models\Schedule;
@@ -25,16 +26,20 @@ class ScheduleController extends Controller
             ->latest()
             ->get();
         $schedules = Schedule::with(['classe', 'timeSlot'])->get();
-        return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers','schoolInformation'));
+        return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers', 'schoolInformation'));
     }
 
     public function attendanceStudent(Schedule $schedule)
     {
-        return view('student.card.attendance',[
-            'schedule' => $schedule
-        ]);
+        $currentDay = Carbon::now()->format('l'); // 'l' retourne le jour en anglais, par ex: 'Monday'
+        if ($currentDay === $schedule->day_of_week) {
+            return view('student.card.attendance', [
+                'schedule' => $schedule,
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'L\'appel ne peut etre effectué le jour ne correspond pas!!');
+        }
     }
-
 
     /**
      * Display a listing of the resource.
