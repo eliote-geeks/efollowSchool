@@ -34,16 +34,21 @@ class ScheduleController extends Controller
 
     public function attendanceStudent(Schedule $schedule)
     {
-        $endSchedule = EndSchedule::where('schedule_id', $schedule->id)->count();
+        $today = Carbon::today()->toDateString();
+        $endSchedule = EndSchedule::where([
+            'schedule_id' => $schedule->id,
+            'date' => $today,
+        ])->count();
+  
         $currentDay = Carbon::now()->format('l'); // 'l' retourne le jour en anglais, par ex: 'Monday'
         if ($currentDay === $schedule->day_of_week) {
             if ($endSchedule == 0) {
-                if(!Carbon::parse($schedule->timeSlot->start_time)->gte(now())){
+                if (!Carbon::parse($schedule->timeSlot->start_time)->gte(now())) {
                     return view('student.card.attendance', [
                         'schedule' => $schedule,
                     ]);
-                }else{
-                    return redirect()->back()->with('error','Veuillez patientez le debut du cours pour effectuez l\'appel!! ');
+                } else {
+                    return redirect()->back()->with('error', 'Veuillez patientez le debut du cours pour effectuez l\'appel!! ');
                 }
             } else {
                 return redirect()->back()->with('error', 'L\'appel a déja été effectué pour ce créneau !!');
