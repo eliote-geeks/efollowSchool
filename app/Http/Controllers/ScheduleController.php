@@ -30,7 +30,9 @@ class ScheduleController extends Controller
 
     public function attendanceStudent(Schedule $schedule)
     {
-        return view('student.card.attendance',compact('schedule'));
+        return view('student.card.attendance',[
+            'schedule' => $schedule
+        ]);
     }
 
 

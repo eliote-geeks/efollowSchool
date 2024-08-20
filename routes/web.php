@@ -76,6 +76,8 @@ Route::get('student-control-payment',[SmartCardController::class,'controlPayment
 Route::get('scheduleCLass/{classe}',[ScheduleController::class,'scheduleCLass'])->name('scheduleCLass');
 Route::get('creneauClass/{classe}',[TimeSlotController::class,'creneauClass'])->name('creneauClass');
 Route::get('attendanceStudent/{schedule}',[ScheduleController::class,'attendanceStudent'])->name('attendanceStudent');
+route::get('carte/etudiant/{schedule}',[SmartCardController::class,'endListCardschedule'])->name('endListCardschedule');
+route::post('carte/shedule/{schedule}',[SmartCardController::class,'scheduleCard'])->name('scheduleCard');
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

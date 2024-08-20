@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\Classe;
+use App\Models\Absence;
 use App\Models\Teacher;
+use App\Models\Presence;
 use App\Models\TimeSlot;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,5 +27,15 @@ class Schedule extends Model
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
+    }
+
+    public function absence()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    public function presence()
+    {
+        return $this->hasMany(Presence::class);
     }
 }

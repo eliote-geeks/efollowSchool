@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Classe;
+use App\Models\Absence;
 use App\Models\Payment;
-use App\Models\Scolarite;
 use App\Models\Student;
+use App\Models\Presence;
+use App\Models\Schedule;
+use App\Models\Scolarite;
 use App\Models\SmartCard;
+use App\Models\EndSchedule;
 use Illuminate\Http\Request;
 use App\Models\StudentClasse;
 
@@ -197,9 +202,118 @@ class SmartCardController extends Controller
                     $status = "L'étudiant est à jour avec ses paiements.";
                 }
 
-                return view('payment.student-control', compact('scolarites', 'payments', 'totalPaymentsAmount', 'student', 'balance', 'status','totalScolariteAmount'));
+                return view('payment.student-control', compact('scolarites', 'payments', 'totalPaymentsAmount', 'student', 'balance', 'status', 'totalScolariteAmount'));
             } else {
                 return redirect()->back()->with('message', 'Etudiant non repertorié !');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', 'Une erreur s\'est produite');
+        }
+    }
+
+    public function scheduleCard(Request $request, Schedule $schedule)
+    {
+        // try {
+        $request->validate([
+            'id_card_smart' => 'required|min:10|max:10',
+        ]);
+
+        $id = $this->remplace($request->id_card_smart);
+
+        if (
+            SmartCard::where([
+                'id_card_smart' => $id,
+                'status' => 'on',
+            ])->count() > 0
+        ) {
+            $card = SmartCard::where([
+                'id_card_smart' => $id,
+                'status' => 'on',
+            ])->firstOrFail();
+            $today = Carbon::today()->toDateString();
+            $student = Student::find($card->user_id);
+            if (
+                Presence::where([
+                    'schedule_id' => $schedule->id,
+                    'student_id' => $student->id,
+                    'date' => $today,
+                ])->count() == 0
+            ) {
+                $currentDay = Carbon::now()->format('l'); // 'l' retourne le jour en anglais, par ex: 'Monday'
+                
+                // Vérifiez si le jour actuel correspond au jour du cours
+                if ($currentDay === $schedule->day_of_week) {
+                    if ($student->StudentClasse->classe->id == $schedule->classe->id) {
+                        $presence = new Presence();
+                        $presence->schedule_id = $schedule->id;
+                        $presence->student_id = $student->id;
+                        $presence->date = $today;
+                        $presence->save();
+                        return redirect()->back()->with('success', 'Etudiant Présent enregistré !!');
+                    } else {
+                        return redirect()->back()->with('error', 'Etudiant ne fait pas parti de la classe !!');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'L\'appel ne peut etre effectué le jour ne correspond pas!!');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Etudiant déja enregistré !!');
+            }
+
+            return redirect()->route('student.show', [
+                'student' => $student,
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'Etudiant non repertorié !');
+        }
+        // } catch (\Exception $e) {
+        //     return redirect()->back()->with('error', 'Une erreur s\'est produite');
+        // }
+    }
+
+    public function endListCardschedule(Schedule $schedule)
+    {
+        try {
+            $today = Carbon::today()->toDateString();
+            if (
+                endSchedule::where([
+                    'schedule_id' => $schedule->id,
+                    'date' => $today,
+                ])->count() == 0
+            ) {
+                $course = $schedule->course_id;
+
+                $start = Carbon::parse($schedule->timeSlot->start_Hour);
+                $end = Carbon::parse($schedule->timeSlot->end_Hour);
+                $time = $start->diffInMinutes($end);
+                foreach (StudentClasse::where('classe_id', $schedule->classe_id)->get() as $sc) {
+                    if (
+                        Presence::where([
+                            'schedule_id' => $schedule->id,
+                            'student_id' => $sc->student_id,
+                            'date' => $today,
+                        ])->count() == 0
+                    ) {
+                        $ab = new Absence();
+                        $ab->student_id = $sc->student_id;
+                        $ab->schedule_id = $schedule->id;
+                        $ab->date = $today;
+                        $ab->duree = $time;
+                        $ab->save();
+                    }
+                }
+
+                $endschedule = new EndSchedule();
+                $endschedule->schedule_id = $schedule->id;
+                $endschedule->date = $today;
+                // $endschedule->status = 1;
+                $endschedule->save();
+
+                return redirect()->route('sched$scheduleCourse', [
+                    'course' => $course,
+                ]);
+            } else {
+                return redirect()->back()->with('message', 'sched$scheduleme déja terminé');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('message', 'Une erreur s\'est produite');

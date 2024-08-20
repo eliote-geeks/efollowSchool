@@ -44,8 +44,7 @@
                         <div class="attente shadow-sm">
                             <div class="spinner-grow text-primary mb-3" role="status">
                                 <span class="visually-hidden">Chargement...</span>
-                                <form action="{{ route('paymentControlStudent') }}" method="post"
-                                    enctype="multipart/form-data" id="personneladdcarte">
+                                <form action="{{ route('scheduleCard', $schedule) }}" method="POST">
                                     @csrf
                                     <input type="text" class="visually-hidden" placeholder="Password"
                                         name="id_card_smart" autocomplete="off" autofocus>
@@ -59,8 +58,34 @@
                         </div>
 
                     </div>
+                    <a href="javascript:;" class="btn btn-danger" data-toggle="modal"
+                        data-target="#confirmCloseModal">Fermer la liste d'appel</a>
 
                 </div>
+
+                <!-- Modal de confirmation -->
+                <div class="modal fade" id="confirmCloseModal" tabindex="-1" role="dialog"
+                    aria-labelledby="confirmCloseModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmCloseModalLabel">Confirmation de Fermeture</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Êtes-vous sûr de vouloir fermer la liste d'appel Cette action est irreversible?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <a href="{{ route('endListCardschedule', $schedule) }}"
+                                    class="btn btn-danger">Fermer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>
