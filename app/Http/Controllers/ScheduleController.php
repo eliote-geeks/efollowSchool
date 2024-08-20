@@ -43,7 +43,7 @@ class ScheduleController extends Controller
         $currentDay = Carbon::now()->format('l'); // 'l' retourne le jour en anglais, par ex: 'Monday'
         if ($currentDay === $schedule->day_of_week) {
             if ($endSchedule == 0) {
-                if (!Carbon::parse($schedule->timeSlot->start_time)->gte(now())) {
+                if (Carbon::parse($schedule->timeSlot->start_time)->gte(now())) {
                     return view('student.card.attendance', [
                         'schedule' => $schedule,
                     ]);

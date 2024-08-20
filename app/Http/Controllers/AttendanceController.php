@@ -54,7 +54,9 @@ class AttendanceController extends Controller
 
     public function historiqueAbsence(Classe $classe)
     {
-        return view('historique.appelAbsence',compact('classe'));
+        $courses = Schedule::where('classe_id',$classe->id)->get();
+        $presences = Presence::where('classe_id',$classe->id)->get();
+        return view('historique.appelAbsence',compact('classe','courses','presences'));
     }
     /**
      * Display a listing of the resource.
