@@ -311,7 +311,7 @@ class SmartCardController extends Controller
 
                 return redirect()->route('scheduleCLass', [
                     'classe' => $schedule->classe_id,
-                ]);
+                ])->with('Appel Terminé vous pouvez consultez la liste de presence de ce jour !!');
             } else {
                 return redirect()->back()->with('error', 'Presence au cours déja terminé');
             }

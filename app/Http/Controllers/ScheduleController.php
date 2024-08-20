@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Classe;
+use App\Models\EndSchedule;
 use App\Models\Teacher;
 use App\Models\Schedule;
 use App\Models\TimeSlot;
@@ -21,21 +22,28 @@ class ScheduleController extends Controller
     public function scheduleCLass(Classe $classe)
     {
         $schoolInformation = $this->schoolInformation;
-        $timeSlots = TimeSlot::where('classe_id',$classe->id)->get();
+        $timeSlots = TimeSlot::where('classe_id', $classe->id)->get();
         $teachers = Teacher::where('school_information_id', $this->schoolInformation->id)
             ->latest()
             ->get();
-        $schedules = Schedule::where('classe_id',$classe->id)->with(['classe', 'timeSlot'])->get();
+        $schedules = Schedule::where('classe_id', $classe->id)
+            ->with(['classe', 'timeSlot'])
+            ->get();
         return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers', 'schoolInformation'));
     }
 
     public function attendanceStudent(Schedule $schedule)
     {
+        $endSchedule = EndSchedule::where('schedule_id', $schedule->id)->count();
         $currentDay = Carbon::now()->format('l'); // 'l' retourne le jour en anglais, par ex: 'Monday'
         if ($currentDay === $schedule->day_of_week) {
-            return view('student.card.attendance', [
-                'schedule' => $schedule,
-            ]);
+            if ($endSchedule == 0) {
+                return view('student.card.attendance', [
+                    'schedule' => $schedule,
+                ]);
+            } else {
+                return redirect()->back()->with('error', 'L\'appel a déja été effectué pour ce créneau !!');
+            }
         } else {
             return redirect()->back()->with('error', 'L\'appel ne peut etre effectué le jour ne correspond pas!!');
         }
