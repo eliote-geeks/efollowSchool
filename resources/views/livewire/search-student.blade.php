@@ -327,9 +327,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <tr>
-                                        <td colspan="9" class="text-center text-muted">Aucun étudiant trouvé</td>
-                                    </tr>
+                                   
                                 @endforelse
                             </tbody>
                         </table>
