@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
-use App\Models\Attendance;
+use App\Models\Absence;
 use App\Models\Presence;
 use App\Models\Schedule;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
+use App\Models\StudentClasse;
 
 class AttendanceController extends Controller
 {
@@ -47,16 +49,22 @@ class AttendanceController extends Controller
 
     public function historiquePresence(Classe $classe)
     {
-        $courses = Schedule::where('classe_id',$classe->id)->get();
-        $presences = Presence::where('classe_id',$classe->id)->get();
-        return view('historique.appelPresence',compact('classe','courses','presences'));
+        $students = StudentClasse::where([
+            'classe_id' => $classe->id,
+        ])->get();
+        $courses = Schedule::where('classe_id', $classe->id)->get();
+        $presences = Presence::where('classe_id', $classe->id)->get();
+        return view('historique.appelPresence', compact('classe', 'courses', 'presences', 'students'));
     }
 
     public function historiqueAbsence(Classe $classe)
     {
-        $courses = Schedule::where('classe_id',$classe->id)->get();
-        $presences = Presence::where('classe_id',$classe->id)->get();
-        return view('historique.appelAbsence',compact('classe','courses','presences'));
+        $students = StudentClasse::where([
+            'classe_id' => $classe->id,
+        ])->get();
+        $courses = Schedule::where('classe_id', $classe->id)->get();
+        $presences = Absence::where('classe_id', $classe->id)->get();
+        return view('historique.appelAbsence', compact('classe', 'courses', 'presences', 'students'));
     }
     /**
      * Display a listing of the resource.

@@ -28,6 +28,20 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="course" class="form-label">Etudiant :</label>
+                            <select class="form-control" name="course" id="course">
+                                <option value="">Sélectionnez un Etudiant</option>
+                                @foreach ($students as $s)
+                                    <option value="{{ $s->student->id }}">
+                                        {{ $s->student->first_name . ' ' . $s->student->last_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('course')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="period" class="form-label">Période <span class="text-danger">*</span>:</label>
                             <select name="period" id="period" class="form-control" required>
                                 <option value="week">Cette Semaine</option>
@@ -84,11 +98,13 @@
                                     <tbody>
                                         @foreach ($presences as $p)
                                             <tr>
-                                                <td>{{ $p->student->first_name.' '.$p->student->last_name }}</td>
+                                                <td>{{ $p->student->first_name . ' ' . $p->student->last_name }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($p->date)->format('d, M Y') }}</td>
                                                 <td>{{ $p->schedule->subject }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($p->schedule->timeSlot->start_time)->format('H:i') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($p->schedule->timeSlot->end_time)->format('H:i') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($p->schedule->timeSlot->start_time)->format('H:i') }}
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($p->schedule->timeSlot->end_time)->format('H:i') }}
+                                                </td>
                                                 <td>{{ $p->schedule->teacher->user->name }}</td>
                                             </tr>
                                         @endforeach
