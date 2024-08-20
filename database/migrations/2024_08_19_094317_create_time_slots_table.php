@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('time_slots', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('classe_id')->references('id')->on('classes')->onDelete('cascade');
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();

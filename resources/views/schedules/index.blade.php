@@ -52,8 +52,15 @@
                                 @if ($schedule)
                                     <div>
                                         <small>{{ Str::limit($schedule->teacher->user->name,10) }}</small><br>
-                                        <span class="text-muted">{{ $schedule->subject }}</span>
+                                        <small class="text-muted">{{ $schedule->subject }}</small>
                                     </div>
+
+                                    <div>
+                                        <a class="btn btn-sm btn-outline-info" href="{{ route('attendanceStudent',$schedule) }}">
+                                        <i class="fe fe-bell"></i>
+                                    </a>
+                                    </div>
+                                    
                                     <div class="mt-2">
                                         <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                             data-bs-target="#editScheduleModal{{ $schedule->id }}">

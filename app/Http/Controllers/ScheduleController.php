@@ -27,6 +27,13 @@ class ScheduleController extends Controller
         $schedules = Schedule::with(['classe', 'timeSlot'])->get();
         return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers','schoolInformation'));
     }
+
+    public function attendanceStudent(Schedule $schedule)
+    {
+        return view('student.card.attendance',compact('schedule'));
+    }
+
+
     /**
      * Display a listing of the resource.
      */
