@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('school_information_id')->references('id')->on('school_information')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreignId('niveau_id')->references('id')->on('niveaux')->onDelete('cascade'); 
             $table->json('niveaux');
             $table->string('tranche');
             $table->string('uniqid');

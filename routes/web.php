@@ -15,6 +15,7 @@ use App\Http\Controllers\MoratoireController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchoolInformationController;
 use App\Models\Attendance;
 
@@ -34,9 +35,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
 });
 
 Route::resource('schoolInformation', SchoolInformationController::class);
@@ -111,13 +110,6 @@ Route::get('student-view', function () {
 
 
 
-// Route::get('reduction', function(){
-//     return view('reduction.reduction');
-// });
-
-Route::get('enseignant', function(){
-    return view('enseignant.enseignant');
-});
 
 Route::get('sequence', function(){
     return view('sequence.sequence');
