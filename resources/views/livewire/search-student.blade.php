@@ -59,7 +59,9 @@
                             </thead>
                             <tbody>
                                 @forelse ($students as $student)
-                                    <tr class="align-middle">
+                                @if ($student->school_information_id == $this->schoolInformation->id)
+                                    
+                                                                    <tr class="align-middle">
                                         <td>{{ $student->first_name . ' ' . $student->last_name }}
                                             @if ($student->status == 0)
                                                 <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
@@ -326,6 +328,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
+
                                 @empty
                                    
                                 @endforelse
