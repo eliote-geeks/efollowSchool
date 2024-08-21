@@ -1,11 +1,13 @@
+<base href="/">
 <x-layouts>
     <div class="container">
-        <h1 class="text-center my-4">Liste des Créneaux Horaires</h1>
+        <h5 class="text-center my-4">Liste des Créneaux Horaires ({{ $classe->niveau->name}}) {{  $classe->name }}</h5>
         <div class="d-flex justify-content-end mb-3">
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createTimeSlotModal">
                 <i class="fe fe-plus"></i> Ajouter un créneau horaire
             </button>
         </div>
+
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -61,6 +63,8 @@
                     <div class="modal-body">
                         <form action="{{ route('timeslots.store') }}" method="POST">
                             @csrf
+
+                            <input type="hidden" name="classe_id" value="{{ $classe->id }}">
                             <div class="form-group mb-3">
                                 <label for="start_time" class="form-label">Heure de Début</label>
                                 <input type="time" name="start_time" id="start_time" class="form-control" required>

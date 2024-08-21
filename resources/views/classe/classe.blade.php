@@ -72,7 +72,7 @@
                                                     Supprimer
                                                 </a>
                                             </td>
-                                            </td>
+                                            {{-- </td> --}}
                                         </tr>
 
                                         <div class="modal fade" id="editSchoolYear{{ $c->id }}"

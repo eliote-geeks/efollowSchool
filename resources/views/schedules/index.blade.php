@@ -13,14 +13,16 @@
         }
     </style>
     <div class="container">
-        <h5 class="text-center my-4">Emploi du Temps  ({{ $classe->niveau->name }}) {{ $classe->name }} {{ \Carbon\Carbon::parse($schoolInformation->start)->format('Y').'-'.\Carbon\Carbon::parse($schoolInformation->end)->format('Y') }}</h5>
-      
+        <h5 class="text-center my-4">Emploi du Temps ({{ $classe->niveau->name }}) {{ $classe->name }}
+            {{ \Carbon\Carbon::parse($schoolInformation->start)->format('Y') . '-' . \Carbon\Carbon::parse($schoolInformation->end)->format('Y') }}
+        </h5>
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary">Imprimer</button>
+            <a href="{{ route('historiquePresence', $classe) }}" class="btn btn-link">Historique Présence</a>
+            <a href="{{ route('historiqueAbsence', $classe) }}" class="btn btn-link">Historique Absence</a>
+        </div><br><br>
+
 
         <!-- Emploi du Temps -->
         <table class="table table-hover text-center">
@@ -39,7 +41,8 @@
             <tbody>
                 @foreach ($timeSlots as $timeSlot)
                     <tr>
-                        <td class="align-middle">{{ \Carbon\Carbon::parse($timeSlot->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($timeSlot->end_time)->format('H:i') }}</td>
+                        <td class="align-middle">{{ \Carbon\Carbon::parse($timeSlot->start_time)->format('H:i') }} -
+                            {{ \Carbon\Carbon::parse($timeSlot->end_time)->format('H:i') }}</td>
                         @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
                             <td class="align-middle">
                                 @php
@@ -51,9 +54,17 @@
 
                                 @if ($schedule)
                                     <div>
-                                        <small>{{ Str::limit($schedule->teacher->user->name,10) }}</small><br>
-                                        <span class="text-muted">{{ $schedule->subject }}</span>
+                                        <small>{{ Str::limit($schedule->teacher->user->name, 10) }}</small><br>
+                                        <small class="text-muted">{{ $schedule->subject }}</small>
                                     </div>
+
+                                    <div>
+                                        <a class="btn btn-sm btn-outline-info"
+                                            href="{{ route('attendanceStudent', $schedule) }}">
+                                            <i class="fe fe-bell"></i>
+                                        </a>
+                                    </div>
+
                                     <div class="mt-2">
                                         <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                             data-bs-target="#editScheduleModal{{ $schedule->id }}">
@@ -75,8 +86,8 @@
                                     </button>
 
                                     <!-- Modal pour ajouter un emploi du temps -->
-                                    <div class="modal fade" id="addScheduleModal{{ $timeSlot->id }}{{ $day }}"
-                                        tabindex="-1"
+                                    <div class="modal fade"
+                                        id="addScheduleModal{{ $timeSlot->id }}{{ $day }}" tabindex="-1"
                                         aria-labelledby="addScheduleModalLabel{{ $timeSlot->id }}{{ $day }}"
                                         aria-hidden="true">
                                         <div class="modal-dialog">
@@ -90,7 +101,8 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="{{ route('schedules.store') }}" method="POST" autocomplete="off">
+                                                    <form action="{{ route('schedules.store') }}" method="POST"
+                                                        autocomplete="off">
                                                         @csrf
                                                         <input type="hidden" name="time_slot_id"
                                                             value="{{ $timeSlot->id }}">
@@ -151,7 +163,8 @@
                                 <input type="hidden" name="class_id" value="{{ $classe->id }}">
                                 <div class="form-group mb-3">
                                     <label for="subject" class="form-label">code Matière</label>
-                                    <input type="text" name="subject" value="{{ $schedule->subject }}" class="form-control" id="">
+                                    <input type="text" name="subject" value="{{ $schedule->subject }}"
+                                        class="form-control" id="">
                                 </div>
 
                                 <div class="form-group mb-3">

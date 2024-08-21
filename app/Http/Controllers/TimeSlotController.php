@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -13,8 +14,14 @@ class TimeSlotController extends Controller
      */
     public function index()
     {
-        $timeslots = TimeSlot::all();
-        return view('creneau.index', compact('timeslots'));
+       
+        return view('creneau.index');
+    }
+
+    public function creneauClass(Classe $classe)
+    {
+        $timeslots = TimeSlot::where('classe_id',$classe->id)->get();
+        return view('creneau.index', compact('timeslots','classe'));
     }
 
     /**
@@ -47,11 +54,12 @@ class TimeSlotController extends Controller
         );
 
         $timeslot = new TimeSlot();
+        $timeslot->classe_id = $request->classe_id;
         $timeslot->start_time = $request->start_time;
         $timeslot->end_time = $request->end_time;
         $timeslot->save();
 
-        return redirect()->route('timeslots.index')->with('success', 'Créneau horaire créé avec succès.');
+        return redirect()->back()->with('success', 'Créneau horaire créé avec succès.');
     }
 
     /**
@@ -96,7 +104,7 @@ class TimeSlotController extends Controller
 
         $timeSlot->update($request->all());
 
-        return redirect()->route('timeslots.index')->with('success', 'Créneau horaire mis à jour avec succès.');
+        return redirect()->back()->with('success', 'Créneau horaire mis à jour avec succès.');
     }
 
     /**
@@ -106,6 +114,6 @@ class TimeSlotController extends Controller
     {
         $timeSlot->delete();
 
-        return redirect()->route('timeslots.index')->with('success', 'Créneau horaire supprimé avec succès.');
+        return redirect()->back()->with('success', 'Créneau horaire supprimé avec succès.');
     }
 }

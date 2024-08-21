@@ -19,6 +19,15 @@ class Student extends Model
 {
     use HasFactory;
 
+    public function absence()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    public function presence()
+    {
+        return $this->hasMany(Presence::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

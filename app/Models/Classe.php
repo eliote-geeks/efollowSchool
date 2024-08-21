@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Models\Niveau;
+use App\Models\Absence;
 use App\Models\Payment;
 use App\Models\Student;
+use App\Models\Presence;
 use App\Models\Schedule;
+use App\Models\TimeSlot;
 use App\Models\ClasseCours;
 use App\Models\StudentClasse;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +37,19 @@ class Classe extends Model
         return $this->hasMany(Schedule::class);
     }
 
+    public function timeSlot()
+    {
+        return $this->hasMany(TimeSlot::class);
+    }
 
+    public function presence()
+    {
+        return $this->hasMany(Presence::class);
+    }
+
+    public function absence()
+    {
+        return $this->hasMany(Absence::class);
+    }
  
 }

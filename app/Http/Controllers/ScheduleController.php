@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Classe;
+use App\Models\EndSchedule;
 use App\Models\Teacher;
 use App\Models\Schedule;
 use App\Models\TimeSlot;
@@ -20,13 +22,42 @@ class ScheduleController extends Controller
     public function scheduleCLass(Classe $classe)
     {
         $schoolInformation = $this->schoolInformation;
-        $timeSlots = TimeSlot::all();
+        $timeSlots = TimeSlot::where('classe_id', $classe->id)->get();
         $teachers = Teacher::where('school_information_id', $this->schoolInformation->id)
             ->latest()
             ->get();
-        $schedules = Schedule::with(['classe', 'timeSlot'])->get();
-        return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers','schoolInformation'));
+        $schedules = Schedule::where('classe_id', $classe->id)
+            ->with(['classe', 'timeSlot'])
+            ->get();
+        return view('schedules.index', compact('schedules', 'classe', 'timeSlots', 'teachers', 'schoolInformation'));
     }
+
+    public function attendanceStudent(Schedule $schedule)
+    {
+        $today = Carbon::today()->toDateString();
+        $endSchedule = EndSchedule::where([
+            'schedule_id' => $schedule->id,
+            'date' => $today,
+        ])->count();
+  
+        $currentDay = Carbon::now()->format('l'); // 'l' retourne le jour en anglais, par ex: 'Monday'
+        if ($currentDay === $schedule->day_of_week) {
+            if ($endSchedule == 0) {
+                if (Carbon::parse($schedule->timeSlot->start_time)->gte(now())) {
+                    return view('student.card.attendance', [
+                        'schedule' => $schedule,
+                    ]);
+                } else {
+                    return redirect()->back()->with('error', 'Veuillez patientez le debut du cours pour effectuez l\'appel!! ');
+                }
+            } else {
+                return redirect()->back()->with('error', 'L\'appel a déja été effectué pour ce créneau !!');
+            }
+        } else {
+            return redirect()->back()->with('error', 'L\'appel ne peut etre effectué le jour ne correspond pas!!');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */

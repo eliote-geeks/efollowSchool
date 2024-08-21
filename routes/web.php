@@ -8,13 +8,15 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TimeSlotController;
 use App\Http\Controllers\MoratoireController;
-use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SchoolInformationController;
-use App\Http\Controllers\TeacherController;
+use App\Models\Attendance;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +76,17 @@ Route::get('statusReq/{requete}',[PaymentController::class,'statusReq'])->name('
 Route::post('paiement/control',[SmartCardController::class,'paymentControlStudent'])->name('paymentControlStudent');
 Route::get('student-control-payment',[SmartCardController::class,'controlPayment'])->name('controlPayment');
 Route::get('scheduleCLass/{classe}',[ScheduleController::class,'scheduleCLass'])->name('scheduleCLass');
+Route::get('creneauClass/{classe}',[TimeSlotController::class,'creneauClass'])->name('creneauClass');
+Route::get('attendanceStudent/{schedule}',[ScheduleController::class,'attendanceStudent'])->name('attendanceStudent');
+route::get('carte/etudiant/{schedule}',[SmartCardController::class,'endListCardschedule'])->name('endListCardschedule');
+route::post('carte/shedule/{schedule}',[SmartCardController::class,'scheduleCard'])->name('scheduleCard');
+route::get('historique/presence/{classe}',[AttendanceController::class,'historiquePresence'])->name('historiquePresence');
+route::get('historique/absence/{classe}',[AttendanceController::class,'historiqueAbsence'])->name('historiqueAbsence');
+
+Route::get('/attendance/print/day', [AttendanceController::class, 'printDay'])->name('attendance.print.day');
+Route::get('/attendance/print/week', [AttendanceController::class, 'printWeek'])->name('attendance.print.week');
+Route::get('/attendance/print/month', [AttendanceController::class, 'printMonth'])->name('attendance.print.month');
+Route::get('/attendance/print/period', [AttendanceController::class, 'printPeriod'])->name('attendance.print.period');
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

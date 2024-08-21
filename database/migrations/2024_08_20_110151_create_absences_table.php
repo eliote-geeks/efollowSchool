@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('time_slots', function (Blueprint $table) {
+        Schema::create('absences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('classe_id')->references('id')->on('classes')->onDelete('cascade');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->foreignId('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+            $table->foreignId('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->timestamp('date'); 
+            $table->bigInteger('duree');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('time_slots');
+        Schema::dropIfExists('absences');
     }
 };
