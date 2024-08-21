@@ -87,6 +87,9 @@ Route::get('/attendance/print/day', [AttendanceController::class, 'printDay'])->
 Route::get('/attendance/print/week', [AttendanceController::class, 'printWeek'])->name('attendance.print.week');
 Route::get('/attendance/print/month', [AttendanceController::class, 'printMonth'])->name('attendance.print.month');
 Route::get('/attendance/print/period', [AttendanceController::class, 'printPeriod'])->name('attendance.print.period');
+Route::post('absence/rapport/{classe}',[AttendanceController::class,'absencegenerateReport'])->name('absence.generateReport');
+Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencegenerateReport'])->name('presence.generateReport');
+
 
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');

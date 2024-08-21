@@ -95,7 +95,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('timeslots.update', $timeslot->id) }}" method="POST">
+                            <form action="{{ route('timeslots.update', $timeslot) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group mb-3">
@@ -130,7 +130,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Êtes-vous sûr de vouloir supprimer ce créneau horaire?</p>
-                            <form action="{{ route('timeslots.destroy', $timeslot->id) }}" method="POST">
+                            <form action="{{ route('timeslots.destroy', $timeslot) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Supprimer</button>

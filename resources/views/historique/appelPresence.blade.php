@@ -11,9 +11,8 @@
                     <h4 class="mb-0">Générer un Rapport de Présence</h4>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('presence.generateReport',$classe) }}" method="POST">
                         @csrf
-
                         <div class="form-group mb-3">
                             <label for="course" class="form-label">Cours :</label>
                             <select class="form-control" name="course" id="course">
@@ -28,8 +27,8 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="course" class="form-label">Etudiant :</label>
-                            <select class="form-control" name="course" id="course">
+                            <label for="student" class="form-label">Etudiant :</label>
+                            <select class="form-control" name="student" id="student">
                                 <option value="">Sélectionnez un Etudiant</option>
                                 @foreach ($students as $s)
                                     <option value="{{ $s->student->id }}">

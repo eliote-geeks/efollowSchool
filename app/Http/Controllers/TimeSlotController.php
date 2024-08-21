@@ -81,28 +81,28 @@ class TimeSlotController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TimeSlot $timeSlot)
+    public function update(Request $request, TimeSlot $timeslot)
     {
         $request->validate(
             [
                 'start_time' => [
                     'required',
-                    'date_format:H:i',
-                    Rule::unique('time_slots')->where(function ($query) use ($request, $timeSlot) {
+                    // 'date_format:H:i',
+                    Rule::unique('time_slots')->where(function ($query) use ($request, $timeslot) {
                         return $query
                             ->where('start_time', $request->start_time)
                             ->where('end_time', $request->end_time)
-                            ->where('id', '!=', $timeSlot->id); // Exclure l'ID actuel de la vérification
+                            ->where('id', '!=', $timeslot->id); // Exclure l'ID actuel de la vérification
                     }),
                 ],
-                'end_time' => 'required|date_format:H:i|after:start_time',
+                'end_time' => 'required|after:start_time',
             ],
             [
                 'start_time.unique' => 'Ce créneau horaire existe déjà.',
             ],
         );
 
-        $timeSlot->update($request->all());
+        $timeslot->update($request->all());
 
         return redirect()->back()->with('success', 'Créneau horaire mis à jour avec succès.');
     }
@@ -110,9 +110,9 @@ class TimeSlotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TimeSlot $timeSlot)
+    public function destroy(TimeSlot $timeslot)
     {
-        $timeSlot->delete();
+        $timeslot->delete();
 
         return redirect()->back()->with('success', 'Créneau horaire supprimé avec succès.');
     }

@@ -243,6 +243,82 @@
                                 </div>
                             </div>
 
+<<<<<<< Updated upstream
+=======
+
+
+
+        <!-- Informations de l'Étudiant -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">Informations de l'Étudiant</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Nom Complet :</strong> {{ $student->first_name . ' ' . $student->last_name }}</p>
+                <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
+                <p><strong>Date de Naissance :</strong>
+                    {{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
+                <p><strong>Lieu de Naissance :</strong> {{ $student->place_birth }}</p>
+                <p><strong>Classe :</strong>
+                    {{ $student->studentClasse->classe->niveau->name . ' ' . $student->studentClasse->classe->name }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Formulaire de Paiement -->
+        <form action="{{ route('payment.store') }}" method="POST" class="mt-4">
+            @csrf
+            <input type="hidden" name="student" value="{{ $student->id }}">
+            <input type="hidden" name="totalPaymentsAmount" value="{{ $totalPaymentsAmount }}">
+
+            <div class="mb-3">
+                <label for="scolarite_id" class="form-label">Tranche</label>
+                <select name="scolarite" id="scolarite_id" class="form-control">
+                    @foreach ($scolarites as $scolarite)
+                        @if ($scolarite->amount > \App\Models\Payment::where('student_id', $student->id)
+                        ->where('scolarite_id', $scolarite->id)
+                        ->sum('amount'))
+                            <option value="{{ $scolarite->id }}">{{ $scolarite->name }} -
+                                {{ number_format($scolarite->amount) }} FCFA</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Montant</label>
+                <input type="number" name="amount" id="amount" class="form-control" step="0.01"
+                    placeholder="Entrez le montant à payer" required>
+            </div>
+
+            <!-- Bouton de Confirmation -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target=".payment-confirmation-modal">
+                Confirmation de paiement
+            </button>
+
+            <!-- Modal de Confirmation -->
+            <div class="modal fade payment-confirmation-modal" tabindex="-1" role="dialog"
+                aria-labelledby="paymentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content p-4">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="paymentModalLabel">Confirmation de Paiement</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div> 
+                        <div class="modal-body">
+                            <p><strong>Nom de l'Étudiant :</strong> {{ $student->first_name }}
+                                {{ $student->last_name }}</p>
+                            <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
+                            <p><strong>Date de Paiement :</strong> {{ \Carbon\Carbon::now()->format('d, M Y') }}</p>
+                            <p><strong>Montant :</strong> <span id="confirmation-amount"></span> FCFA</p>
+                            <p><strong>Tranche :</strong> <span id="confirmation-tranche"></span></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-success">Effectuer le Paiement</button>
+>>>>>>> Stashed changes
                         </div>
                         
                     </div>
