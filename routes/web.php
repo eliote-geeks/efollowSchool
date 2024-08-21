@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\StudentAllExport;
 use App\Models\Moratoire;
 use App\Exports\StudentsExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,6 +19,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchoolInformationController;
 use App\Models\Attendance;
+use Illuminate\Database\Eloquent\Model;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,7 @@ use App\Models\Attendance;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -90,6 +93,14 @@ Route::post('absence/rapport/{classe}',[AttendanceController::class,'absencegene
 Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencegenerateReport'])->name('presence.generateReport');
 
 
+// export
+
+Route::get('exportALl/student',function(){
+    return Excel::download(new StudentAllExport(),'students.xlsx');
+})->name('exportStudentAll');
+
+
+
 Route::get('export-students', function () {
     // return Excel::download(new StudentsExport, 'students.xlsx');
     $filePath = storage_path('app/students.xlsx');
@@ -107,8 +118,6 @@ Route::get('export-students', function () {
 Route::get('student-view', function () {
     return view('student.student-view');
 });
-
-
 
 
 Route::get('sequence', function(){

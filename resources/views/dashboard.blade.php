@@ -5,33 +5,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Étudiants</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Paiements</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Absences</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Scolarite</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Presences</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter classes</a>
-                </li>
-                <!-- Ajoutez d'autres liens d'export ici -->
-            </ul>
-        </div>
+  
     </nav>
     <div class="container-fluid">
         <!-- Header du tableau de bord -->
@@ -54,8 +28,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                                <i class="fe fe-user-graduate fe-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportStudentAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -69,10 +44,10 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Total des Paiements</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPayments }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPayments }} FCFA</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fe fe-dollar-sign fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -90,7 +65,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRemises }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-percentage fa-2x text-gray-300"></i>
+                                <i class="fe fe-percentage fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -108,7 +83,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAbsences }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-user-slash fa-2x text-gray-300"></i>
+                                <i class="fe fe-user-slash fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -129,7 +104,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPresences }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                                <i class="fe fe-user-check fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -147,7 +122,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalMoratoires }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                <i class="fe fe-clock fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -165,7 +140,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalScolarites }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-school fa-2x text-gray-300"></i>
+                                <i class="fe fe-school fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -183,7 +158,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $monthlyPayments }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+                                <i class="fe fe-calendar-alt fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -201,7 +176,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $weeklyPayments }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar-week fa-2x text-gray-300"></i>
+                                <i class="fe fe-calendar-week fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
