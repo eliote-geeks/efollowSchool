@@ -209,13 +209,10 @@
             </div>
         </div>
     </div>
-
-
-
     <div class="container-fluid">
         <!-- Header du tableau de bord -->
 
-  <!-- Section des graphiques -->
+        <!-- Section des graphiques -->
         <div class="row">
             <!-- Graphique des paiements mensuels -->
             <div class="col-xl-6 col-lg-6">
