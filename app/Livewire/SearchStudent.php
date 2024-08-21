@@ -34,7 +34,7 @@ class SearchStudent extends Component
         return view('livewire.search-student', [
             'students' => $students,
             'scolarites' => Scolarite::where('school_information_id', $this->schoolInformation->id)
-                ->where('end_date', '>', now())
+                // ->where('end_date', '>', now())
                 ->get(),
         ]);
     }
