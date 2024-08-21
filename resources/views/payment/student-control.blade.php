@@ -3,39 +3,48 @@
 
     <div class="container mt-5">
         <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h3>Statut de Paiement de l'Étudiant</h3>
+            <div class="card-header">
+                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                    <h2 class="mb-1">Statut du paiement de l'étudiant</h2>
+                </div>
             </div>
             <div class="card-body">
-                <h4 class="card-title">Informations de l'Étudiant</h4>
-                <p><strong>Nom :</strong> {{ $student->first_name }} {{ $student->last_name }}</p>
+                <div class="col-md-12 col-12 mb-4 position-relative">
+                    <h5 class="mb-2">Photo de l'étudiant</h5>
+                    <label for="img" class="img-thumbnail position-relative"
+                        style="height: 100px; width: 100px; cursor: pointer;">
+                        <img id="StudentImage"
+                            src="{{ $student->user->profile_photo_url }}"
+                            class=" w-100 h-100">
+                    </label>
+                </div>
+                <p><strong>Nom complet:</strong> {{ $student->first_name }} {{ $student->last_name }}</p>
                 <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
-                <p><strong>Classe :</strong> {{ $student->studentClasse->classe->name }}
-                    ({{ $student->studentClasse->classe->niveau->name }})</p>
+                <p><strong>Niveau :</strong> {{ $student->studentClasse->classe->niveau->name }}</p>
+                <p><strong>Classe :</strong> {{ $student->studentClasse->classe->name }} </p>
 
-                <hr>
+                <hr class="mb-5">
 
-                <h4 class="card-title">Statut de Paiement</h4>
                 @if ($balance > 0)
                     <div class="alert alert-danger">
                         <h5 class="alert-heading">Paiement en Retard</h5>
                         <p>L'étudiant doit encore payer <strong>{{ number_format($balance) }} FCFA</strong>.</p>
                     </div>
                 @else
-                    <div class="alert alert-success">
+                    <div class="alert alert-success mb-5">
                         <h5 class="alert-heading">Paiement à Jour</h5>
                         <p>L'étudiant est à jour avec ses paiements.</p>
                     </div>
                 @endif
 
-                <hr>
+                <hr class="mb-5">
 
-                <h4 class="card-title">Détails des Scolarités</h4>
+                <h3 class="mb-3">Frais exigible à payer/compléter</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered" >
                         <thead>
                             <tr>
-                                <th>Tranche</th>
+                                <th>Frais exigible</th>
                                 <th>Montant</th>
                                 <th>Date d'echéance</th>
                             </tr>
@@ -58,14 +67,14 @@
                     </table>
                 </div>
 
-                <hr>
+                <hr class="mb-5">
 
-                <h4 class="card-title">Détails des Paiements</h4>
+                <h3 class="mb-3">Historique des paiements</h3>
                 <div class="table-responsive">
                     <table class="table table-hover table-lg fs-4" id="dataTableBasic">
                         <thead class="table-light">
                             <tr>
-                                <th>Identifiant Paiement</th>
+                                <th>Paiement N°</th>
                                 <th scope="col">Frais Scolaire</th>
                                 <th>Montant</th>
                                 <th>Date</th>

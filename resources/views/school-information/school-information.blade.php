@@ -81,7 +81,7 @@
                                                         href="#" role="button" id="courseDropdown2"
                                                         data-bs-toggle="dropdown" data-bs-offset="-20,20"
                                                         aria-expanded="false">
-                                                        <i class="fe fe-more-vertical"></i>
+                                                        <i class="fe fe-list fs-3"></i>
                                                     </a>
                                                     <span class="dropdown-menu" aria-labelledby="courseDropdown2">
                                                         <span class="dropdown-header">Action</span>
