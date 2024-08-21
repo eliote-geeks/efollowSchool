@@ -18,7 +18,7 @@ class AttendanceController extends Controller
 {
     protected $schoolInformation;
 
-    protected function __construct()
+    public function __construct()
     {
         $this->schoolInformation = SchoolInformation::where('status',1)->first();
     }
