@@ -44,7 +44,7 @@
                             <h2 class="mb-1">Liste des années scolaires</h2>
                             <a class="btn btn-primary rounded-pill ms-auto" data-bs-toggle="modal" href="#addSchoolYear"
                                 role="button">
-                                <i class="fas fa-plus me-2"></i>
+                                <i class="fe fe-plus me-2"></i>
                                 Créer une année scolaire
                             </a>
                         </div>

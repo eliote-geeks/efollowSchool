@@ -1,198 +1,268 @@
 <base href="/">
 
 <x-layouts>
-    <div class="container mt-5">
-        <!-- Status du Paiement -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Status du Paiement</h4>
-            </div>
-            <div class="card-body">
-                <p class="mb-0">{{ $status }}</p>
-            </div>
-        </div>
+    <section class="container-fluid p-4">
 
-        <!-- Informations financières -->
-        <div class="row mb-4">
-
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0">Totale à Payer</h4>
-                    </div>
+        <div class="row">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <p class="mb-0">{{ number_format($totalScolariteAmount) }} FCFA</p>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase fw-semibold ls-md">Total à payer</span>
+                            </div>
+                            <div>
+                                <span class="bi bi-currency-dollar fs-3 text-primary"></span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ number_format($totalScolariteAmount) }} FCFA</h2>
+                        <span class="text-success fw-semibold">
+                        </span>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-warning text-dark">
-                        <h4 class="mb-0">Reste à Payer</h4>
-                    </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <p class="mb-0">{{ number_format($balance) }} FCFA</p>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase fw-semibold ls-md">Solde Total payé</span>
+                            </div>
+                            <div>
+                                <span class="bi bi-wallet fs-3 text-primary"></span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ number_format($totalPaymentsAmount) }} FCFA</h2>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-info text-white">
-                        <h4 class="mb-0">Solde Total Payé</h4>
-                    </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <p class="mb-0">{{ number_format($totalPaymentsAmount) }} FCFA</p>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase fw-semibold ls-md">Reste à payer</span>
+                            </div>
+                            <div>
+                                <span class="bi bi-hourglass-split fs-3 text-primary"></span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ number_format($balance) }} FCFA</h2>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-info text-white">
-                        <h4 class="mb-0">Remise</h4>
-                    </div>
-                    @foreach ($studentRemises as $rem)
-                        <div class="card-body">
-                            <p>Scolarite: {{ $rem->scolarite->name }}</p>
-                            <p class="mb-0">{{ number_format($rem->rest) }} FCFA</p>
-                            <small>{{ $rem->status == 1 ? 'payé' : 'non payé' }}</small>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase fw-semibold ls-md">Remise</span>
+                            </div>
+                            <div>
+                                <span class="bi bi-graph-up fs-3 text-primary"></span>
+                            </div>
                         </div>
-                    @endforeach
+                        <h2 class="fw-bold mb-1">
+                            @foreach ($studentRemises as $rem)
+                                <div class="card-body">
+                                    <p>Frais exigible: {{ $rem->scolarite->name }}</p>
+                                    <p class="mb-0">{{ number_format($rem->rest) }} FCFA</p>
+                                    <small>{{ $rem->status == 1 ? 'payé' : 'non payé' }}</small>
+                                </div>
+                            @endforeach
 
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase fw-semibold ls-md">Statut de l'étudiant</span>
+                            </div>
+                            <div>
+                                <span class="bi bi-check-circle fs-3 text-primary"></span>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-1">{{ $status }}</h3>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div class="row">
+            <!-- basic table -->
+            <div class="col-md-12 col-12 mb-5">
+                <div class="card">
+                    <!-- table  -->
+                    <div class="card-body">
 
-        <div class="container py-8">
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-5">
-                        <!-- heading -->
-                        <h2 class="fw-bold">Paiements</h2>
-                        <p class="mb-0">Liste de Paiements .</p>
+                        <div class="row">
+
+                            <div class="mb-5 col-md-6">
+                                <h2 class="mb-1 me-auto">Informations sur l'étudiant</b></h2>
+                                <div class="card-body">
+                                    <p><strong>Nom Complet :</strong> {{ $student->first_name . ' ' . $student->last_name }}</p>
+                                    <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
+                                    <p><strong>Date de Naissance :</strong>
+                                        {{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
+                                    <p><strong>Lieu de Naissance :</strong> {{ $student->place_birth }}</p>
+                                    <p><strong>Niveau :</strong> {{ $student->studentClasse->classe->niveau->name }}</p>
+                                    <p><strong>Classe :</strong> {{ $student->studentClasse->classe->name }}</p>
+                                </div>
+                            </div>
+
+                            <div class="mb-5 col-md-6">
+
+                                <form action="{{ route('payment.store') }}" method="POST">
+                                    @csrf
+                                    <h2 class="mb-5 me-auto">Effectuer un paiement</b></h2><!-- input -->
+                                    <div class="mb-5 col-md-12">
+                                        <input type="hidden" name="student" value="{{ $student->id }}">
+                                        <input type="hidden" name="totalPaymentsAmount" value="{{ $totalPaymentsAmount }}">
+                                        
+                                        <label class="form-label" for="masque">Frais exigible</label>
+                                        <select name="scolarite" id="scolarite_id" class="form-control">
+                                            @foreach ($scolarites as $scolarite)
+                                                @if ($scolarite->amount > \App\Models\Payment::where('student_id', $student->id)
+                                                ->where('scolarite_id', $scolarite->id)
+                                                ->sum('amount'))
+                                                    <option value="{{ $scolarite->id }}">{{ $scolarite->name }} -
+                                                        {{ number_format($scolarite->amount) }} FCFA</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <!-- input -->
+                                    <div class="mb-5 col-md-12">
+                                        <label class="form-label" for="amount">Montant
+                                            en FCFA</label>
+                                        <input type="text" class="form-control"
+                                            placeholder="Entrez le montant des frais exigibles"
+                                            value="" id="amount" name="amount" onInput="formatAmountCosts(this)"
+                                            step="0.01" onkeypress="return formatAmountCosts(this, event)"
+                                            required>
+                                    </div>
+                                        <button type="button" class="btn btn-primary confirm" data-bs-toggle="modal"
+                                        href="#payment-confirmation-modal">Confirmer le paiement</button>
+                                    </div>
+
+                                    <div class="modal fade" id="payment-confirmation-modal" aria-hidden="true" aria-labelledby="payment-confirmation-modal" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="payment-confirmation-modalLabel">Confirmation du paiement</h3>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <!-- input -->
+                                                        <p><strong>Nom de l'Étudiant :</strong> {{ $student->first_name }}
+                                                            {{ $student->last_name }}</p>
+                                                        <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
+                                                        <p><strong>Date de Paiement :</strong> {{ \Carbon\Carbon::now()->format('d, M Y') }}</p>
+                                                        <p><strong>Montant :</strong> <span id="confirmation-amount"></span> FCFA</p>
+                                                        <p><strong>Tranche :</strong> <span id="confirmation-tranche"></span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                    <button type="submit" class="btn btn-primary">Effectuer le paiement</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
                     </div>
-                    <!-- table -->
-                    <div class="table-responsive">
-                        <table class="table table-hover table-lg fs-4" id="dataTableBasic">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Identifiant Paiement</th>
-                                    <th scope="col">Frais Scolaire</th>
-                                    <th>Montant</th>
-                                    <th>Date</th>
-                                    <th class="text-center">Options</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($payments as $p)
-                                    <tr>
-                                        <td>{{ $p->id }}</td>
-                                        <td>{{ $p->scolarite->name }}</td>
-                                        <td>{{ number_format($p->amount) }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d, M Y') }}</td>
-                                        <td class="text-end"><a class="btn btn-info"
-                                                href="{{ route('receiptPayment', [$p->student->id, $p]) }}">Imprimer</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+
                 </div>
 
             </div>
-        </div>
 
+             <div class="row">
+            <!-- basic table -->
+            <div class="col-md-12 col-12 mb-5">
+                <div class="card">
+                    <!-- table  -->
+                    <div class="card-body">
 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <!-- heading -->
+                                    <h2 class="fw-bold">Historique des Paiements</h2>
+                                </div>
+                                <!-- table -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-lg fs-4" id="dataTableBasic">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Paiement N°</th>
+                                                <th scope="col">Frais Scolaire</th>
+                                                <th>Montant</th>
+                                                <th>Date</th>
+                                                <th class="text-center">Options</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($payments as $p)
+                                                <tr>
+                                                    <td>{{ $p->id }}</td>
+                                                    <td>{{ $p->scolarite->name }}</td>
+                                                    <td>{{ number_format($p->amount) }} FCFA</td>
+                                                    <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d, M Y') }}</td>
+                                                    <td class="text-center">
+                                                    
+                                                        <a class="btn btn-info" 
+                                                            href="{{ route('receiptPayment', [$p->student->id, $p]) }}">
+                                                        <i class="bi bi-printer me-1"></i> Imprimer </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-
-
-
-        <!-- Informations de l'Étudiant -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-secondary text-white">
-                <h4 class="mb-0">Informations de l'Étudiant</h4>
-            </div>
-            <div class="card-body">
-                <p><strong>Nom Complet :</strong> {{ $student->first_name . ' ' . $student->last_name }}</p>
-                <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
-                <p><strong>Date de Naissance :</strong>
-                    {{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
-                <p><strong>Lieu de Naissance :</strong> {{ $student->place_birth }}</p>
-                <p><strong>Classe :</strong>
-                    {{ $student->studentClasse->classe->niveau->name . ' ' . $student->studentClasse->classe->name }}
-                </p>
-            </div>
-        </div>
-
-        <!-- Formulaire de Paiement -->
-        <form action="{{ route('payment.store') }}" method="POST" class="mt-4">
-            @csrf
-
-            <input type="hidden" name="student" value="{{ $student->id }}">
-            <input type="hidden" name="totalPaymentsAmount" value="{{ $totalPaymentsAmount }}">
-
-            <div class="mb-3">
-                <label for="scolarite_id" class="form-label">Tranche</label>
-                <select name="scolarite" id="scolarite_id" class="form-control">
-                    @foreach ($scolarites as $scolarite)
-                        @if ($scolarite->amount > \App\Models\Payment::where('student_id', $student->id)
-                        ->where('scolarite_id', $scolarite->id)
-                        ->sum('amount'))
-                            <option value="{{ $scolarite->id }}">{{ $scolarite->name }} -
-                                {{ number_format($scolarite->amount) }} FCFA</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="amount" class="form-label">Montant</label>
-                <input type="number" name="amount" id="amount" class="form-control" step="0.01"
-                    placeholder="Entrez le montant à payer" required>
-            </div>
-
-            <!-- Bouton de Confirmation -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target=".payment-confirmation-modal">
-                Confirmation de paiement
-            </button>
-
-            <!-- Modal de Confirmation -->
-            <div class="modal fade payment-confirmation-modal" tabindex="-1" role="dialog"
-                aria-labelledby="paymentModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content p-4">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="paymentModalLabel">Confirmation de Paiement</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <p><strong>Nom de l'Étudiant :</strong> {{ $student->first_name }}
-                                {{ $student->last_name }}</p>
-                            <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
-                            <p><strong>Date de Paiement :</strong> {{ \Carbon\Carbon::now()->format('d, M Y') }}</p>
-                            <p><strong>Montant :</strong> <span id="confirmation-amount"></span> FCFA</p>
-                            <p><strong>Tranche :</strong> <span id="confirmation-tranche"></span></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" class="btn btn-success">Effectuer le Paiement</button>
-                        </div>
+                        
                     </div>
+                    
                 </div>
-            </div>
 
-            <a href="{{ route('searchByname') }}" class="btn btn-info mt-3">Retour</a>
-        </form>
-    </div>
+            </div>
+            
+        </div>
+
+        </div> 
+
+
+
+    </section>
+
+
 
     <script>
-        document.querySelector('[data-bs-target=".payment-confirmation-modal"]').addEventListener('click', function() {
+        document.querySelector('.confirm').addEventListener('click', function() {
             const amount = document.getElementById('amount').value;
             const tranche = document.getElementById('scolarite_id').options[document.getElementById('scolarite_id')
                 .selectedIndex].text;
