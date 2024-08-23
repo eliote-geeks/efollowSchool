@@ -88,6 +88,7 @@ class PaymentController extends Controller
             ->orderByDesc('id')
             ->get();
 
+        $schoolInformationId = $this->schoolInformation->id;
         return view('payment.payment', [
             'totalPaymentsAmount' => $totalPaymentsAmount,
             'balance' => $balance,
@@ -97,6 +98,7 @@ class PaymentController extends Controller
             'totalScolariteAmount' => $totalScolariteAmount,
             'studentRemises' => $studentRemises,
             'payments' => $payments,
+            'schoolInformationId' => $schoolInformationId
         ]);
     }
 
