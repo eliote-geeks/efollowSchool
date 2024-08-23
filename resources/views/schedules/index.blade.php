@@ -232,7 +232,7 @@
                                                             @foreach ($teachers as $teacher)
                                                                 <option value="{{ $teacher->id }}"
                                                                     @if ($teacher->id == $schedule->teacher_id) selected @endif>
-                                                                    {{ $schedule->teacher->user->name }} </option>
+                                                                    {{ $teacher->user->name }} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
