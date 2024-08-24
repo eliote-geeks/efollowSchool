@@ -8,7 +8,6 @@
         <th>Sexe</th>
         <th>Classe</th>
         <th>Niveau</th>
-        <th>Date de Creation</th>
         <th>Frais Concerné</th>
         <th>Montant</th>
     </tr>
@@ -23,7 +22,6 @@
             <td>{{ $payment->student->sexe }}</td>
             <td>{{  $payment->student->studentClasse->classe->name }}</td>
             <td>{{ $payment->student->studentClasse->classe->niveau->name }}</td>
-            <td>{{ \Carbon\Carbon::parse($payment->student->created_at)->format('d, M Y') }}</td>
             <td>{{ $payment->scolarite->name }}</td>
             <td>{{ number_format($payment->amount) }} FCFA</td>
         </tr>

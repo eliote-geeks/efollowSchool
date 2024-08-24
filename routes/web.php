@@ -1,6 +1,7 @@
 <?php
 
 use App\Exports\PaymentAllExport;
+use App\Exports\RemiseAllExport;
 use App\Exports\StudentAllExport;
 use App\Models\Moratoire;
 use App\Exports\StudentsExport;
@@ -103,6 +104,10 @@ Route::get('exportALl/student',function(){
 Route::get('exportALl/payment',function(){
     return Excel::download(new PaymentAllExport(),'payments.xlsx');
 })->name('exportPaymentAll');
+
+Route::get('exportALl/remise',function(){
+    return Excel::download(new RemiseAllExport(),'remises.xlsx');
+})->name('exportRemiseAll');
 
 
 

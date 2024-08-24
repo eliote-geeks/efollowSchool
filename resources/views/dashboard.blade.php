@@ -68,6 +68,7 @@
                             <div class="col-auto">
                                 <i class="fe fe-percentage fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportRemiseAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
