@@ -1,6 +1,24 @@
+<base href="/">
 <x-layouts>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Tableau de Bord</a>
+        <div class="d-flex">
+            <!-- form -->
+            <div class="input-group me-9  ">
+                <form action="">
+                <select class="form-control" name="" id="">
+                    <option value="">
+                        Changer l'année en cours</option>
+                    <option value="">2020-2022</option>
+                    <option value="">2020-2022</option>
+                    <option value="">2020-2022</option>
+                    <option value="">2020-2022</option>
+                </select>
+                <!-- button -->
+                <a href="" class="btn btn-primary">Basculez</a>
+                </form>
+            </div>
+
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
