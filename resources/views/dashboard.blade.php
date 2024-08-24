@@ -5,7 +5,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-  
+
     </nav>
     <div class="container-fluid">
         <!-- Header du tableau de bord -->
@@ -191,6 +191,16 @@
                 </div>
             </div>
 
+            <div class="col-xl-6 col-lg-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="weeklyAbsencesChart"></canvas>
+                    </div>
+                </div>
+            </div>
             <!-- Graphique des étudiants et des présences -->
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
@@ -199,20 +209,6 @@
                     </div>
                     <div class="card-body">
                         <canvas id="studentsPresencesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Graphique des absences par semaine -->
-            <div class="col-xl-6 col-lg-6">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h6>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="weeklyAbsencesChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -228,7 +224,13 @@
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
+
+
     </div>
 
     <!-- Script pour Chart.js -->
