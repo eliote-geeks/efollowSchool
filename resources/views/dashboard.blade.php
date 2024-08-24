@@ -128,6 +128,7 @@
                             <div class="col-auto">
                                 <i class="fe fe-clock fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportMoratoireAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>

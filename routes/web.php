@@ -9,6 +9,7 @@ use App\Exports\AbsenceAllExport;
 use App\Exports\PaymentAllExport;
 use App\Exports\StudentAllExport;
 use App\Exports\PresenceAllExport;
+use App\Exports\MoratoireAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
@@ -119,6 +120,11 @@ Route::get('exportAll/absence',function(){
 Route::get('exportAll/presence',function(){
     return Excel::download(new PresenceAllExport(),'presences.xlsx');
 })->name('exportPresenceAll');
+
+Route::get('exportAll/moratoire',function(){
+    return Excel::download(new MoratoireAllExport(),'moratoires.xlsx');
+})->name('exportMoratoireAll');
+
 
 
 
