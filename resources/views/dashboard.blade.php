@@ -49,6 +49,7 @@
                             <div class="col-auto">
                                 <i class="fe fe-dollar-sign fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportPaymentAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>

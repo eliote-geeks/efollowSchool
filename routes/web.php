@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\PaymentAllExport;
 use App\Exports\StudentAllExport;
 use App\Models\Moratoire;
 use App\Exports\StudentsExport;
@@ -98,6 +99,11 @@ Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencege
 Route::get('exportALl/student',function(){
     return Excel::download(new StudentAllExport(),'students.xlsx');
 })->name('exportStudentAll');
+
+Route::get('exportALl/payment',function(){
+    return Excel::download(new PaymentAllExport(),'payments.xlsx');
+})->name('exportPaymentAll');
+
 
 
 
