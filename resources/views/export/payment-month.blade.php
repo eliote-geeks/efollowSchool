@@ -11,6 +11,7 @@
         <th>Frais Concerné</th>
         <th>Montant</th>
         <th>Date de paiement</th>
+        <th>Mois Concerné</th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
             <td>{{ $payment->scolarite->name }}</td>
             <td>{{ number_format($payment->amount) }} FCFA</td>
             <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d, M Y') }}</td>
+            <td>{{ date('M') }}</td>
         </tr>
     @endforeach
     </tbody>

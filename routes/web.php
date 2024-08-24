@@ -11,6 +11,7 @@ use App\Exports\PaymentAllExport;
 use App\Exports\StudentAllExport;
 use App\Exports\PresenceAllExport;
 use App\Exports\MoratoireAllExport;
+use App\Exports\PaymentMonthExport;
 use App\Exports\ScolariteAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
@@ -130,6 +131,10 @@ Route::get('exportAll/moratoire',function(){
 Route::get('exportAll/scolarite',function(){
     return Excel::download(new ScolariteAllExport(),'scolarites.xlsx');
 })->name('exportScolariteAll');
+
+Route::get('exportMonth/payment',function(){
+    return Excel::download(new PaymentMonthExport(),'payments-'.date('m').'.xlsx');
+})->name('exportPaymentMonth');
 
 
 
