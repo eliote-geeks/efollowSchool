@@ -4,17 +4,17 @@
         <div class="d-flex">
             <!-- form -->
             <div class="input-group me-9  ">
-                <form action="">
-                <select class="form-control" name="" id="">
-                    <option value="">
-                        Changer l'année en cours</option>
-                    <option value="">2020-2022</option>
-                    <option value="">2020-2022</option>
-                    <option value="">2020-2022</option>
-                    <option value="">2020-2022</option>
-                </select>
-                <!-- button -->
-                <a href="" class="btn btn-primary">Basculez</a>
+                <form action="{{ route('changeSchoolInformationStatus') }}" method="POST">
+                    @csrf
+                    <select class="form-control" name="year" id="">
+                        <option value="">
+                            Changer l'année en cours</option>
+                        @foreach ($years as $y)
+                            <option value="{{ $y->id }}">{{ \Carbon\Carbon::parse($y->start)->format('Y').'-'.\Carbon\Carbon::parse($y->end)->format('Y') }}</option>
+                        @endforeach
+                    </select>
+                    <!-- button -->
+                    <button type="submit" class="btn btn-primary">Basculez</button>
                 </form>
             </div>
 

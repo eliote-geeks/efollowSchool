@@ -29,6 +29,7 @@ use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SchoolInformationController;
+use App\Models\SchoolInformation;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +101,7 @@ Route::get('/attendance/print/month', [AttendanceController::class, 'printMonth'
 Route::get('/attendance/print/period', [AttendanceController::class, 'printPeriod'])->name('attendance.print.period');
 Route::post('absence/rapport/{classe}',[AttendanceController::class,'absencegenerateReport'])->name('absence.generateReport');
 Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencegenerateReport'])->name('presence.generateReport');
-
+Route::post('change/School/Status',[SchoolInformationController::class,'changeSchoolInformationStatus'])->name('changeSchoolInformationStatus');
 
 // export
 
