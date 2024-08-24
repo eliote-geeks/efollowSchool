@@ -87,6 +87,7 @@
                             <div class="col-auto">
                                 <i class="fe fe-user-slash fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportAbsenceAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -108,6 +109,7 @@
                             <div class="col-auto">
                                 <i class="fe fe-user-check fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportPresenceAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>

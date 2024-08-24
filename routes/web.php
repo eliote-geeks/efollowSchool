@@ -1,12 +1,17 @@
 <?php
 
-use App\Exports\PaymentAllExport;
-use App\Exports\RemiseAllExport;
-use App\Exports\StudentAllExport;
+use App\Models\Presence;
 use App\Models\Moratoire;
+use App\Models\Attendance;
 use App\Exports\StudentsExport;
+use App\Exports\RemiseAllExport;
+use App\Exports\AbsenceAllExport;
+use App\Exports\PaymentAllExport;
+use App\Exports\StudentAllExport;
+use App\Exports\PresenceAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\PaymentController;
@@ -14,14 +19,12 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TimeSlotController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MoratoireController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchoolInformationController;
-use App\Models\Attendance;
-use Illuminate\Database\Eloquent\Model;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,18 +100,25 @@ Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencege
 
 // export
 
-Route::get('exportALl/student',function(){
+Route::get('exportAll/student',function(){
     return Excel::download(new StudentAllExport(),'students.xlsx');
 })->name('exportStudentAll');
 
-Route::get('exportALl/payment',function(){
+Route::get('exportAll/payment',function(){
     return Excel::download(new PaymentAllExport(),'payments.xlsx');
 })->name('exportPaymentAll');
 
-Route::get('exportALl/remise',function(){
+Route::get('exportAll/remise',function(){
     return Excel::download(new RemiseAllExport(),'remises.xlsx');
 })->name('exportRemiseAll');
 
+Route::get('exportAll/absence',function(){
+    return Excel::download(new AbsenceAllExport(),'absences.xlsx');
+})->name('exportAbsenceAll');
+
+Route::get('exportAll/presence',function(){
+    return Excel::download(new PresenceAllExport(),'presences.xlsx');
+})->name('exportPresenceAll');
 
 
 
