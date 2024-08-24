@@ -7,10 +7,11 @@
                 <form action="{{ route('changeSchoolInformationStatus') }}" method="POST">
                     @csrf
                     <select class="form-control" name="year" id="">
-                        <option value="">
-                            Changer l'année en cours</option>
+
                         @foreach ($years as $y)
-                            <option value="{{ $y->id }}">{{ \Carbon\Carbon::parse($y->start)->format('Y').'-'.\Carbon\Carbon::parse($y->end)->format('Y') }}</option>
+                            <option @if ($school->id == $y->id) selected @endif value="{{ $y->id }}">
+                                {{ \Carbon\Carbon::parse($y->start)->format('Y') . '-' . \Carbon\Carbon::parse($y->end)->format('Y') }}
+                            </option>
                         @endforeach
                     </select>
                     <!-- button -->

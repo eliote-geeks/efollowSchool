@@ -50,6 +50,7 @@ class DashboardController extends Controller
             ->sum('amount');
 
         $years = SchoolInformation::all();
-        return view('dashboard', compact('years','totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments'));
+        $school = $this->schoolInformation;
+        return view('dashboard', compact('years','school','totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments'));
     }
 }
