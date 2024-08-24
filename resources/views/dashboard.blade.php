@@ -147,6 +147,7 @@
                             <div class="col-auto">
                                 <i class="fe fe-school fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportScolariteAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>

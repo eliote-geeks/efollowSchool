@@ -2,6 +2,7 @@
 
 use App\Models\Presence;
 use App\Models\Moratoire;
+use App\Models\Scolarite;
 use App\Models\Attendance;
 use App\Exports\StudentsExport;
 use App\Exports\RemiseAllExport;
@@ -10,6 +11,7 @@ use App\Exports\PaymentAllExport;
 use App\Exports\StudentAllExport;
 use App\Exports\PresenceAllExport;
 use App\Exports\MoratoireAllExport;
+use App\Exports\ScolariteAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
@@ -125,6 +127,9 @@ Route::get('exportAll/moratoire',function(){
     return Excel::download(new MoratoireAllExport(),'moratoires.xlsx');
 })->name('exportMoratoireAll');
 
+Route::get('exportAll/scolarite',function(){
+    return Excel::download(new ScolariteAllExport(),'scolarites.xlsx');
+})->name('exportScolariteAll');
 
 
 
