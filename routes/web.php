@@ -102,7 +102,7 @@ Route::get('/attendance/print/period', [AttendanceController::class, 'printPerio
 Route::post('absence/rapport/{classe}',[AttendanceController::class,'absencegenerateReport'])->name('absence.generateReport');
 Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencegenerateReport'])->name('presence.generateReport');
 Route::post('change/School/Status',[SchoolInformationController::class,'changeSchoolInformationStatus'])->name('changeSchoolInformationStatus');
-
+Route::get('change/user/status/{student}',[StudentController::class,'status'])->name('changeStudentStatus');
 // export
 
 Route::get('exportAll/student',function(){
