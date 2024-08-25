@@ -20,7 +20,7 @@ class AttendanceController extends Controller
 
     public function __construct()
     {
-        $this->schoolInformation = SchoolInformation::where('status',1)->first();
+        $this->schoolInformation = SchoolInformation::where('status', 1)->first();
     }
     public function printDay()
     {
@@ -61,6 +61,7 @@ class AttendanceController extends Controller
     {
         $students = StudentClasse::where([
             'classe_id' => $classe->id,
+            'school_information_id' => $this->schoolInformation->id,
         ])->get();
         $courses = Schedule::where('classe_id', $classe->id)->get();
         $presences = Presence::where('classe_id', $classe->id)->get();
@@ -71,6 +72,7 @@ class AttendanceController extends Controller
     {
         $students = StudentClasse::where([
             'classe_id' => $classe->id,
+            'school_information_id' => $this->schoolInformation->id,
         ])->get();
         $courses = Schedule::where('classe_id', $classe->id)->get();
         $presences = Absence::where('classe_id', $classe->id)->get();
@@ -143,7 +145,7 @@ class AttendanceController extends Controller
             'format' => 'A4',
             'orientation' => 'P',
         ]);
-        return $pdf->download('absence-'.$classe->niveau->name.' '.$classe->name.'-'.Carbon::parse($this->schoolInformation->start)->format('Y').'-'.Carbon::parse($this->schoolInformation->end)->format('Y').'.pdf');
+        return $pdf->download('absence-' . $classe->niveau->name . ' ' . $classe->name . '-' . Carbon::parse($this->schoolInformation->start)->format('Y') . '-' . Carbon::parse($this->schoolInformation->end)->format('Y') . '.pdf');
     }
 
     public function presencegenerateReport(Request $request, Classe $classe)
@@ -211,7 +213,7 @@ class AttendanceController extends Controller
             'format' => 'A4',
             'orientation' => 'P',
         ]);
-        return $pdf->download('presence-'.$classe->niveau->name.' '.$classe->name.'-'.Carbon::parse($this->schoolInformation->start)->format('Y').'-'.Carbon::parse($this->schoolInformation->end)->format('Y').'.pdf');
+        return $pdf->download('presence-' . $classe->niveau->name . ' ' . $classe->name . '-' . Carbon::parse($this->schoolInformation->start)->format('Y') . '-' . Carbon::parse($this->schoolInformation->end)->format('Y') . '.pdf');
     }
     /**
      * Display a listing of the resource.
