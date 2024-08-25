@@ -78,8 +78,10 @@ class NiveauController extends Controller
      */
     public function show(Niveau $niveau)
     {
+        $schoolInformation = SchoolInformation::where('status', 1)->first();
         $classes = Classe::where([
             'status' => 1,
+            'school_information_id' => $schoolInformation->id,
             'niveau_id' => $niveau->id,
             ])->get();
             return view('classe.classe',[

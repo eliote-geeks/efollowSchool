@@ -59,9 +59,11 @@ class ClasseController extends Controller
     public function show(Classe $classe)
     {
         try{
-        $classes = Classe::where('school_information_id',SchoolInformation::where('status',1)->first()->id)->orderBy('name','desc')->get();
+        $classes = Classe::where(
+            'school_information_id',SchoolInformation::where('status',1)->first()->id)->orderBy('name','desc')->get();
         $students = StudentClasse::where([
-            'classe_id' => $classe->id,            
+            'classe_id' => $classe->id,
+            'school_information_id'=>SchoolInformation::where('status',1)->first()->id,            
             ])->get();
 
         return view('student.student-list',[
