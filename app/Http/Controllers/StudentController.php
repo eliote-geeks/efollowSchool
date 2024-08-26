@@ -23,6 +23,11 @@ class StudentController extends Controller
         //
     }
 
+    public function searchByCard()
+    {
+        return view('student.card.search-student');
+    }
+
     public function printCard(Student $student, SchoolInformation $schoolInformation)
     {
         return view('student.card-view', [

@@ -105,7 +105,7 @@ class SmartCardController extends Controller
         }
     }
 
-    public function searchByStudentCard(Request $request, Student $student)
+    public function searchByStudentCard(Request $request)
     {
         try {
             $request->validate([
