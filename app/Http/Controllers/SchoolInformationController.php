@@ -214,9 +214,13 @@ class SchoolInformationController extends Controller
     public function changeSchoolInformationStatus(Request $request)
     {
         $request->validate([
-            'year' => 'required'
+            'year' => 'required',
         ]);
         try {
+            if (SchoolInformation::where('status', 1)->first()->id == $request->year) {
+                return redirect()->back();
+            }
+
             $school = SchoolInformation::find($request->year);
             foreach (SchoolInformation::all() as $sc) {
                 $sc->status = 0;
