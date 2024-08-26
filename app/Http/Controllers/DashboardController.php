@@ -38,7 +38,7 @@ class DashboardController extends Controller
             ->groupBy('day')
             ->pluck('count', 'day');
 
-        // Plus de statistiques par exemple, par mois, par semaine, etc.
+        // Plus de statistiques par exemple, par mois, par semaine..
         $monthlyPayments = Payment::where('school_information_id', $this->schoolInformation->id)
             ->whereDate('created_at', '>=', now()->startOfMonth())
             ->whereDate('created_at', '<=', now()->endOfMonth())
