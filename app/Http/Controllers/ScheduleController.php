@@ -143,6 +143,6 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
-        return redirect()->back()->with('success', 'Emploi du temps supprimé avec succès');
+        return redirect()->back()->with('success', 'Cours supprimé avec succès');
     }
 }
