@@ -64,7 +64,10 @@ class DashboardController extends Controller
             ->whereDate('created_at', '<=', now()->endOfWeek())
             ->sum('amount');
 
-        $absencesByClass = Absence::select('classe_id', DB::raw('COUNT(*) as total_absences'))->groupBy('classe_id')->orderByDesc('total_absences')->get();
+        $absencesByClass = Absence::select('classe_id', DB::raw('COUNT(*) as total_absences'))
+        ->whereBetween('created_at', [$start, $end])
+        ->groupBy('classe_id')
+        ->orderByDesc('total_absences')->get();
 
         // Récupérer les noms des classes et les totaux d'absences
         $classes = [];
