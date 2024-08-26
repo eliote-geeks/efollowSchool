@@ -126,8 +126,8 @@
                                                         </a>
                                                         <span class="dropdown-menu" aria-labelledby="courseDropdown2">
                                                             <span class="dropdown-header">Action</span>
-                                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                                href="#" role="button">
+                                                            <a class="dropdown-item" 
+                                                                href="{{ route('student.show',$student) }}" role="button">
                                                                 <i class="fe fe-eye dropdown-item-icon"></i>
                                                                 Voir plus d'informations
                                                             </a>
@@ -135,7 +135,7 @@
                                                                 href="{{ route('addStudentCard', $student) }}"
                                                                 role="button">
                                                                 <i class="fe fe-plus dropdown-item-icon"></i>
-                                                                Ajouter une carte
+                                                                Attribuer une carte
                                                             </a>
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                                 href="#editStudent{{ $student->student->id }}"
