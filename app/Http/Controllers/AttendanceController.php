@@ -209,7 +209,7 @@ class AttendanceController extends Controller
                 ->get();
         }
 
-        $pdf = PDF::loadView('historique.presencePdf', compact('absences', 'classe'), [
+        $pdf = PDF::loadView('historique.presencePdf', compact('presences', 'classe'), [
             'format' => 'A4',
             'orientation' => 'P',
         ]);

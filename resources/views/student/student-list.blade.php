@@ -150,6 +150,7 @@
                                                                 Supprimer
                                                             </a>
                                                         </span>
+                                                    </span>
                                                 </td>
                                             </tr>
                                             <div class="modal fade" id="editStudent{{ $student->student->id }}"

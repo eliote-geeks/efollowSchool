@@ -137,7 +137,46 @@
         <!-- Modals pour l'édition -->
         @foreach ($timeslots as $timeslot)
 
-             <div class="modal fade" id="deleteTimeSlotModal{{ $timeslot->id }}" aria-hidden="true"
+            <div class="modal fade" id="editTimeSlotModal{{ $timeslot->id }}" aria-hidden="true" aria-labelledby="editTimeSlotModal{{ $timeslot->id }}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="editTimeSlotModal{{ $timeslot->id }}">Modifier le créneau horaire</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('timeslots.update', $timeslot->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            <input type="hidden" name="classe_id" value="{{ $classe->id }}">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <!-- input -->
+                                    <div class="mb-5 col-md-10">
+                                        <label for="start_time" class="form-label">Heure de Début</label>
+                                        <input type="time" name="start_time" id="start_time" class="form-control" 
+                                        value="{{ $timeslot->start_time }}" required>
+                                    </div>
+                                    <!-- input -->
+                                    <div class="mb-5 col-md-10">
+                                        <label for="end_time" class="form-label">Heure de Fin</label>
+                                        <input type="time" name="end_time" id="end_time" class="form-control" 
+                                        value="{{ $timeslot->end_time }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="deleteTimeSlotModal{{ $timeslot->id }}" aria-hidden="true"
                 aria-labelledby="deleteTimeSlotModal{{ $timeslot->id }}" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -162,31 +201,6 @@
                                 @method('DELETE')
                                 <button type="submit"
                                     class="btn btn-danger">supprimer</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal pour la suppression -->
-            <div class="modal fade" id="deleteTimeSlotModal{{ $timeslot->id }}" tabindex="-1"
-                aria-labelledby="deleteTimeSlotModalLabel{{ $timeslot->id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-danger text-white">
-                            <h5 class="modal-title" id="deleteTimeSlotModalLabel{{ $timeslot->id }}">Supprimer le
-                                Créneau Horaire</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Êtes-vous sûr de vouloir supprimer ce créneau horaire?</p>
-                            <form action="{{ route('timeslots.destroy', $timeslot) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Annuler</button>
                             </form>
                         </div>
                     </div>

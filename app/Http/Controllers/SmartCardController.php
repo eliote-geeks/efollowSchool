@@ -98,7 +98,7 @@ class SmartCardController extends Controller
                         ->with('success', 'Reussie !! L\'étudiant: ' . $student->first_name . ' dispose d\'une nouvelle carte! Ancienne Carte retirée');
                 }
             } else {
-                return redirect()->back()->with('error', 'Carte déja prise !!');
+                return redirect()->back()->with('error', 'Cette carte est déjà utilisée !!');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'une erreur innatendue s\'est produite');
