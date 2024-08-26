@@ -42,6 +42,7 @@ class DashboardController extends Controller
         $absencesW = Absence::select(DB::raw('DAYNAME(date) as day, COUNT(*) as total_absences'))
             ->groupBy('day')
             ->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')") // ->pluck('day','total_absences');
+            ->whereBetween('created_at', [$start, $end])
             ->get();
 
         $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -70,12 +71,47 @@ class DashboardController extends Controller
         $absenceCounts = [];
 
         foreach ($absencesByClass as $absence) {
-            $classes[] = $absence->classe->niveau->name.' '.$absence->classe->name; // Assurez-vous que la relation `classe` est définie dans votre modèle `Absence`
+            $classes[] = $absence->classe->niveau->name . ' ' . $absence->classe->name; // Assurez-vous que la relation `classe` est définie dans votre modèle `Absence`
             $absenceCounts[] = $absence->total_absences;
         }
 
+        $studentsLatePayments = DB::table('students')
+            ->leftJoin('payments', 'students.id', '=', 'payments.student_id')
+            ->rightJoin('scolarites', function ($join) {
+                $join->on('students.school_information_id', '=', 'scolarites.school_information_id');
+            })
+            ->select('students.first_name as student_name', 'scolarites.name as scolarite_name', 'scolarites.end_date', DB::raw('IFNULL(SUM(payments.amount), 0) as total_paid'), 'scolarites.amount as total_due')
+            ->groupBy('students.id', 'scolarites.id')
+            ->havingRaw('total_paid < total_due')
+            ->where('students.school_information_id', $this->schoolInformation->id)
+            ->where('scolarites.school_information_id', $this->schoolInformation->id)
+            ->where('scolarites.end_date', '<', Carbon::now())
+            ->get();
+
+        // Préparer les données pour le graphique
+        $studentNames = [];
+        $lateAmounts = [];
+        $scolariteNames = [];
+        
+        foreach ($studentsLatePayments as $payment) {
+            $studentNames[] = $payment->student_name ? $payment->student_name . ' (' . $payment->scolarite_name . ')' : $payment->scolarite_name;
+            $lateAmounts[] = $payment->total_due - $payment->total_paid;
+        }
+
+        foreach ($studentsLatePayments as $payment) {
+            $studentNames[] = $payment->student_name;
+            $lateAmounts[] = $payment->total_due - $payment->total_paid;
+        }
+
+        // Passer les données à la vue
+
+        $classes = $classes;
+        $absenceCounts = $absenceCounts;
+        $studentNames = $studentNames;
+        $lateAmounts = $lateAmounts;
+
         $years = SchoolInformation::all();
         $school = $this->schoolInformation;
-        return view('dashboard', compact('classes','absenceCounts','years', 'school', 'totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments', 'absenceDataW'));
+        return view('dashboard', compact('lateAmounts', 'studentNames', 'classes', 'absenceCounts', 'years', 'school', 'totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments', 'absenceDataW'));
     }
 }

@@ -259,6 +259,18 @@
                 </div>
             </div>
 
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">retard paiements</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="latePaymentsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
 
@@ -268,6 +280,52 @@
     <!-- Script pour Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const ctxLatePayments = document.getElementById('latePaymentsChart').getContext('2d');
+
+        const studentNames = @json($studentNames);
+        const lateAmounts = @json($lateAmounts);
+
+        new Chart(ctxLatePayments, {
+            type: 'bar',
+            data: {
+                labels: studentNames, // Affiche le nom de l'étudiant et le nom de la scolarité
+                datasets: [{
+                    label: 'Montant en retard',
+                    data: lateAmounts,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('fr-FR', {
+                                        style: 'currency',
+                                        currency: 'XAF'
+                                    }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         // Graphique des paiements mensuels
         const ctxMonthlyPayments = document.getElementById('monthlyPaymentsChart').getContext('2d');
         new Chart(ctxMonthlyPayments, {
