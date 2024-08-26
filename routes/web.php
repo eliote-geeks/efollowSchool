@@ -103,6 +103,8 @@ Route::post('absence/rapport/{classe}',[AttendanceController::class,'absencegene
 Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencegenerateReport'])->name('presence.generateReport');
 Route::post('change/School/Status',[SchoolInformationController::class,'changeSchoolInformationStatus'])->name('changeSchoolInformationStatus');
 Route::get('change/user/status/{student}',[StudentController::class,'status'])->name('changeStudentStatus');
+// Route::get('print/student/card/{student}',[StudentController::class,'printCard'])->name('printCardStudent');
+
 // export
 
 Route::get('exportAll/student',function(){

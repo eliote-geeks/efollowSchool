@@ -95,6 +95,12 @@
                                                             <i class="fe fe-eye dropdown-item-icon"></i>
                                                             Voir plus d'informations
                                                         </a>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('print.card', [$student,$student->schoolInformation]) }}"
+                                                            role="button">
+                                                            <i class="fe fe-credit-card dropdown-item-icon"></i>
+                                                            Imprimer Carte
+                                                        </a>
                                                         @if ($student->status == 1)
                                                             <a class="dropdown-item"
                                                                 href="{{ route('payment.student', $student) }}"
@@ -102,33 +108,36 @@
                                                                 <i class="fe fe-credit-card dropdown-item-icon"></i>
                                                                 Effectuer un paiement
                                                             </a>
-                                                       
-                                                        <a class="dropdown-item" href="{{ route('controlPayment') }}"
-                                                            role="button">
-                                                            <i class="bi bi-currency-dollar dropdown-item-icon"></i>
-                                                            Scolarité
-                                                        </a>
-                                                        @if (
-                                                            \App\Models\Moratoire::where(
-                                                                'school_information_id',
-                                                                \App\Models\SchoolInformation::where('status', 1)->latest()->first()->id)->where('student_id', $student->id)->where('end_date', '>', now())->count() == 0)
-                                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                                href="#addMoratoire{{ $student->id }}" role="button">
-                                                                <i class="bi bi-pause-circle dropdown-item-icon"></i>
-                                                                Ajouter un moratoire
+
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('controlPayment') }}" role="button">
+                                                                <i class="bi bi-currency-dollar dropdown-item-icon"></i>
+                                                                Scolarité
                                                             </a>
-                                                        @else
+                                                            @if (
+                                                                \App\Models\Moratoire::where(
+                                                                    'school_information_id',
+                                                                    \App\Models\SchoolInformation::where('status', 1)->latest()->first()->id)->where('student_id', $student->id)->where('end_date', '>', now())->count() == 0)
+                                                                <a class="dropdown-item" data-bs-toggle="modal"
+                                                                    href="#addMoratoire{{ $student->id }}"
+                                                                    role="button">
+                                                                    <i
+                                                                        class="bi bi-pause-circle dropdown-item-icon"></i>
+                                                                    Ajouter un moratoire
+                                                                </a>
+                                                            @else
+                                                                <a class="dropdown-item" data-bs-toggle="modal"
+                                                                    href="javascript:;" role="button">
+                                                                    <i
+                                                                        class="bi bi-pause-circle dropdown-item-icon"></i>
+                                                                    moratoire en activité
+                                                                </a>
+                                                            @endif
                                                             <a class="dropdown-item" data-bs-toggle="modal"
-                                                                href="javascript:;" role="button">
-                                                                <i class="bi bi-pause-circle dropdown-item-icon"></i>
-                                                                moratoire en activité
+                                                                href="#addReduction{{ $student->id }}" role="button">
+                                                                <i class="bi bi-cash-stack dropdown-item-icon"></i>
+                                                                Ajouter une réduction
                                                             </a>
-                                                        @endif
-                                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#addReduction{{ $student->id }}" role="button">
-                                                            <i class="bi bi-cash-stack dropdown-item-icon"></i>
-                                                            Ajouter une réduction
-                                                        </a>
                                                         @endif
                                                     </span>
                                                 </span>

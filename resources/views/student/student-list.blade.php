@@ -56,16 +56,16 @@
                                 </a>
 
                                 <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
-                                href="{{ route('creneauClass', $classe) }}" role="button">
-                                <i class="fe fe-time me-2"></i>
-                                Créer un Creneau
-                            </a>
+                                    href="{{ route('creneauClass', $classe) }}" role="button">
+                                    <i class="fe fe-time me-2"></i>
+                                    Créer un Creneau
+                                </a>
 
-                            <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
-                            href="{{ route('scheduleCLass', $classe) }}" role="button">
-                            <i class="fe fe-calendar me-2"></i>
-                            Créer un emploi de temps
-                        </a>
+                                <a class="btn btn-primary rounded-pill me-2 mb-2 mb-md-0"
+                                    href="{{ route('scheduleCLass', $classe) }}" role="button">
+                                    <i class="fe fe-calendar me-2"></i>
+                                    Créer un emploi de temps
+                                </a>
 
                                 <a class="btn btn-success rounded-pill"
                                     href="{{ route('showImportForm', $classe->id) }}" role="button">
@@ -126,8 +126,9 @@
                                                         </a>
                                                         <span class="dropdown-menu" aria-labelledby="courseDropdown2">
                                                             <span class="dropdown-header">Action</span>
-                                                            <a class="dropdown-item" 
-                                                                href="{{ route('student.show',$student) }}" role="button">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('student.show', $student) }}"
+                                                                role="button">
                                                                 <i class="fe fe-eye dropdown-item-icon"></i>
                                                                 Voir plus d'informations
                                                             </a>
@@ -136,6 +137,12 @@
                                                                 role="button">
                                                                 <i class="fe fe-plus dropdown-item-icon"></i>
                                                                 Attribuer une carte
+                                                            </a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('print.card', [$student, $student->schoolInformation]) }}"
+                                                                role="button">
+                                                                <i class="fe fe-credit-card dropdown-item-icon"></i>
+                                                                Imprimer Carte
                                                             </a>
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                                 href="#editStudent{{ $student->student->id }}"
@@ -186,7 +193,8 @@
                                                                                 id="img" name="avatar"
                                                                                 onchange="previewEditStudentImage(this)" />
                                                                         </label>
-                                                                        <p class="mb-0">Cliquez sur l'image ci-dessus</p>
+                                                                        <p class="mb-0">Cliquez sur l'image ci-dessus
+                                                                        </p>
                                                                         <p>pour la modifier</p>
                                                                     </div>
                                                                     <!-- input -->
@@ -292,7 +300,8 @@
                                                                             id="fatherPhone" name="phone_father"
                                                                             required>
                                                                         <div class="invalid-feedback">Veuillez entrer
-                                                                            le numero de téléphone du père ou tuteur</div>
+                                                                            le numero de téléphone du père ou tuteur
+                                                                        </div>
                                                                     </div>
                                                                     <!-- input -->
                                                                     <div class="mb-5 col-md-6">
@@ -317,20 +326,25 @@
                                                                             id="motherPhone" name="phone_mother"
                                                                             required>
                                                                         <div class="invalid-feedback">Veuillez entrer
-                                                                            le numero de téléphone de la mère ou tutrice</div>
+                                                                            le numero de téléphone de la mère ou tutrice
+                                                                        </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="mb-5 col-md-6">
                                                                         <label class="form-label"
                                                                             for="motherPhone">Sexe</label>
-                                                                        <select class="form-control" name='sexe' required>
-                                                                            <option>{{ $student->student->sexe }}</option>
-                                                                            @if ($student->student->sexe == "Masculin")
-                                                                                <option value="Feminin">Feminin</option>
+                                                                        <select class="form-control" name='sexe'
+                                                                            required>
+                                                                            <option>{{ $student->student->sexe }}
+                                                                            </option>
+                                                                            @if ($student->student->sexe == 'Masculin')
+                                                                                <option value="Feminin">Feminin
+                                                                                </option>
                                                                             @else
-                                                                                <option value="Masculin">Masculin</option>
+                                                                                <option value="Masculin">Masculin
+                                                                                </option>
                                                                             @endif
-                                                                        </select>  
+                                                                        </select>
                                                                     </div>
 
                                                                     {{-- <div class="mb-5 col-md-6">
