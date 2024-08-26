@@ -210,6 +210,10 @@
                 </div>
             </div>
 
+
+
+
+
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -244,7 +248,16 @@
                 </div>
             </div>
 
-
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="classesAbsencesChart"></canvas>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
@@ -337,6 +350,34 @@
                     ],
                     borderWidth: 1
                 }]
+            }
+        });
+
+
+        const ctxClassesAbsences = document.getElementById('classesAbsencesChart').getContext('2d');
+
+        // Utilisation des données PHP dans le script JavaScript
+        const classes = @json($classes); // Insère les noms des classes
+        const absenceCounts = @json($absenceCounts); // Insère les totaux d'absences
+
+        new Chart(ctxClassesAbsences, {
+            type: 'bar',
+            data: {
+                labels: classes, // Utilise les noms des classes comme labels
+                datasets: [{
+                    label: 'Total Absences',
+                    data: absenceCounts, // Utilise les totaux d'absences comme données
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
         });
     </script>

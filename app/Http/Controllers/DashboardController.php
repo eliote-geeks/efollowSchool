@@ -39,8 +39,10 @@ class DashboardController extends Controller
             ->groupBy('day')
             ->pluck('count', 'day');
 
-        $absencesW = Absence::select(DB::raw('DAYNAME(date) as day, COUNT(*) as total_absences'))->groupBy('day')->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")// ->pluck('day','total_absences');
-        ->get();
+        $absencesW = Absence::select(DB::raw('DAYNAME(date) as day, COUNT(*) as total_absences'))
+            ->groupBy('day')
+            ->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')") // ->pluck('day','total_absences');
+            ->get();
 
         $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $absenceDataW = [];
@@ -61,8 +63,19 @@ class DashboardController extends Controller
             ->whereDate('created_at', '<=', now()->endOfWeek())
             ->sum('amount');
 
+        $absencesByClass = Absence::select('classe_id', DB::raw('COUNT(*) as total_absences'))->groupBy('classe_id')->orderByDesc('total_absences')->get();
+
+        // Récupérer les noms des classes et les totaux d'absences
+        $classes = [];
+        $absenceCounts = [];
+
+        foreach ($absencesByClass as $absence) {
+            $classes[] = $absence->classe->niveau->name.' '.$absence->classe->name; // Assurez-vous que la relation `classe` est définie dans votre modèle `Absence`
+            $absenceCounts[] = $absence->total_absences;
+        }
+
         $years = SchoolInformation::all();
         $school = $this->schoolInformation;
-        return view('dashboard', compact('years', 'school', 'totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments','absenceDataW'));
+        return view('dashboard', compact('classes','absenceCounts','years', 'school', 'totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments', 'absenceDataW'));
     }
 }
