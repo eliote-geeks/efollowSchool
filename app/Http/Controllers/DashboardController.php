@@ -49,6 +49,8 @@ class DashboardController extends Controller
             ->whereDate('created_at', '<=', now()->endOfWeek())
             ->sum('amount');
 
-        return view('dashboard', compact('totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments'));
+        $years = SchoolInformation::all();
+        $school = $this->schoolInformation;
+        return view('dashboard', compact('years','school','totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments'));
     }
 }

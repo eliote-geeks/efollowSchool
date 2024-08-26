@@ -11,6 +11,7 @@ use App\Imports\StudentsImport;
 use App\Models\SchoolInformation;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\SmartCard;
 
 class StudentController extends Controller
 {
@@ -32,8 +33,8 @@ class StudentController extends Controller
 
     public function showImportForm($classe)
     {
-        return view('student.import-students',[
-            'classe' => $classe
+        return view('student.import-students', [
+            'classe' => $classe,
         ]);
     }
 
@@ -49,8 +50,8 @@ class StudentController extends Controller
 
     public function createStudentClass(Classe $classe)
     {
-        return view('student.create',[
-            'classe' => $classe
+        return view('student.create', [
+            'classe' => $classe,
         ]);
     }
 
@@ -75,6 +76,12 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        $st = Student::where([
+            'id' => $student->id,
+            'school_information_id' => SchoolInformation::where('status', 1)->first()->id,
+        ])->firstOrFail();
+        $student = $st;
+        return view('student.student-view', compact('student'));
     }
 
     /**
@@ -88,6 +95,21 @@ class StudentController extends Controller
     public function searchByname()
     {
         return view('student.searchByname');
+    }
+
+    public function status(Student $student)
+    {
+        $smartCard = SmartCard::where([
+            'user_id' => $student->id,
+            'status' => 'on',
+        ])->firstOrFail();
+        $smartCard->status = 'false';
+        $smartCard->save();
+
+        $student->status = 0;
+        $student->save();
+
+        return redirect()->back()->with('success', 'etudiant désactivé avec success !!');
     }
 
     /**

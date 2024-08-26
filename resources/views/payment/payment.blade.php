@@ -114,12 +114,14 @@
                             <div class="mb-5 col-md-6">
                                 <h2 class="mb-1 me-auto">Informations sur l'étudiant</b></h2>
                                 <div class="card-body">
-                                    <p><strong>Nom Complet :</strong> {{ $student->first_name . ' ' . $student->last_name }}</p>
+                                    <p><strong>Nom Complet :</strong>
+                                        {{ $student->first_name . ' ' . $student->last_name }}</p>
                                     <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
                                     <p><strong>Date de Naissance :</strong>
                                         {{ \Carbon\Carbon::parse($student->date_birth)->format('d, M Y') }}</p>
                                     <p><strong>Lieu de Naissance :</strong> {{ $student->place_birth }}</p>
-                                    <p><strong>Niveau :</strong> {{ $student->studentClasse->classe->niveau->name }}</p>
+                                    <p><strong>Niveau :</strong> {{ $student->studentClasse->classe->niveau->name }}
+                                    </p>
                                     <p><strong>Classe :</strong> {{ $student->studentClasse->classe->name }}</p>
                                 </div>
                             </div>
@@ -131,14 +133,15 @@
                                     <h2 class="mb-5 me-auto">Effectuer un paiement</b></h2><!-- input -->
                                     <div class="mb-5 col-md-12">
                                         <input type="hidden" name="student" value="{{ $student->id }}">
-                                        <input type="hidden" name="totalPaymentsAmount" value="{{ $totalPaymentsAmount }}">
-                                        
+                                        <input type="hidden" name="totalPaymentsAmount"
+                                            value="{{ $totalPaymentsAmount }}">
+
                                         <label class="form-label" for="masque">Frais exigible</label>
                                         <select name="scolarite" id="scolarite_id" class="form-control">
                                             @foreach ($scolarites as $scolarite)
-                                                @if ($scolarite->amount > \App\Models\Payment::where('student_id', $student->id)
-                                                ->where('scolarite_id', $scolarite->id)
-                                                ->sum('amount'))
+                                                @if (
+                                                    $scolarite->amount >
+                                                        \App\Models\Payment::where('student_id', $student->id)->where('scolarite_id', $scolarite->id)->sum('amount'))
                                                     <option value="{{ $scolarite->id }}">{{ $scolarite->name }} -
                                                         {{ number_format($scolarite->amount) }} FCFA</option>
                                                 @endif
@@ -150,45 +153,50 @@
                                         <label class="form-label" for="amount">Montant
                                             en FCFA</label>
                                         <input type="text" class="form-control"
-                                            placeholder="Entrez le montant des frais exigibles"
-                                            value="" id="amount" name="amount" onInput="formatAmountCosts(this)"
-                                            step="0.01" onkeypress="return formatAmountCosts(this, event)"
-                                            required>
+                                            placeholder="Entrez le montant des frais exigibles" value=""
+                                            id="amount" name="amount" onInput="formatAmountCosts(this)"
+                                            step="0.01" onkeypress="return formatAmountCosts(this, event)" required>
                                     </div>
-                                        <button type="button" class="btn btn-primary confirm" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-primary confirm" data-bs-toggle="modal"
                                         href="#payment-confirmation-modal">Confirmer le paiement</button>
-                                    </div>
+                            </div>
 
-                                    <div class="modal fade" id="payment-confirmation-modal" aria-hidden="true" aria-labelledby="payment-confirmation-modal" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title" id="payment-confirmation-modalLabel">Confirmation du paiement</h3>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <!-- input -->
-                                                        <p><strong>Nom de l'Étudiant :</strong> {{ $student->first_name }}
-                                                            {{ $student->last_name }}</p>
-                                                        <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
-                                                        <p><strong>Date de Paiement :</strong> {{ \Carbon\Carbon::now()->format('d, M Y') }}</p>
-                                                        <p><strong>Montant :</strong> <span id="confirmation-amount"></span> FCFA</p>
-                                                        <p><strong>Tranche :</strong> <span id="confirmation-tranche"></span></p>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-primary">Effectuer le paiement</button>
-                                                </div>
+                            <div class="modal fade" id="payment-confirmation-modal" aria-hidden="true"
+                                aria-labelledby="payment-confirmation-modal" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="payment-confirmation-modalLabel">Confirmation du
+                                                paiement</h3>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <!-- input -->
+                                                <p><strong>Nom de l'Étudiant :</strong> {{ $student->first_name }}
+                                                    {{ $student->last_name }}</p>
+                                                <p><strong>Matricule :</strong> {{ $student->matricular }}</p>
+                                                <p><strong>Date de Paiement :</strong>
+                                                    {{ \Carbon\Carbon::now()->format('d, M Y') }}</p>
+                                                <p><strong>Montant :</strong> <span id="confirmation-amount"></span>
+                                                    FCFA</p>
+                                                <p><strong>Tranche :</strong> <span id="confirmation-tranche"></span>
+                                                </p>
                                             </div>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-primary">Effectuer le
+                                                paiement</button>
+                                        </div>
                                     </div>
-
-                                </form>
-
+                                </div>
                             </div>
+
+                            </form>
 
                         </div>
 
@@ -198,7 +206,9 @@
 
             </div>
 
-             <div class="row">
+        </div>
+
+        <div class="row">
             <!-- basic table -->
             <div class="col-md-12 col-12 mb-5">
                 <div class="card">
@@ -217,7 +227,7 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Paiement N°</th>
-                                                <th scope="col">Frais Scolaire</th>
+                                                <th scope="col">Frais Scolaire (montant)</th>
                                                 <th>Montant</th>
                                                 <th>Date</th>
                                                 <th class="text-center">Options</th>
@@ -227,15 +237,42 @@
                                             @foreach ($payments as $p)
                                                 <tr>
                                                     <td>{{ $p->id }}</td>
-                                                    <td>{{ $p->scolarite->name }}</td>
+                                                    <td>{{ $p->scolarite->name }}({{ number_format($p->scolarite->amount) }}
+                                                        FCFA)</td>
                                                     <td>{{ number_format($p->amount) }} FCFA</td>
-                                                    <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d, M Y') }}</td>
-                                                    <td class="text-center">
-                                                    
-                                                        <a class="btn btn-info" 
-                                                            href="{{ route('receiptPayment', [$p->student->id, $p]) }}">
-                                                        <i class="bi bi-printer me-1"></i> Imprimer </a>
+                                                    <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d, M Y') }}
                                                     </td>
+                                                    <td class="text-center">
+
+                                                        <a class="btn btn-info"
+                                                            href="{{ route('receiptPayment', [$p->student->id, $p]) }}">
+                                                            <i class="bi bi-printer me-1"></i> Imprimer </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-lg fs-4" id="dataTableBasic">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">Frais Scolaire (montant)</th>
+                                                <th>Montant Reglé</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (\App\Models\Scolarite::where('school_information_id',$schoolInformationId)->get() as $s)
+                                                <tr>
+                                                    <td>{{ $s->name }}({{ number_format($s->amount) }}
+                                                        FCFA)</td>
+                                                    <td>{{ number_format(\App\Models\Payment::where([
+                                                        'student_id' => $student->id,
+                                                        'scolarite_id' => $s->id,
+                                                        'school_information_id' => $schoolInformationId
+                                                        ])->sum('amount')) }} FCFA</td>                                                    
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -244,16 +281,16 @@
                             </div>
 
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
 
             </div>
-            
+
         </div>
 
-        </div> 
+        </div>
 
 
 

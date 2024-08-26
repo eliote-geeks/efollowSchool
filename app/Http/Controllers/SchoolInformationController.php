@@ -207,7 +207,29 @@ class SchoolInformationController extends Controller
         } catch (\Exception $e) {
             return redirect()
                 ->back()
-                ->with('message', 'Oups une erreur s\'est produite veuillez reesayer: ' . $e->getMessage());
+                ->with('error', 'Oups une erreur s\'est produite veuillez reesayer: ' . $e->getMessage());
+        }
+    }
+
+    public function changeSchoolInformationStatus(Request $request)
+    {
+        $request->validate([
+            'year' => 'required'
+        ]);
+        try {
+            $school = SchoolInformation::find($request->year);
+            foreach (SchoolInformation::all() as $sc) {
+                $sc->status = 0;
+                $sc->save();
+            }
+            $school->status = 1;
+            $school->save();
+
+            return redirect()->back()->with('success', 'reussie');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Oups une erreur s\'est produite veuillez reesayer: ' . $e->getMessage());
         }
     }
 }

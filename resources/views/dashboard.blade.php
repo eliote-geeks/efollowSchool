@@ -1,37 +1,30 @@
+<base href="/">
 <x-layouts>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Tableau de Bord</a>
+        <div class="d-flex">
+            <!-- form -->
+            <div class="input-group me-9  ">
+                <form action="{{ route('changeSchoolInformationStatus') }}" method="POST">
+                    @csrf
+                    <select class="form-control" name="year" id="">
+
+                        @foreach ($years as $y)
+                            <option @if ($school->id == $y->id) selected @endif value="{{ $y->id }}">
+                                {{ \Carbon\Carbon::parse($y->start)->format('Y') . '-' . \Carbon\Carbon::parse($y->end)->format('Y') }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <!-- button -->
+                    <button type="submit" class="btn btn-primary">Basculez</button>
+                </form>
+            </div>
+
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Étudiants</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Paiements</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Absences</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Scolarite</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter Presences</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="">Exporter classes</a>
-                </li>
-                <!-- Ajoutez d'autres liens d'export ici -->
-            </ul>
-        </div>
     </nav>
     <div class="container-fluid">
         <!-- Header du tableau de bord -->
@@ -54,8 +47,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                                <i class="fe fe-user-graduate fe-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportStudentAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -69,11 +63,12 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Total des Paiements</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPayments }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPayments }} FCFA</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fe fe-dollar-sign fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportPaymentAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -90,8 +85,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRemises }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-percentage fa-2x text-gray-300"></i>
+                                <i class="fe fe-percentage fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportRemiseAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -108,8 +104,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAbsences }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-user-slash fa-2x text-gray-300"></i>
+                                <i class="fe fe-user-slash fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportAbsenceAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -129,8 +126,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPresences }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                                <i class="fe fe-user-check fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportPresenceAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -147,8 +145,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalMoratoires }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                <i class="fe fe-clock fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportMoratoireAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -165,8 +164,9 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalScolarites }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-school fa-2x text-gray-300"></i>
+                                <i class="fe fe-school fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportScolariteAll') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
@@ -183,30 +183,14 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $monthlyPayments }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+                                <i class="fe fe-calendar-alt fa-2x text-gray-300"></i>
                             </div>
+                            <a href="{{ route('exportPaymentMonth') }}">Exporter</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Paiements Hebdomadaires -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Paiements cette Semaine</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $weeklyPayments }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar-week fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container-fluid">
@@ -226,6 +210,16 @@
                 </div>
             </div>
 
+            <div class="col-xl-6 col-lg-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="weeklyAbsencesChart"></canvas>
+                    </div>
+                </div>
+            </div>
             <!-- Graphique des étudiants et des présences -->
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
@@ -234,20 +228,6 @@
                     </div>
                     <div class="card-body">
                         <canvas id="studentsPresencesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Graphique des absences par semaine -->
-            <div class="col-xl-6 col-lg-6">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h6>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="weeklyAbsencesChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -263,7 +243,13 @@
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
+
+
     </div>
 
     <!-- Script pour Chart.js -->

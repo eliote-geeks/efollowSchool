@@ -40,6 +40,7 @@
                         </div>
                         <p class="mb-0">
                             Sur cette page vous pouvez créer, visualiser supprimer ou modifier des créneaux horaires
+                       Veuillez creez les heures de façon chronologique
                         </p>
                         @if ($errors->any())
                             <div class="alert alert-danger">

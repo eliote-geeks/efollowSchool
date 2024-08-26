@@ -1,9 +1,21 @@
 <?php
 
+use App\Models\Presence;
 use App\Models\Moratoire;
+use App\Models\Scolarite;
+use App\Models\Attendance;
 use App\Exports\StudentsExport;
+use App\Exports\RemiseAllExport;
+use App\Exports\AbsenceAllExport;
+use App\Exports\PaymentAllExport;
+use App\Exports\StudentAllExport;
+use App\Exports\PresenceAllExport;
+use App\Exports\MoratoireAllExport;
+use App\Exports\PaymentMonthExport;
+use App\Exports\ScolariteAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\PaymentController;
@@ -11,13 +23,13 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TimeSlotController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MoratoireController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchoolInformationController;
-use App\Models\Attendance;
+use App\Models\SchoolInformation;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +41,7 @@ use App\Models\Attendance;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -88,6 +101,42 @@ Route::get('/attendance/print/month', [AttendanceController::class, 'printMonth'
 Route::get('/attendance/print/period', [AttendanceController::class, 'printPeriod'])->name('attendance.print.period');
 Route::post('absence/rapport/{classe}',[AttendanceController::class,'absencegenerateReport'])->name('absence.generateReport');
 Route::post('presence/rapport/{classe}',[AttendanceController::class,'presencegenerateReport'])->name('presence.generateReport');
+Route::post('change/School/Status',[SchoolInformationController::class,'changeSchoolInformationStatus'])->name('changeSchoolInformationStatus');
+Route::get('change/user/status/{student}',[StudentController::class,'status'])->name('changeStudentStatus');
+// export
+
+Route::get('exportAll/student',function(){
+    return Excel::download(new StudentAllExport(),'students.xlsx');
+})->name('exportStudentAll');
+
+Route::get('exportAll/payment',function(){
+    return Excel::download(new PaymentAllExport(),'payments.xlsx');
+})->name('exportPaymentAll');
+
+Route::get('exportAll/remise',function(){
+    return Excel::download(new RemiseAllExport(),'remises.xlsx');
+})->name('exportRemiseAll');
+
+Route::get('exportAll/absence',function(){
+    return Excel::download(new AbsenceAllExport(),'absences.xlsx');
+})->name('exportAbsenceAll');
+
+Route::get('exportAll/presence',function(){
+    return Excel::download(new PresenceAllExport(),'presences.xlsx');
+})->name('exportPresenceAll');
+
+Route::get('exportAll/moratoire',function(){
+    return Excel::download(new MoratoireAllExport(),'moratoires.xlsx');
+})->name('exportMoratoireAll');
+
+Route::get('exportAll/scolarite',function(){
+    return Excel::download(new ScolariteAllExport(),'scolarites.xlsx');
+})->name('exportScolariteAll');
+
+Route::get('exportMonth/payment',function(){
+    return Excel::download(new PaymentMonthExport(),'payments-'.date('m').'.xlsx');
+})->name('exportPaymentMonth');
+
 
 
 Route::get('export-students', function () {
@@ -107,8 +156,6 @@ Route::get('export-students', function () {
 Route::get('student-view', function () {
     return view('student.student-view');
 });
-
-
 
 
 Route::get('sequence', function(){
