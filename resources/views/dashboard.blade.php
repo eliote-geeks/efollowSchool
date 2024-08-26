@@ -301,13 +301,17 @@
 
         // Graphique des absences hebdomadaires
         const ctxWeeklyAbsences = document.getElementById('weeklyAbsencesChart').getContext('2d');
+
+        // Utilisation des données PHP dans le script JavaScript
+        const absenceData = @json($absenceDataW); // Insère les données JSON encodées
+
         new Chart(ctxWeeklyAbsences, {
             type: 'line',
             data: {
-                labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'],
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                 datasets: [{
                     label: 'Absences',
-                    data: [12, 19, 3, 5, 2], // Remplacez par les vraies données
+                    data: absenceData, // Utilise les données d'absences
                     fill: false,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     tension: 0.1

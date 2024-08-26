@@ -12,6 +12,7 @@ use App\Models\remiseDue;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -38,6 +39,17 @@ class DashboardController extends Controller
             ->groupBy('day')
             ->pluck('count', 'day');
 
+        $absencesW = Absence::select(DB::raw('DAYNAME(date) as day, COUNT(*) as total_absences'))->groupBy('day')->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")// ->pluck('day','total_absences');
+        ->get();
+
+        $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        $absenceDataW = [];
+
+        foreach ($days as $day) {
+            $absenceForDay = $absencesW->firstWhere('day', $day);
+            $absenceDataW[] = $absenceForDay ? $absenceForDay->total_absences : 0;
+        }
+
         // Plus de statistiques par exemple, par mois, par semaine..
         $monthlyPayments = Payment::where('school_information_id', $this->schoolInformation->id)
             ->whereDate('created_at', '>=', now()->startOfMonth())
@@ -51,6 +63,6 @@ class DashboardController extends Controller
 
         $years = SchoolInformation::all();
         $school = $this->schoolInformation;
-        return view('dashboard', compact('years','school','totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments'));
+        return view('dashboard', compact('years', 'school', 'totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments','absenceDataW'));
     }
 }
