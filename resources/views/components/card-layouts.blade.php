@@ -266,7 +266,7 @@
                                 <a class="rounded-circle" href="#" role="button" id="dropdownUser"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                                        <img alt="avatar" src="{{ auth()->user()->profile_photo_url }}"
+                                        <img alt="avatar" src="../../../assets/images/avatar/avatar-1.jpg"
                                             class="rounded-circle" />
                                     </div>
                                 </a>
@@ -274,45 +274,76 @@
                                     <div class="dropdown-item">
                                         <div class="d-flex">
                                             <div class="avatar avatar-md avatar-indicators avatar-online">
-                                                <img alt="avatar" src="{{ auth()->user()->profile_photo_url }}"
+                                                <img alt="avatar" src="../../../assets/images/avatar/avatar-1.jpg"
                                                     class="rounded-circle" />
                                             </div>
                                             <div class="ms-3 lh-1">
-                                                <h5 class="mb-1">{{ auth()->user()->name }}</h5>
-                                                <p class="mb-0">{{ auth()->user()->email }}</p>
+                                                <h5 class="mb-1">Annette Black</h5>
+                                                <p class="mb-0">annette@geeksui.com</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <ul class="list-unstyled">
-
+                                        <li class="dropdown-submenu dropstart-lg">
+                                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle"
+                                                href="#">
+                                                <i class="fe fe-circle me-2"></i>
+                                                Status
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <span class="badge-dot bg-success me-2"></span>
+                                                        Online
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <span class="badge-dot bg-secondary me-2"></span>
+                                                        Offline
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <span class="badge-dot bg-warning me-2"></span>
+                                                        Away
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <span class="badge-dot bg-danger me-2"></span>
+                                                        Busy
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                            <a class="dropdown-item" href="../../profile-edit.html">
                                                 <i class="fe fe-user me-2"></i>
-                                                Dashboard
+                                                Profile
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                            <a class="dropdown-item" href="../../student-subscriptions.html">
+                                                <i class="fe fe-star me-2"></i>
+                                                Subscription
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
                                                 <i class="fe fe-settings me-2"></i>
-                                                Profile
+                                                Settings
                                             </a>
                                         </li>
                                     </ul>
                                     <div class="dropdown-divider"></div>
                                     <ul class="list-unstyled">
                                         <li>
-                                            <a class="dropdown-item" href="javascript:;"
-                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <a class="dropdown-item" href="../../../index.html">
                                                 <i class="fe fe-power me-2"></i>
-                                                Déconnexion
+                                                Sign Out
                                             </a>
-                                            <!-- Vue Blade -->
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                            </form>
-
                                         </li>
                                     </ul>
                                 </div>
@@ -321,47 +352,28 @@
                     </div>
                 </nav>
             </div>
-
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @elseif(session('message'))
+                <div class="alert alert-info">
+                    {{ session('message') }}
+                </div>
+            @elseif(session('warning'))
+                <div class="alert alert-warning">
+                    {{ session('warning') }}
+                </div>
+            @endif
             {{ $slot }}
 
         </main>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Affichage des messages de session -->
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @elseif(session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @elseif(session('message'))
-                        <div class="alert alert-info">
-                            {{ session('message') }}
-                        </div>
-                    @elseif(session('warning'))
-                        <div class="alert alert-warning">
-                            {{ session('warning') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Menu -->
     <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
@@ -372,93 +384,49 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <a href="{{ route('dashboard') }}">
-                        <div class="menu-grid">
-                            <div class="menu-item">
-                                <i class="bi bi-speedometer icon fs-1"></i>
-                                <div class="text-secondary">Dashboard</div>
-
-                            </div>
-                    </a>
-                    <a href="{{ route('schoolInformation.index') }}">
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <i class="bi bi-speedometer icon fs-1"></i>
+                            <div class="text-secondary">Dashboard</div>
+                        </div>
                         <div class="menu-item">
                             <i class="bi bi-building icon fs-1"></i>
                             <div class="text-secondary">Gestion de l'établissement</div>
                         </div>
-                    </a>
-                    <a href="{{ route('niveau.index') }}">
                         <div class="menu-item">
                             <i class="bi bi-activity icon fs-1"></i>
                             <div class="text-secondary">Gestion des niveaux</div>
                         </div>
-                    </a>
-                    <a href="{{ route('searchByStudentCard') }}">
                         <div class="menu-item">
-                            <i class="bi bi-search icon fs-1"></i>
-                            <div class="text-secondary">Rechercher par carte un élève</div>
+                            <i class="bi bi-person-plus icon fs-1"></i>
+                            <div class="text-secondary">Créer un élève</div>
                         </div>
-                    </a>
-
-                    <a href="{{ route('searchByname') }}">
-                        <div class="menu-item">
-                            <i class="bi bi-search icon fs-1"></i>
-                            <div class="text-secondary">Rechercher un élève</div>
-                        </div>
-                    </a>
-                    <a href="{{ route('payment.index') }}">
                         <div class="menu-item">
                             <i class="bi bi-coin icon fs-1"></i>
-                            <div class="text-secondary">Gestion des paiement</div>
+                            <div class="text-secondary">Enregistrer un paiement</div>
                         </div>
-                    </a>
-
-                    <a href="{{ route('getRemise') }}">
-                        <div class="menu-item">
-                            <i class="bi bi-coin icon fs-1"></i>
-                            <div class="text-secondary">Gestion des reductions</div>
-                        </div>
-                    </a>
-                    <a href="{{ route('controlPayment') }}">
                         <div class="menu-item">
                             <i class="bi bi-calendar-check icon fs-1"></i>
-                            <div class="text-secondary">Controle Scolarite</div>
+                            <div class="text-secondary">Programmes des cours</div>
                         </div>
-                    </a>
-                    <a href="{{ route('scolarite.index') }}">
                         <div class="menu-item">
                             <i class="bi bi-cash-coin icon fs-1"></i>
                             <div class="text-secondary">Frais de scolarité</div>
                         </div>
-                    </a>
-
-                    <a href="{{ route('moratoire.index') }}">
-                    <div class="menu-item">
-                        <i class="bi bi-pause-circle icon fs-1"></i>
-                        <div class="text-secondary">Gestion des moratoires</div>
-                    </div>
-                </a>
-                    <div class="menu-item">
-                        <i class="bi bi-person icon fs-1"></i>
-                        <div class="text-secondary">Gestion des utilisateurs</div>
-                    </div>
-
-                </a>
-                <a href="javascript:;"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">                        <div class="menu-item">
-                            <i class="fe fe-power me-2 icon fs-1"></i>
-                            <div class="text-secondary">Deconnexion</div>
+                        <div class="menu-item">
+                            <i class="bi bi-pause-circle icon fs-1"></i>
+                            <div class="text-secondary">Gestion des moratoires</div>
                         </div>
-                </a>
-                <!-- Vue Blade -->
-                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                    style="display: none;">
-                    @csrf
-                </form>
+                        <div class="menu-item">
+                            <i class="bi bi-person icon fs-1"></i>
+                            <div class="text-secondary">Gestion des utilisateurs</div>
+                        </div>
 
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 
