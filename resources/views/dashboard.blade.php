@@ -12,7 +12,9 @@
                         <div class="row">
 
                             <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-                                <h2 class="mb-5 me-auto">Tableau de bord ({{ \Carbon\Carbon::parse($school->start)->format('Y').'-'.\Carbon\Carbon::parse($school->end)->format('Y') }})</h2>
+                                <h2 class="mb-5 me-auto">Tableau de bord année scolaire:
+                                    ({{ \Carbon\Carbon::parse($school->start)->format('Y') . '-' . \Carbon\Carbon::parse($school->end)->format('Y') }})
+                                </h2>
                                 <div class="ms-auto">
                                     <a class="btn btn-primary rounded-pill ms-auto mt-3 mt-md-0" data-bs-toggle="modal"
                                         href="#otherYear" role="button">
@@ -308,14 +310,19 @@
         });
 
         // Graphique des absences hebdomadaires
+        // Graphique des absences hebdomadaires
         const ctxWeeklyAbsences = document.getElementById('weeklyAbsencesChart').getContext('2d');
+
+        // Utilisation des données PHP dans le script JavaScript
+        const absenceData = @json($absenceDataW); // Insère les données JSON encodées
+
         new Chart(ctxWeeklyAbsences, {
             type: 'line',
             data: {
-                labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'],
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                 datasets: [{
                     label: 'Absences',
-                    data: [12, 19, 3, 5, 2], // Remplacez par les vraies données
+                    data: absenceData, // Utilise les données d'absences
                     fill: false,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     tension: 0.1
