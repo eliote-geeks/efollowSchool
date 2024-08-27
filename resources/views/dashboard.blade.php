@@ -1,198 +1,195 @@
 <base href="/">
 <x-layouts>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="d-flex">
-            <!-- form -->
-            <div class="input-group me-9  ">
-                <form action="{{ route('changeSchoolInformationStatus') }}" method="POST">
-                    @csrf
-                    <select class="form-control" name="year" id="">
 
-                        @foreach ($years as $y)
-                            <option @if ($school->id == $y->id) selected @endif value="{{ $y->id }}">
-                                {{ \Carbon\Carbon::parse($y->start)->format('Y') . '-' . \Carbon\Carbon::parse($y->end)->format('Y') }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <!-- button -->
-                    <button type="submit" class="btn btn-primary">Basculez</button>
-                </form>
-            </div>
-
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-    </nav>
-    <div class="container-fluid">
-        <!-- Header du tableau de bord -->
-        <div class="row mb-4">
-            <div class="col">
-                <h1 class="h3 mb-0 text-gray-800">Tableau de Bord</h1>
-            </div>
-        </div>
-
-        <!-- Statistiques générales -->
+    <section class="container-fluid p-4">
         <div class="row">
-            <!-- Total Students -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
+            <!-- basic table -->
+            <div class="col-md-12 col-12 mb-5">
+                <div class="card">
+                    <!-- table  -->
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total des Étudiants</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}</div>
+
+                        <div class="row">
+
+                            <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                                <h2 class="mb-5 me-auto">Tableau de bord ({{ \Carbon\Carbon::parse($school->start)->format('Y').'-'.\Carbon\Carbon::parse($school->end)->format('Y') }})</h2>
+                                <div class="ms-auto">
+                                    <a class="btn btn-primary rounded-pill ms-auto mt-3 mt-md-0" data-bs-toggle="modal"
+                                        href="#otherYear" role="button">
+                                        <i class="fe fe-calendar me-2"></i>
+                                        Basculer vers une autre année scolaire
+                                    </a>
+                                </div>
+
                             </div>
-                            <div class="col-auto">
-                                <i class="fe fe-user-graduate fe-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportStudentAll') }}">Exporter</a>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
 
-            <!-- Total Payments -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total des Paiements</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPayments }} FCFA</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fe fe-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportPaymentAll') }}">Exporter</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total Remises -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    Total des Remises</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRemises }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fe fe-percentage fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportRemiseAll') }}">Exporter</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total Absences -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Total des Absences</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAbsences }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fe fe-user-slash fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportAbsenceAll') }}">Exporter</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Statistiques supplémentaires -->
         <div class="row">
-            <!-- Total Presences -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total des Présences</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPresences }}</div>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des élèves</span>
                             </div>
-                            <div class="col-auto">
-                                <i class="fe fe-user-check fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportPresenceAll') }}">Exporter</a>
                         </div>
+                        <h2 class="fw-bold mb-1"> {{ $totalStudents }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportStudentAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Total Moratoires -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-danger shadow h-100 py-2">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                    Total des Moratoires</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalMoratoires }}</div>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des paiements</span>
                             </div>
-                            <div class="col-auto">
-                                <i class="fe fe-clock fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportMoratoireAll') }}">Exporter</a>
                         </div>
+                        <h2 class="fw-bold mb-1"> {{ $totalPayments }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportPaymentAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Total Scolarites -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total des Scolarités</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalScolarites }}</div>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des remises</span>
                             </div>
-                            <div class="col-auto">
-                                <i class="fe fe-school fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportScolariteAll') }}">Exporter</a>
                         </div>
+                        <h2 class="fw-bold mb-1">{{ $totalRemises }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportRemiseAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Paiements Mensuels -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    Paiements ce Mois</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $monthlyPayments }}</div>
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des moratoires</span>
                             </div>
-                            <div class="col-auto">
-                                <i class="fe fe-calendar-alt fa-2x text-gray-300"></i>
-                            </div>
-                            <a href="{{ route('exportPaymentMonth') }}">Exporter</a>
                         </div>
+                        <h2 class="fw-bold mb-1">{{ $totalMoratoires }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportMoratoireAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des frais
+                                    exigibles</span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ $totalScolarites }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportScolariteAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Paiements de ce mois</span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ $monthlyPayments }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportPaymentMonth') }}"
+                                class="text-success">Exporter</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des absences</span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ $totalAbsences }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportAbsenceAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des présences</span>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-1">{{ $totalPresences }}</h2>
+                        <span class="text-success fw-semibold">
+                            <i class="bi bi-download me-2"></i><a href="{{ route('exportPresenceAll') }}"
+                                class="text-success">Exporter</a>
+                        </span>
                     </div>
                 </div>
             </div>
 
         </div>
-    </div>
+    </section>
+
     <div class="container-fluid">
         <!-- Header du tableau de bord -->
 
@@ -202,7 +199,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Paiements Mensuels</h6>
+                        <h4 class="m-0 font-weight-bold text-primary">Paiements Mensuels</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="monthlyPaymentsChart"></canvas>
@@ -210,14 +207,10 @@
                 </div>
             </div>
 
-
-
-
-
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h6>
+                        <h4 class="m-0 font-weight-bold text-primary">Absences Hebdomadaires</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="weeklyAbsencesChart"></canvas>
@@ -228,7 +221,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Étudiants et Présences</h6>
+                        <h4 class="m-0 font-weight-bold text-primary">Étudiants et Présences</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="studentsPresencesChart"></canvas>
@@ -240,7 +233,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Remises et Moratoires</h6>
+                        <h4 class="m-0 font-weight-bold text-primary">Remises et Moratoires</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="remisesMoratoiresChart"></canvas>
@@ -270,8 +263,6 @@
     <!-- Script pour Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      
-
         // Graphique des paiements mensuels
         const ctxMonthlyPayments = document.getElementById('monthlyPaymentsChart').getContext('2d');
         new Chart(ctxMonthlyPayments, {
@@ -318,17 +309,13 @@
 
         // Graphique des absences hebdomadaires
         const ctxWeeklyAbsences = document.getElementById('weeklyAbsencesChart').getContext('2d');
-
-        // Utilisation des données PHP dans le script JavaScript
-        const absenceData = @json($absenceDataW); // Insère les données JSON encodées
-
         new Chart(ctxWeeklyAbsences, {
             type: 'line',
             data: {
-                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'],
                 datasets: [{
                     label: 'Absences',
-                    data: absenceData, // Utilise les données d'absences
+                    data: [12, 19, 3, 5, 2], // Remplacez par les vraies données
                     fill: false,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     tension: 0.1
@@ -357,7 +344,6 @@
             }
         });
 
-
         const ctxClassesAbsences = document.getElementById('classesAbsencesChart').getContext('2d');
 
         // Utilisation des données PHP dans le script JavaScript
@@ -385,5 +371,42 @@
             }
         });
     </script>
+
+    <div class="modal fade" id="otherYear" aria-hidden="true" aria-labelledby="otherYear" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="otherYearLabel">Basculer vers une autre année scolaire</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="{{ route('changeSchoolInformationStatus') }}" class="needs-validation">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- input -->
+                            <div class="mb-5 col-md-10">
+                                <label class="form-label" for="levelName">Selectionnez une année scolaire</label>
+                                <select class="form-control" name="year" id="">
+                                    @foreach ($years as $y)
+                                        <option @if ($school->id == $y->id) selected @endif
+                                            value="{{ $y->id }}">
+                                            {{ \Carbon\Carbon::parse($y->start)->format('Y') . '-' . \Carbon\Carbon::parse($y->end)->format('Y') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Basculer</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 
 </x-layouts>
