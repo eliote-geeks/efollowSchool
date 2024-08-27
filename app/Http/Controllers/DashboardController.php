@@ -30,21 +30,20 @@ class DashboardController extends Controller
         $totalStudents = Student::where('school_information_id', $this->schoolInformation->id)->count();
         $totalPayments = Payment::where('school_information_id', $this->schoolInformation->id)->sum('amount');
         $totalRemises = remiseDue::where('school_information_id', $this->schoolInformation->id)->sum('rest');
-        $totalAbsences = Absence::whereBetween('created_at', [$start, $end])->count();
-        $totalPresences = Presence::whereBetween('created_at', [$start, $end])->count();
+        $totalAbsences = Absence::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $totalPresences = Presence::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->count();
         $totalMoratoires = Moratoire::where('school_information_id', $this->schoolInformation->id)->count();
         $totalScolarites = Scolarite::where('school_information_id', $this->schoolInformation->id)->sum('amount');
-        $weeklyAbsences = Absence::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+        $weeklyAbsences = Absence::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])
             ->selectRaw('DAYNAME(created_at) as day, COUNT(*) as count')
             ->groupBy('day')
             ->pluck('count', 'day');
 
         $absencesW = Absence::select(DB::raw('DAYNAME(date) as day, COUNT(*) as total_absences'))
-            ->groupBy('day')
-            ->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')") // ->pluck('day','total_absences');
-            ->whereBetween('created_at', [$start, $end])
-            ->get();
-
+        ->whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])  // Utilisez 'date' au lieu de 'created_at'
+        ->groupBy('day')
+        ->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")
+        ->get();
         $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $absenceDataW = [];
 
@@ -65,7 +64,7 @@ class DashboardController extends Controller
             ->sum('amount');
 
         $absencesByClass = Absence::select('classe_id', DB::raw('COUNT(*) as total_absences'))
-        ->whereBetween('created_at', [$start, $end])
+        ->whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])
         ->groupBy('classe_id')
         ->orderByDesc('total_absences')->get();
 
