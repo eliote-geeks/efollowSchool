@@ -6,6 +6,7 @@ use App\Models\Classe;
 use App\Models\Niveau;
 use App\Models\SchoolInformation;
 use App\Models\Scolarite;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ScolariteController extends Controller
@@ -53,7 +54,7 @@ class ScolariteController extends Controller
                 'name' => 'required',
                 'amount' => 'required',
                 // 'tranche' => 'required',
-                'end_date' => 'required|date',
+                'end_date' => 'required|date|after:today',
                 'niveaux' => 'required|array',
                 'niveaux.*' => 'exists:niveaux,id',
             ]);
@@ -64,6 +65,15 @@ class ScolariteController extends Controller
 
             $schoolInformation = SchoolInformation::where('status', 1)->first();
             $user = auth()->user();
+
+            if(Scolarite::where('school_information_id',$schoolInformation->id)->count() > 0)
+            {
+                $lastScolarite = Scolarite::where('school_information_id',$schoolInformation->id)->latest()->first();
+                   if(Carbon::parse($lastScolarite->end_date) > $request->end_date){
+                        return redirect()->back()->with('error','La date limite de ce frais doit venir apres celle du frais precédent');
+                   }                 
+            }
+
 
             $tranche = $request->tranche == null ? '//' : $request->tranche;
             if (
