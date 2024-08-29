@@ -116,9 +116,16 @@ class CreateStudent extends Component
                 $studentClass->student_id = $student->id;
                 $studentClass->school_information_id = $this->schoolInformation->id;
                 $studentClass->save();
-                $this->step = 1;
-                $this->student = $student;
-                $this->alert('success', 'Elève Crée Mais Désactivé !!');
+                if ($this->schoolInformation->fillPath == 1) {
+                    $this->step = 1;
+                    $this->alert('success', 'Elève Crée Mais Désactivé !!');
+                    $this->student = $student;
+                } else {
+                    $classe = $this->classe;
+                    $this->reset();
+                    $this->alert('success', 'Elève Crée Mais Désactivé !!');
+                    $this->classe = $classe;
+                }
             });
         } catch (\Exception $e) {
             $this->alert('warning', 'Veuillez remplir correctement les informations: ' . $e->getMessage());
