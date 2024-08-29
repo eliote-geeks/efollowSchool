@@ -30,6 +30,7 @@ class SearchStudent extends Component
             ->orWhere('name_father', 'like', '%' . $this->search . '%')
             ->orWhere('name_mother', 'like', '%' . $this->search . '%')
             ->orWhere('matricular', 'like', '%' . $this->search . '%')
+            ->take(10)
             ->get();
         return view('livewire.search-student', [
             'students' => $students,

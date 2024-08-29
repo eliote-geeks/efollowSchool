@@ -89,7 +89,7 @@ class CreateStudent extends Component
                 $user->updateProfilePhoto($this->avatar);
 
                 $uniqueId = str_pad($user->id, 5, '0', STR_PAD_LEFT);
-                $matricule = date('Y') . $this->schoolInformation->matricular . $uniqueId;
+                $matricule = $this->schoolInformation->matricular . $uniqueId;
 
                 $student = new Student();
                 $student->first_name = $this->first_name;

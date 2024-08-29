@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
 
@@ -175,6 +177,8 @@ class SchoolInformationController extends Controller
 
             if ($request->fillPath == 'on') {
                 $schoolInformation->fillPath = 1;
+            } else {
+                $schoolInformation->fillPath = 0;
             }
             $schoolInformation->save();
             return redirect()->back()->with('success', 'Modifié avec success !!');

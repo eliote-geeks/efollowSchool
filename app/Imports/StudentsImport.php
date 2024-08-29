@@ -42,7 +42,7 @@ class StudentsImport implements ToModel, WithHeadingRow
         $user->password = Hash::make('500//#ERROR');
         $user->save();
         $uniqueId = str_pad($user->id, 5, '0', STR_PAD_LEFT);
-        $matricule = date('Y') . $this->schoolInformation->matricular . $uniqueId;
+        $matricule = $this->schoolInformation->matricular . $uniqueId;
         // Créez un nouvel étudiant
         $student = new Student();
         $student->user_id = $user->id;
