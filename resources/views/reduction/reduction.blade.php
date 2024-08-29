@@ -63,7 +63,7 @@
                                                 @if ($remise->status == 0)
                                                     <a href="{{ route('statusRemise',$remise) }}" class="btn btn-primary">Appliquer la réduction</a>
                                                 @else
-                                                    <a href="{{ route('statusRemise',$remise) }}" class="btn btn-danger">Retirer la réduction</a>
+                                                    <small>Active</small>
                                                 @endif
 
                                             </td>

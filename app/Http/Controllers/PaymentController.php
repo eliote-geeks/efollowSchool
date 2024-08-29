@@ -98,7 +98,7 @@ class PaymentController extends Controller
             'totalScolariteAmount' => $totalScolariteAmount,
             'studentRemises' => $studentRemises,
             'payments' => $payments,
-            'schoolInformationId' => $schoolInformationId
+            'schoolInformationId' => $schoolInformationId,
         ]);
     }
 
@@ -188,11 +188,19 @@ class PaymentController extends Controller
 
     public function delRemise(remiseDue $reduction)
     {
-        if ($reduction->status == 0) {
+        if ($reduction->status == 1) {
+            $payment = Payment::where([
+                'scolarite_id' => $reduction->scolarite_id,
+                'student_id' => $reduction->student_id,
+                'amount' => $reduction->rest,
+                'school_information_id' => $this->schoolInformation->id,
+            ])->first();
+            $payment->delete();
             $reduction->delete();
             return redirect()->back()->with('success', 'suppression reussie!!');
         } else {
-            return redirect()->back()->with('warning', 'Impossible de supprimer cette reduction car actif!!');
+            $reduction->delete();
+            return redirect()->back()->with('success', 'suppression reussie!!');
         }
     }
 
@@ -219,7 +227,7 @@ class PaymentController extends Controller
 
                     $reduction->status = 1;
                     $reduction->save();
-                    return redirect()->back()->with('warning', 'Reussie remise active !!');
+                    return redirect()->back()->with('success', 'Reussie remise active !!');
                 } else {
                     return redirect()->back()->with('warning', 'Le montant entré associé au precedent paiement excede celui du frais scolaire en cours !!');
                 }

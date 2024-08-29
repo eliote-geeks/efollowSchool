@@ -50,7 +50,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>Nom</th>
-                                        <th>Tranche</th>
+                                        {{-- <th>Tranche</th> --}}
                                         <th>Montant</th>
                                         <th>Niveau</th>
                                         <th>Début du contrôle</th>
@@ -62,7 +62,7 @@
                                     @foreach ($scolarites as $sc)
                                         <tr>
                                             <td>{{ $sc->name }}</td>
-                                            <td>{{ $sc->tranche == '//' ? 'Une tranche' : 'Tranche: ' . $sc->tranche }}
+                                            {{-- <td>{{ $sc->tranche == '//' ? 'Une tranche' : 'Tranche: ' . $sc->tranche }} --}}
                                             </td>
                                             <td>{{ number_format($sc->amount) }}FCFA</td>
                                             <td>
@@ -119,7 +119,7 @@
                                                                         du frais exigible</div>
                                                                 </div>
                                                                 <!-- input -->
-                                                                <div class="mb-5 col-md-6">
+                                                                {{-- <div class="mb-5 col-md-6">
                                                                     <label class="form-label" for="tranche">Tranche des
                                                                         frais</label>
                                                                     <input type="number" class="form-control"
@@ -128,7 +128,7 @@
                                                                         id="tranche" name="tranche" required>
                                                                     <div class="invalid-feedback">Veuillez entrer la
                                                                         tranche du paiement</div>
-                                                                </div>
+                                                                </div> --}}
                                                                 <!-- input -->
                                                                 <div class="mb-5 col-md-6">
                                                                     <label class="form-label" for="amount">Montant des
@@ -246,14 +246,14 @@
                                 <div class="invalid-feedback">Veuillez entrer le nom du frais exigible</div>
                             </div>
                             <!-- input -->
-                            <div class="mb-5 col-md-6">
+                            {{-- <div class="mb-5 col-md-6">
                                 <label class="form-label" for="tranche">Tranche des frais</label>
                                 <input type="number" class="form-control"
                                     placeholder="Entrez la tranche de paiement des frais" id="tranche"
                                     name="tranche">
                                 <div class="invalid-feedback">Veuillez entrer la tranche du paiement</div>
                                 <small>Si ce frais se paye en une tranche veuillez laisser vide ce champ</small>
-                            </div>
+                            </div> --}}
                             <!-- input -->
                             <div class="mb-5 col-md-6">
                                 <label class="form-label" for="amount">Montant des frais en FCFA</label>

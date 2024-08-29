@@ -61,7 +61,7 @@
                                 </h2>
                                 <p class="mb-1 fs-3" style="color: black;">{{ $student->matricular }}</p>
                                 <span class="text-primary lh-1 d-flex align-baseline fs-4">
-                                    {{ $student->studentClasse->classe->niveau->name }}
+                                    {{ $student->studentClasse->classe->niveau->name }} - {{ $student->studentClasse->classe->name }}
                                 </span>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                             <a class="nav-link active fs-4" id="pills-dropdown-basic-design-tab"
                                                 data-bs-toggle="pill" href="#pills-dropdown-basic-design" role="tab"
                                                 aria-controls="pills-dropdown-basic-design"
-                                                aria-selected="true">2024-2025</a>
+                                                aria-selected="true">Imprimer</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link fs-4" id="pills-dropdown-basic-html-tab"

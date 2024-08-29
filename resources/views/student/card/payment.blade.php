@@ -1,5 +1,5 @@
 <base href="/">
-<x-layouts>
+<x-card-layouts>
 
     <section class="container-fluid p-4">
         <div class="row">
@@ -60,4 +60,4 @@
 
     </section>
 
-</x-layouts>
+</x-card-layouts>
