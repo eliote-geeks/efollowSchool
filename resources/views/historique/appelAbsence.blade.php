@@ -127,7 +127,7 @@
                                         <th scope="col">Heure de début</th>
                                         <th scope="col">Heure de fin</th>
                                         <th scope="col">Nom du professeur</th>
-                                        <th scope="col">Durée totale en heures</th>
+                                        <th scope="col">Durée</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,8 +141,13 @@
                                             <td>{{ \Carbon\Carbon::parse($p->schedule->timeSlot->end_time)->format('H:i') }}
                                             </td>
                                             <td>{{ $p->schedule->teacher->user->name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($p->schedule->timeSlot->start_time)->diffInHours(\Carbon\Carbon::parse($p->schedule->timeSlot->end_time)) }}
-                                            </td>
+                                            
+
+                                            @php
+                                            $start = \Carbon\Carbon::parse($p->schedule->timeSlot->start_time);
+                                            $end = \Carbon\Carbon::parse($p->schedule->timeSlot->end_time);
+                                        @endphp
+                                        <td>{{ $start->diffInHours($end) < 1 ? $start->diffInMinutes($end) . ' m' : $start->diffInHours($end) . ' H' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

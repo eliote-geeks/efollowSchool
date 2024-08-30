@@ -63,7 +63,10 @@ class AttendanceController extends Controller
             'classe_id' => $classe->id,
             'school_information_id' => $this->schoolInformation->id,
         ])->get();
-        $courses = Schedule::where('classe_id', $classe->id)->get();
+        $courses = Schedule::select('subject')
+            ->distinct()
+            ->where('classe_id', $classe->id)
+            ->get();
         $presences = Presence::where('classe_id', $classe->id)->get();
         return view('historique.appelPresence', compact('classe', 'courses', 'presences', 'students'));
     }
@@ -74,7 +77,10 @@ class AttendanceController extends Controller
             'classe_id' => $classe->id,
             'school_information_id' => $this->schoolInformation->id,
         ])->get();
-        $courses = Schedule::where('classe_id', $classe->id)->get();
+        $courses = Schedule::select('subject')
+            ->distinct()
+            ->where('classe_id', $classe->id)
+            ->get();
         $presences = Absence::where('classe_id', $classe->id)->get();
         return view('historique.appelAbsence', compact('classe', 'courses', 'presences', 'students'));
     }

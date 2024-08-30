@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Liste des Absences</title>
     <style>
@@ -8,16 +9,20 @@
             border-collapse: collapse;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
     </style>
 </head>
+
 <body>
     <h1>Liste Absences Classe:({{ $classe->niveau->name }}) {{ $classe->name }}</h1>
     <table>
@@ -29,23 +34,31 @@
                 <th>Prof</th>
                 <th>Heure de début</th>
                 <th>Heure de fin</th>
-                <th>Durée (minutes)</th>
+                <th>Durée</th>
                 {{-- <th>Absences</th> --}}
             </tr>
         </thead>
         <tbody>
             @foreach ($absences as $absence)
                 <tr>
-                    <td>{{ \App\Models\Student::find($absence->student)->first_name.' '.\App\Models\Student::find($absence->student)->last_name }}</td>
+                    <td>{{ \App\Models\Student::find($absence->student)->first_name . ' ' . \App\Models\Student::find($absence->student)->last_name }}
+                    </td>
                     <td>{{ \Carbon\Carbon::parse($absence->date)->format('d, M Y') }}</td>
                     <td>{{ $absence->subject }}</td>
                     <td>{{ \App\Models\Teacher::find($absence->teacher)->user->name }}</td>
-                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time)->format('H:i') }}</td>
-                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time)->format('H:i') }}</td>
-                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time)->diffInHours(\Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time)) }} heure(s)</td>
+                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time)->format('H:i') }}
+                    </td>
+                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time)->format('H:i') }}
+                    </td>
+                    @php
+                        $start = \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time);
+                        $end = \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time);
+                    @endphp
+                    <td>{{ $start->diffInHours($end) < 1 ? $start->diffInMinutes($end) . ' M' : $start->diffInHours($end) . ' H' }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </body>
+
 </html>

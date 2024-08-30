@@ -431,6 +431,13 @@
                         </div>
                     </a>
 
+                    <a href="{{ route('teacher.index') }}">
+                        <div class="menu-item">
+                            <i class="bi bi-chalkboard-teacher icon fs-1"></i>
+                            <div class="text-secondary">Gestion des Enseignants</div>
+                        </div>
+                    </a>
+
                     <a href="{{ route('moratoire.index') }}">
                     <div class="menu-item">
                         <i class="bi bi-pause-circle icon fs-1"></i>
