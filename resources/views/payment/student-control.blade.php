@@ -2,7 +2,7 @@
 <x-layouts>
 
     <div class="container mt-5">
-        <div class="card">
+        <div class="card" id="statusIndicator">
             <div class="card-header">
                 <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
                     <h2 class="mb-1">Statut du paiement de l'étudiant</h2>
@@ -13,9 +13,7 @@
                     <h5 class="mb-2">Photo de l'étudiant</h5>
                     <label for="img" class="img-thumbnail position-relative"
                         style="height: 100px; width: 100px; cursor: pointer;">
-                        <img id="StudentImage"
-                            src="{{ $student->user->profile_photo_url }}"
-                            class=" w-100 h-100">
+                        <img id="StudentImage" src="{{ $student->user->profile_photo_url }}" class=" w-100 h-100">
                     </label>
                 </div>
                 <p><strong>Nom complet:</strong> {{ $student->first_name }} {{ $student->last_name }}</p>
@@ -37,11 +35,16 @@
                     </div>
                 @endif
 
+
+
+
+
+
                 <hr class="mb-5">
 
                 <h3 class="mb-3">Frais exigible à payer/compléter</h3>
                 <div class="table-responsive">
-                    <table class="table table-bordered" >
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Frais exigible</th>
@@ -95,13 +98,66 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div> 
+                </div>
 
                 <a href="{{ url()->previous() }}" class="btn btn-info mt-3">Retour</a>
             </div>
         </div>
     </div>
 
+    {{-- <div  style="width: 100px; height: 100px;"></div> --}}
 
+    <script>
+        function playBeep(frequency, duration) {
+            try {
+                // Créer un contexte audio
+                const audioContext = new(window.AudioContext || window.webkitAudioContext)();
+
+                // Créer un oscillateur
+                const oscillator = audioContext.createOscillator();
+
+                // Définir la fréquence de l'oscillateur (en Hertz)
+                oscillator.frequency.value = frequency;
+
+                // Connecter l'oscillateur à la destination (haut-parleurs)
+                oscillator.connect(audioContext.destination);
+
+                // Démarrer l'oscillateur
+                oscillator.start();
+
+                // Arrêter l'oscillateur après la durée spécifiée
+                setTimeout(() => {
+                    oscillator.stop();
+                    // Fermer le contexte audio pour libérer des ressources
+                    audioContext.close();
+                }, duration);
+            } catch (error) {
+                console.error("Erreur lors de la génération du bip :", error);
+            }
+        }
+
+        function simulateBeep(isUpToDate) {
+            if (isUpToDate > 0) {
+                // Trois bips courts
+                playBeep(440, 200); // Premier bip court
+                setTimeout(() => {
+                    playBeep(440, 200);
+                }, 400); // Deuxième bip court
+                setTimeout(() => {
+                    playBeep(440, 200);
+                }, 800); // Troisième bip court
+
+            } else {
+                // Un seul bip long
+                playBeep(440, 3000); // 440 Hz (A4), 1 seconde
+            }
+        }
+
+        // Exemple d'utilisation : appeler simulateBeep avec un statut
+        document.addEventListener('DOMContentLoaded', function() {
+            let status = {{ $balance }}; // ou true, selon votre logique
+            simulateBeep(status);
+        });
+    </script>
 
 </x-layouts>
