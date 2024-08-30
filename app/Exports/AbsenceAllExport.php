@@ -22,9 +22,9 @@ class AbsenceAllExport implements FromView
      */
     public function view(): View
     {
-        $start = Carbon::parse($this->schoolInformation->start)->format('Y');
-        $end = Carbon::parse($this->schoolInformation->end)->format('Y');
-        $absences = Absence::whereBetween('created_at', [$start, $end])->get();
+        $start = $this->schoolInformation->start;
+        $end = $this->schoolInformation->end;
+        $absences = Absence::whereBetween('date', [$start, $end])->get();
         return view('export.absence', compact('absences'));
     }
 }

@@ -22,9 +22,9 @@ class PresenceAllExport implements FromView
      */
     public function view(): View
     {
-        $start = Carbon::parse($this->schoolInformation->start)->format('Y');
-        $end = Carbon::parse($this->schoolInformation->end)->format('Y');
-        $presences = Presence::whereBetween('created_at', [$start, $end])->get();
+        $start = $this->schoolInformation->start;
+        $end = $this->schoolInformation->end;
+        $presences = Presence::whereBetween('date', [$start, $end])->get();
         return view('export.presence', compact('presences'));
     }
 }

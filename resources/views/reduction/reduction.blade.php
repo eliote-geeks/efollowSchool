@@ -82,11 +82,13 @@
                                                             <i class="fe fe-eye dropdown-item-icon"></i>
                                                             Voir plus d'informations
                                                         </a> --}}
+                                                        @if ($remise->status == 0)
                                                         <a class="dropdown-item" data-bs-toggle="modal"
                                                             href="#editReduction{{ $remise->id }}" role="button">
                                                             <i class="fe fe-edit dropdown-item-icon"></i>
                                                             Modifier
                                                         </a>
+                                                        @endif
                                                         <a class="dropdown-item" data-bs-toggle="modal"
                                                             href="#deleteReduction{{ $remise->id }}" role="button">
                                                             <i class="fe fe-trash dropdown-item-icon"></i>
