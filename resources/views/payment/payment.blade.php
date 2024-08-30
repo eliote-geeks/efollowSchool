@@ -70,17 +70,19 @@
                                 <span class="bi bi-graph-up fs-3 text-primary"></span>
                             </div>
                         </div>
-                        <h2 class="fw-bold mb-1">
-                            @foreach ($studentRemises as $rem)
-                                <div class="card-body">
-                                    <p>Frais exigible: {{ $rem->scolarite->name }}</p>
-                                    <p class="mb-0">{{ number_format($rem->rest) }} FCFA</p>
-                                    <small>{{ $rem->status == 1 ? 'payé' : 'non payé' }}</small>
-                                </div>
-                            @endforeach
-
-                        </h2>
+                        <div class="scrollable-content" style="max-height: 200px; overflow-y: auto;">
+                            <h2 class="fw-bold mb-1">
+                                @foreach ($studentRemises as $rem)
+                                    <div class="card-body">
+                                        <p>Frais exigible: {{ $rem->scolarite->name }}</p>
+                                        <p class="mb-0">{{ number_format($rem->rest) }} FCFA</p>
+                                        <small>{{ $rem->status == 1 ? 'payé' : 'non payé' }}</small>
+                                    </div>
+                                @endforeach
+                            </h2>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="col-xl-9 col-lg-6 col-md-12 col-12">
