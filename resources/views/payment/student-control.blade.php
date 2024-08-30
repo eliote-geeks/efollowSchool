@@ -3,9 +3,15 @@
 
     <div class="container mt-5">
         <div class="card" id="statusIndicator">
-            <div class="card-header">
+            <div class="card-header @if ($balance > 0) alert alert-danger @else alert alert-success @endif">
                 <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-                    <h2 class="mb-1">Statut du paiement de l'étudiant</h2>
+                    <h2 class="mb-1">
+                        @if ($balance > 0)
+                            Paiement en retard
+                        @else
+                            Paiement à Jour
+                        @endif
+                    </h2>
                 </div>
             </div>
             <div class="card-body">
@@ -37,15 +43,16 @@
 
                 <!-- Bouton pour voir plus d'informations -->
                 <div class="text-center mt-3">
-                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#studentInfoModal">
+                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#studentInfoModal">
                         Voir plus d'informations
                     </button>
-                
+
                     <a href="{{ url()->previous() }}" class="btn btn-info">
                         Retour
                     </a>
                 </div>
-                
+
 
             </div>
         </div>
