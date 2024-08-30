@@ -29,6 +29,7 @@ use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SchoolInformationController;
+use App\Http\Controllers\UserController;
 use App\Models\SchoolInformation;
 
 /*
@@ -102,9 +103,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('change/user/status/{student}', [StudentController::class, 'status'])->name('changeStudentStatus');
     Route::get('search/student-card', [StudentController::class, 'searchByCard'])->name('searchByCard');
     Route::post('search-by-card', [SmartCardController::class, 'searchByStudentCard'])->name('searchByStudentCard');
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+    Route::post('user', [UserController::class, 'store'])->name('user.store');
+    Route::post('user/update/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
 
     // export
-
     Route::get('exportAll/student', function () {
         return Excel::download(new StudentAllExport(), 'students.xlsx');
     })->name('exportStudentAll');

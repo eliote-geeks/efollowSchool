@@ -470,11 +470,12 @@
                             <div class="text-secondary">Gestion des moratoires</div>
                         </div>
                     </a>
+                    <a href="{{ route('user.index') }}">
                     <div class="menu-item">
                         <i class="bi bi-person icon fs-1"></i>
                         <div class="text-secondary">Gestion des utilisateurs</div>
                     </div>
-
+                </a>
                     </a>
                     <a href="javascript:;"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
