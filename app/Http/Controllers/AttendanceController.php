@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Absence;
 use App\Models\Presence;
 use App\Models\Schedule;
 use App\Models\Attendance;
-use App\Models\SchoolInformation;
 use Illuminate\Http\Request;
 use App\Models\StudentClasse;
+use App\Models\SchoolInformation;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
@@ -151,6 +152,7 @@ class AttendanceController extends Controller
             'format' => 'A4',
             'orientation' => 'P',
         ]);
+        User::log('Impression Historique des absences');
         return $pdf->download('absence-' . $classe->niveau->name . ' ' . $classe->name . '-' . Carbon::parse($this->schoolInformation->start)->format('Y') . '-' . Carbon::parse($this->schoolInformation->end)->format('Y') . '.pdf');
     }
 
@@ -219,6 +221,7 @@ class AttendanceController extends Controller
             'format' => 'A4',
             'orientation' => 'P',
         ]);
+        User::log('Impression Historique des presences');
         return $pdf->download('presence-' . $classe->niveau->name . ' ' . $classe->name . '-' . Carbon::parse($this->schoolInformation->start)->format('Y') . '-' . Carbon::parse($this->schoolInformation->end)->format('Y') . '.pdf');
     }
     /**

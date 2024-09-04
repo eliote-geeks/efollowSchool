@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Moratoire;
 use App\Models\Scolarite;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class MoratoireController extends Controller
     {
         $pdf = Pdf::loadView('moratoire.pdf', compact('moratoire'));
 
+        User::log('Impression moratoire !!');
         return $pdf->download('moratoire_' . $moratoire->name . '.pdf');
     }
 
@@ -68,6 +70,7 @@ class MoratoireController extends Controller
                 $moratoire->file_path = $request->reason->store('moratoires', 'public');
                 $moratoire->school_information_id = SchoolInformation::where('status', 1)->latest()->first()->id;
                 $moratoire->save();
+                User::log('Enregistrement Moratoire');
                 return redirect()->route('moratoire.index')->with('danger', 'Moratoire Crée pour l\'etudiant: '.$moratoire->student->first_name.' '.$moratoire->student->last_name);
             } else {
                 return redirect()->back()->with('warning', 'Oups cet etudiant dispose deja d\'un moratoire !!');
@@ -101,18 +104,19 @@ class MoratoireController extends Controller
         try {
             $request->validate([
                 'scolarite' => 'required',
-                'student' => 'required',
+                // 'student' => 'required',
                 'name' => 'required',
-                'duree' => 'required|integer',
+                'duree' => 'required',
             ]);
 
             $moratoire->scolarite_id = $request->scolarite;
-            $moratoire->student_id = $request->student;
+            // $moratoire->student_id = $request->student;
             $moratoire->name = $request->name;
             $moratoire->end_date = Carbon::now()->addDays($request->duree);
-            $moratoire->file_path = $request->reason->store('moratoires', 'public');
+            // $moratoire->file_path = $request->reason->store('moratoires', 'public');
             $moratoire->school_information_id = SchoolInformation::where('status', 1)->latest()->first()->id;
             $moratoire->save();
+            User::log('Mise à jour moratoire !!');
             return redirect()->back()->with('success', 'Moratoire mis à jour !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Oups erreur innatendue !!');
@@ -126,6 +130,7 @@ class MoratoireController extends Controller
     {
         try {
             $moratoire->delete();
+            User::log('Suppression moratoire !!');
             return redirect()->back()->with('success', 'moratoire retiré !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Oups erreur innatendue !!');

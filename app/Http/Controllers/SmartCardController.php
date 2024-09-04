@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Absence;
 use App\Models\Payment;
@@ -93,6 +94,8 @@ class SmartCardController extends Controller
                     $student->save();
                     $class = StudentClasse::where('student_id', $student->id)->first();
                     $classe = Classe::find($class->classe_id);
+                    
+                    User::log('Attribution d\'une carte à l\'etudiant: '.$student->first_name.' '.$student->first_name);
                     return redirect()
                         ->route('classe.show', $classe)
                         ->with('success', 'Reussie !! L\'étudiant: ' . $student->first_name . ' dispose d\'une nouvelle carte! Ancienne Carte retirée');
@@ -126,6 +129,7 @@ class SmartCardController extends Controller
                 ])->firstOrFail();
                 $student = Student::find($card->user_id);
 
+                User::log('recherche d\'une carte de l\'etudiant: '.$student->first_name.' '.$student->first_name);
                 return redirect()->route('student.show', [
                     'student' => $student,
                 ]);
@@ -201,6 +205,7 @@ class SmartCardController extends Controller
                 } else {
                     $status = "L'étudiant est à jour avec ses paiements.";
                 }
+                User::log('Cntrole de paiement d\'une carte de l\'etudiant: '.$student->first_name.' '.$student->first_name);
 
                 return view('payment.student-control', compact('scolarites', 'payments', 'totalPaymentsAmount', 'student', 'balance', 'status', 'totalScolariteAmount'));
             } else {
@@ -312,7 +317,7 @@ class SmartCardController extends Controller
                 $endschedule->date = $today;
                 // $endschedule->status = 1;
                 $endschedule->save();
-
+                User::log('Appel Effectué pour la classe: '.$schedule->classe->niveau->name.'-'.$schedule->classe->name);
                 return redirect()
                     ->route('scheduleCLass', [
                         'classe' => $schedule->classe_id,

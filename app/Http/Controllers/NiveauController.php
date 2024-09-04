@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Niveau;
+use App\Models\Scolarite;
 use Illuminate\Http\Request;
 use App\Models\SchoolInformation;
-use App\Models\Scolarite;
 
 class NiveauController extends Controller
 {
@@ -55,6 +56,7 @@ class NiveauController extends Controller
                 $niveau->name = $request->name;
                 $niveau->school_information_id = $schoolInformation->id;
                 $niveau->save();
+                User::log('Ajout d\'un niveau !!');
                 return redirect()->back()->with('success', 'Nouveau niveau ajouté !!');
             } else {
                 return redirect()->back()->with('error', 'Ce niveau existe déja dans le système');
@@ -117,6 +119,7 @@ class NiveauController extends Controller
             ) {
                 $niveau->name = $request->name;
                 $niveau->save();
+                User::log('Modification d\'un niveau !!');
                 return redirect()->back()->with('message', 'Niveau Edité !!');
             } else {
                 return redirect()->back()->with('message', 'Ce niveau existe déja dans le système');
@@ -136,6 +139,7 @@ class NiveauController extends Controller
         try {
             $niveau->status = 0;
             $niveau->save();
+            User::log('Suppression d\'un niveau !!');
             return redirect()->back()->with('message', 'Niveau Retiré avec success !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('message', 'Oups erreur innatendue s\'est produite !!');

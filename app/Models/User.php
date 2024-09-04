@@ -9,7 +9,9 @@ use App\Models\Teacher;
 use App\Models\Scolarite;
 use App\Models\RequestPayment;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -68,7 +70,7 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
-        public function request_payment()
+    public function request_payment()
     {
         return $this->hasMany(RequestPayment::class);
     }
@@ -76,5 +78,14 @@ class User extends Authenticatable
     public function teacher()
     {
         return $this->hasMany(Teacher::class);
+    }
+
+    public static function log($message)
+    {
+        $user = Auth::user();
+        $filename = $user->name . '.txt';
+        $content = '[' . now() . '] ' . $message . "\n";
+
+        Storage::append('user_logs/' . $filename, $content);
     }
 }

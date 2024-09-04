@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Student;
+use App\Models\SmartCard;
 use Illuminate\Http\Request;
 use App\Models\StudentClasse;
 use App\Imports\StudentImport;
@@ -11,7 +13,6 @@ use App\Imports\StudentsImport;
 use App\Models\SchoolInformation;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Models\SmartCard;
 
 class StudentController extends Controller
 {
@@ -155,7 +156,7 @@ class StudentController extends Controller
         ])->first();
         $sc->classe_id = $validatedData['classe'];
         $sc->save();
-
+        User::log('etudiant mis à jour: '.$student->first_name.' '.$student->last_name);
         $student->name_father = $validatedData['name_father'];
         $student->phone_father = $validatedData['phone_father'];
         $student->name_mother = $validatedData['name_mother'];
@@ -173,6 +174,7 @@ class StudentController extends Controller
         try {
             $student->status = 2;
             $student->save();
+            User::log('etudiant detruit: '.$student->first_name.' '.$student->last_name);
             return redirect()->back()->with('success', 'etudiant Retiré !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('success', 'Une erreur s\'est produite veuillez reessayer !!');

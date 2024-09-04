@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Niveau;
-use App\Models\SchoolInformation;
 use App\Models\Scolarite;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\SchoolInformation;
 
 class ScolariteController extends Controller
 {
@@ -20,18 +21,18 @@ class ScolariteController extends Controller
             $scolarites = Scolarite::where([
                 'school_information_id' => SchoolInformation::where('status', 1)->first()->id,
                 // 'status' => 1
-                ])->get();
+            ])->get();
             $niveaux = Niveau::where([
                 'school_information_id' => SchoolInformation::where('status', 1)->first()->id,
-                'status' => 1
-                ])->get();
-            
+                'status' => 1,
+            ])->get();
+
             return view('scolarité.scolarité', [
                 'scolarites' => $scolarites,
                 'niveaux' => $niveaux,
             ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger','Impossible d\'acceder à cette page si une annéé n\'est pas fonctionnelle');
+            return redirect()->back()->with('danger', 'Impossible d\'acceder à cette page si une annéé n\'est pas fonctionnelle');
         }
     }
 
@@ -54,7 +55,7 @@ class ScolariteController extends Controller
                 'name' => 'required',
                 'amount' => 'required',
                 // 'tranche' => 'required',
-                'end_date' => 'required|date|after:today',
+                'end_date' => 'required|date',
                 'niveaux' => 'required|array',
                 'niveaux.*' => 'exists:niveaux,id',
             ]);
@@ -66,14 +67,14 @@ class ScolariteController extends Controller
             $schoolInformation = SchoolInformation::where('status', 1)->first();
             $user = auth()->user();
 
-            if(Scolarite::where('school_information_id',$schoolInformation->id)->count() > 0)
-            {
-                $lastScolarite = Scolarite::where('school_information_id',$schoolInformation->id)->latest()->first();
-                   if(Carbon::parse($lastScolarite->end_date) > $request->end_date){
-                        return redirect()->back()->with('error','La date limite de ce frais doit venir apres celle du frais precédent');
-                   }                 
+            if (Scolarite::where('school_information_id', $schoolInformation->id)->count() > 0) {
+                $lastScolarite = Scolarite::where('school_information_id', $schoolInformation->id)
+                    ->latest()
+                    ->first();
+                if (Carbon::parse($lastScolarite->end_date) > $request->end_date) {
+                    return redirect()->back()->with('error', 'La date limite de ce frais doit venir apres celle du frais precédent');
+                }
             }
-
 
             $tranche = $request->tranche == null ? '//' : $request->tranche;
             if (
@@ -92,12 +93,16 @@ class ScolariteController extends Controller
                 $scolarite->amount = $number;
                 $scolarite->uniqid = str_pad($user->id, 9, '0', STR_PAD_LEFT);
                 $scolarite->save();
+                User::log('Scolarité enregistré: Nom: ' . $scolarite->name . ' Montant: ' . number_format($scolarite->amount));
+
                 return redirect()->back()->with('success', 'Frais AJouté');
             } else {
                 return redirect()->back()->with('warning', 'Frais déja existant');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('warning', 'Oups une erreur s\'est produite !!: '.$e->getMessage());
+            return redirect()
+                ->back()
+                ->with('warning', 'Oups une erreur s\'est produite !!: ' . $e->getMessage());
         }
     }
 
@@ -121,7 +126,7 @@ class ScolariteController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Scolarite $scolarite)
-    { 
+    {
         try {
             $request->validate([
                 'name' => 'required',
@@ -131,14 +136,14 @@ class ScolariteController extends Controller
                 'niveaux.*' => 'exists:niveaux,id',
             ]);
             $str = str_replace(' ', '', $request->amount);
-           
+
             $number = (float) $str;
 
             // $schoolInformation = SchoolInformation::where('status', 1)->first();
             $user = auth()->user();
 
-            $tranche = ($request->tranche == null || $request->tranche == 0)  ? '//' : $request->tranche;
-           
+            $tranche = $request->tranche == null || $request->tranche == 0 ? '//' : $request->tranche;
+
             // $scolarite->school_information_id = $schoolInformation->id;
             $scolarite->user_id = $user->id;
             $scolarite->niveaux = json_encode($request->niveaux);
@@ -148,10 +153,12 @@ class ScolariteController extends Controller
             $scolarite->amount = $number;
             // $scolarite->uniqid = str_pad($user->id, 9, '0', STR_PAD_LEFT);
             $scolarite->save();
-
+            User::log('Scolarité modifié: Nom: ' . $scolarite->name . ' Montant: ' . number_format($scolarite->amount));
             return redirect()->back()->with('success', 'Frais Edité');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Oups une erreur s\'est produite : !!'.$e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', 'Oups une erreur s\'est produite : !!' . $e->getMessage());
         }
     }
 
@@ -161,8 +168,9 @@ class ScolariteController extends Controller
     public function destroy(Scolarite $scolarite)
     {
         try {
+            User::log('Scolarité Détruite: Nom: '.$scolarite->name.' Montant: '.number_format($scolarite->amount));
             $scolarite->delete();
-            return redirect()->back()->with('success','Scolarité Supprimé !! ');
+            return redirect()->back()->with('success', 'Scolarité Supprimé !! ');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Erreur innatendue !!');
         }

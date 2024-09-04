@@ -66,6 +66,7 @@ class StudentsImport implements ToModel, WithHeadingRow
         $studentClasse->student_id = $student->id; // Associez l'étudiant nouvellement créé
         $studentClasse->school_information_id = $this->schoolInformation->id; // Associez l'ID de l'information scolaire si nécessaire
         $studentClasse->save();
+        User::log('Etudiant ajouté: '.$student->first_name.' '.$student->last_name);
         return $student;
     }
 }

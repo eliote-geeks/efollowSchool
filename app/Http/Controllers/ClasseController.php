@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Niveau;
-use App\Models\SchoolInformation;
 use App\Models\Student;
-use App\Models\StudentClasse;
 use Illuminate\Http\Request;
+use App\Models\StudentClasse;
+use App\Models\SchoolInformation;
 
 class ClasseController extends Controller
 {
@@ -42,6 +43,7 @@ class ClasseController extends Controller
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
+            User::log('Enregistrement d\'une classe');
             return redirect()->back()->with('success', 'Nouvelle Classe AJoutée !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erreur innatendue !!');
@@ -94,6 +96,7 @@ class ClasseController extends Controller
             $classe->name = $request->name;
             $classe->prof_titulaire = $request->prof_titulaire;
             $classe->save();
+            User::log('Mise à jour d\'une classe');
             return redirect()->back()->with('success', 'Classe Mise A jour !!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erreur innatendue !!');
@@ -108,6 +111,7 @@ class ClasseController extends Controller
         try {
             $classe->status = 0;
             $classe->save();
+            User::log('Suppression d\'une classe');
             return redirect()->back()->with('success', 'Classe Retirée !!');
         } catch (\Exception $e) {
             return redirect()

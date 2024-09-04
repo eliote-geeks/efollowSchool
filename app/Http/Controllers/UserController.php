@@ -28,6 +28,7 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->password = Hash::make($request->password);
         $user->save();
+        User::log('utilisateur ajouté: '.$user->name.' role: '.$user->role);
         return redirect()->back()->with('success', 'Utilisateur AJouté !!');
     }
 
@@ -47,6 +48,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->save();
+        User::log('utilisateur mis à jour: '.$user->name.' role: '.$user->role);
         return redirect()->back()->with('success', 'Utilisateur Edité !!');
     }
 
@@ -56,6 +58,7 @@ class UserController extends Controller
             $user->password = '//';
             $user->status = 0;
             $user->save();
+            User::log('utilisateur status modifié: '.$user->name.' role: '.$user->role);
             return redirect()->back()->with('success', 'Utilisateur Désactivé !!');
         } else {
             $user->status = 1;
