@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Models\Presence;
 use App\Models\Moratoire;
 use App\Models\Scolarite;
@@ -9,13 +10,17 @@ use App\Exports\RemiseAllExport;
 use App\Exports\AbsenceAllExport;
 use App\Exports\PaymentAllExport;
 use App\Exports\StudentAllExport;
+use App\Models\SchoolInformation;
 use App\Exports\PresenceAllExport;
 use App\Exports\MoratoireAllExport;
 use App\Exports\PaymentMonthExport;
 use App\Exports\ScolariteAllExport;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\PaymentController;
@@ -29,8 +34,6 @@ use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\SmartCardController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SchoolInformationController;
-use App\Http\Controllers\UserController;
-use App\Models\SchoolInformation;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,4 +155,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             return back()->with('error', 'Le fichier spécifié n\'existe pas.');
         }
     })->name('exportModel');
+
+    Route::get('/download-log', function () {
+        $user = Auth::user();
+        $filename = $user->name . '.txt';
+
+        User::log('telechargement des Logs');
+
+        if (Storage::exists('user_logs/' . $filename)) {
+            return Storage::download('user_logs/' . $filename);
+        }
+    
+        return redirect()->back()->with('error', 'No logs found for this user.');
+    })->name('logs');
 });
