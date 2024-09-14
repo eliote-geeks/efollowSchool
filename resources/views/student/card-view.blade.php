@@ -162,7 +162,7 @@
                                             <img src="{{ $student->user->profile_photo_url }}" alt="Photo de l'étudiant" class="student-photo">
                                         </div>
                                         <div class="mb-3"></div>
-                                        <h4 class="text-center text-success" style="font-weight: bold; font-size: 10px;">Lycée Bilingue de Yaoundé</h4>
+                                        <h4 class="text-center text-success" style="font-weight: bold; font-size: 10px;">{{ $schoolInformation->name }}</h4>
                                     </div>
                                     <div class="logo"></div>
                                 </div>

@@ -477,6 +477,12 @@
                     </div>
                 </a>
                 
+                <a href="{{ route('logs') }}">
+                    <div class="menu-item">
+                        <i class="bi bi-download icon fs-1"></i>
+                        <div class="text-secondary">Télécharger les logs</div>
+                    </div>
+                </a>
                     </a>
                     <a href="javascript:;"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -489,13 +495,6 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-
-                    <a href="{{ route('logs') }}">
-                        <div class="menu-item">
-                            <i class="bi bi-download icon fs-1"></i>
-                            <div class="text-secondary">Télécharger les logs</div>
-                        </div>
-                    </a>
 
                 </div>
             </div>

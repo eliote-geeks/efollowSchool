@@ -115,7 +115,7 @@
 
                         </div>
 
-                        <h3 class="mb-3 me-auto text-secondary">Historique des présences</b></h3>
+                        <h3 class="mb-3 me-auto text-secondary">Historique des absences</b></h3>
 
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="dataTableBasic">

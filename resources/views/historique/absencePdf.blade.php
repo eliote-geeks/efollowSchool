@@ -2,11 +2,35 @@
 <html>
 
 <head>
-    <title>Liste des Absences</title>
+    <title>Récapitulatif Absences et Retards</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            margin: 2px 0;
+        }
+
+        .school-info,
+        .student-info {
+            margin-bottom: 10px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         table,
@@ -17,48 +41,82 @@
 
         th,
         td {
-            padding: 8px;
+            padding: 6px;
             text-align: left;
+        }
+
+        .sub-table {
+            width: 100%;
+            border: none;
+        }
+
+        .sub-table td {
+            border: none;
+        }
+
+        .highlight {
+            background-color: #f2f2f2;
+        }
+
+        .justify {
+            text-align: justify;
+        }
+
+        .bold {
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <h1>Liste Absences Classe:({{ $classe->niveau->name }}) {{ $classe->name }}</h1>
+    @php
+    $schoolInformation = \App\Models\SchoolInformation::where('status', 1)->first();
+    @endphp
+
+    <div class="header">
+        <div class="school-info">
+            <p>{{ $schoolInformation->name }}</p>
+        </div>
+        <div class="student-info">
+            <p>{{ $classe->niveau->name }} - {{ $classe->name }} ( {{ \App\Models\StudentClasse::where('classe_id',$classe->id)->count() }} élèves)</p>
+            {{-- <p>Né(e) le 20/02/2005 à Marseille</p> --}}
+        </div>
+        <h2>Récapitulatif absences </h2>
+    </div>
+
+    <h3>Absences</h3>
     <table>
         <thead>
             <tr>
-                <td>Etudiant</td>
+                <th>Étudiant</th>
                 <th>Jour</th>
                 <th>Matière</th>
                 <th>Prof</th>
                 <th>Heure de début</th>
                 <th>Heure de fin</th>
                 <th>Durée</th>
-                {{-- <th>Absences</th> --}}
             </tr>
         </thead>
         <tbody>
             @foreach ($absences as $absence)
-                <tr>
-                    <td>{{ \App\Models\Student::find($absence->student)->first_name . ' ' . \App\Models\Student::find($absence->student)->last_name }}
-                    </td>
-                    <td>{{ \Carbon\Carbon::parse($absence->date)->format('d, M Y') }}</td>
-                    <td>{{ $absence->subject }}</td>
-                    <td>{{ \App\Models\Teacher::find($absence->teacher)->user->name }}</td>
-                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time)->format('H:i') }}
-                    </td>
-                    <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time)->format('H:i') }}
-                    </td>
-                    @php
-                        $start = \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time);
-                        $end = \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time);
-                    @endphp
-                    <td>{{ $start->diffInHours($end) < 1 ? $start->diffInMinutes($end) . ' M' : $start->diffInHours($end) . ' H' }}</td>
-                </tr>
+            <tr>
+                <td>{{ \App\Models\Student::find($absence->student)->first_name . ' ' . \App\Models\Student::find($absence->student)->last_name }}</td>
+                <td>{{ \Carbon\Carbon::parse($absence->date)->format('d, M Y') }}</td>
+                <td>{{ $absence->subject }}</td>
+                <td>{{ \App\Models\Teacher::find($absence->teacher)->user->name }}</td>
+                <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time)->format('H:i') }}</td>
+                <td>{{ \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time)->format('H:i') }}</td>
+                @php
+                $start = \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->start_time);
+                $end = \Carbon\Carbon::parse(\App\Models\TimeSlot::find($absence->timeslot)->end_time);
+                @endphp
+                <td>{{ $start->diffInMinutes($end) . ' M' }}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>
+
+   
 </body>
 
 </html>
