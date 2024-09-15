@@ -111,7 +111,7 @@
                             </ul>
                         </div>
                         <ul class="navbar-nav navbar-right-wrap ms-2 d-flex nav-top-wrap">
-                            <li class="dropdown stopevent">
+                            {{-- <li class="dropdown stopevent">
                                 <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary"
                                     href="#" role="button" id="dropdownNotification" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -266,7 +266,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </li>
+                            </li> --}}
                             <!-- List -->
                             <li class="dropdown ms-2">
                                 <a class="rounded-circle" href="#" role="button" id="dropdownUser"
