@@ -1,11 +1,7 @@
 <base href="/">
 <x-layouts>
 
-<<<<<<< Updated upstream
     <section class="container-fluid p-4">
-=======
-    <section class="container-fluid p-4">       
->>>>>>> Stashed changes
         <div class="row">
             <!-- basic table -->
             <div class="col-md-12 col-12 mb-5">
@@ -15,7 +11,6 @@
 
                         <div class="row">
 
-<<<<<<< Updated upstream
                             <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
                                 <h2 class="mb-5 me-auto">Tableau de bord année scolaire:
                                     ({{ \Carbon\Carbon::parse($school->start)->format('Y') . '-' . \Carbon\Carbon::parse($school->end)->format('Y') }})
@@ -30,20 +25,6 @@
 
                             </div>
 
-=======
-                                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-                                    <h2 class="mb-5 me-auto">Tableau de bord (Année scolaire ANNEE_EN_COURS)</h2>
-                                    <div class="ms-auto">
-                                        <a class="btn btn-primary rounded-pill ms-auto mt-3 mt-md-0" data-bs-toggle="modal" href="#otherYear"
-                                            role="button">
-                                            <i class="fe fe-calendar me-2"></i>
-                                                Basculer vers une autre année scolaire
-                                        </a>
-                                    </div>
-                                    
-                                </div>
-
->>>>>>> Stashed changes
                         </div>
 
                     </div>
@@ -65,16 +46,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des élèves</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1"> {{ number_format($totalStudents) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportStudentAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1"> {{ $totalStudents }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportStudentAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -90,16 +65,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des paiements</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1"> {{ number_format($totalPayments) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportPaymentAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1"> {{ $totalPayments }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportPaymentAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -115,16 +84,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des remises</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1">{{ number_format($totalRemises) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportRemiseAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1">{{ $totalRemises }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportRemiseAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -140,16 +103,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des moratoires</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1">{{ number_format($totalMoratoires) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportMoratoireAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1">{{ $totalMoratoires }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportMoratoireAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -162,7 +119,6 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
                             <div>
-<<<<<<< Updated upstream
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des frais
                                     exigibles</span>
                             </div>
@@ -171,14 +127,6 @@
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportScolariteAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                                <span class="text-uppercase text-primary fw-semibold ls-md">Total des frais exigibles</span>
-                            </div>
-                        </div>
-                        <h2 class="fw-bold mb-1">{{ $totalScolarites }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportScolariteAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -194,16 +142,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Paiements de ce mois</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1">{{ number_format($monthlyPayments) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportPaymentMonth') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1">{{ $monthlyPayments }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportPaymentMonth') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -219,16 +161,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des absences</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1">{{ number_format($totalAbsences) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportAbsenceAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1">{{ $totalAbsences }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportAbsenceAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -244,16 +180,10 @@
                                 <span class="text-uppercase text-primary fw-semibold ls-md">Total des présences</span>
                             </div>
                         </div>
-<<<<<<< Updated upstream
                         <h2 class="fw-bold mb-1">{{ number_format($totalPresences) }}</h2>
                         <span class="text-success fw-semibold">
                             <i class="bi bi-download me-2"></i><a href="{{ route('exportPresenceAll') }}"
                                 class="text-success">Exporter</a>
-=======
-                        <h2 class="fw-bold mb-1">{{ $totalPresences }}</h2>
-                        <span class="text-success fw-semibold">
-                            <i class="bi bi-download me-2"></i><a href="{{ route('exportPresenceAll') }}" class="text-success">Exporter</a>
->>>>>>> Stashed changes
                         </span>
                     </div>
                 </div>
@@ -449,11 +379,7 @@
         });
     </script>
 
-<<<<<<< Updated upstream
     <div class="modal fade" id="otherYear" aria-hidden="true" aria-labelledby="otherYear" tabindex="-1">
-=======
-     <div class="modal fade" id="otherYear" aria-hidden="true" aria-labelledby="otherYear" tabindex="-1">
->>>>>>> Stashed changes
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -467,16 +393,10 @@
                             <!-- input -->
                             <div class="mb-5 col-md-10">
                                 <label class="form-label" for="levelName">Selectionnez une année scolaire</label>
-<<<<<<< Updated upstream
                                 <select class="form-control" name="year" id="">
                                     @foreach ($years as $y)
                                         <option @if ($school->id == $y->id) selected @endif
                                             value="{{ $y->id }}">
-=======
-                                <select class="form-control" name="year" id="">                                               
-                                    @foreach ($years as $y)
-                                        <option @if ($school->id == $y->id) selected @endif value="{{ $y->id }}">
->>>>>>> Stashed changes
                                             {{ \Carbon\Carbon::parse($y->start)->format('Y') . '-' . \Carbon\Carbon::parse($y->end)->format('Y') }}
                                         </option>
                                     @endforeach
