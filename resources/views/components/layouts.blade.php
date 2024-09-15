@@ -60,6 +60,8 @@
 </head>
 
 <body>
+@auth
+    
 
     <div id="db-wrappe">
         <main id="page-conten">
@@ -501,7 +503,7 @@
         </div>
     </div>
     </div>
-
+    @endauth
 
     @livewireScripts
     <script>
