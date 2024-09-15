@@ -33,7 +33,8 @@
                                 <a class="btn btn-secondary rounded-pill ms-auto" data-bs-toggle="modal"
                                     href="#desactivate" role="button">Désactiver le compte de l'élève</a>
                             @else
-                                <a class="btn btn-success rounded-pill ms-auto" href="{{ route('addStudentCard', $student) }}" >Activer le compte de l'élève</a>
+                                <a class="btn btn-success rounded-pill ms-auto" 
+                                    href="{{ route('addStudentCard', $student) }}" >Activer le compte de l'élève</a>
                             @endif
                             <a href="javascript:void(0);" onclick="printPage()" class="btn btn-primary rounded-pill ms-auto">Imprimer</a>
 
