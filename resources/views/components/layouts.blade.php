@@ -17,6 +17,10 @@
     <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" />
     <style>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         .menu-icon {
             position: fixed;
             top: 20px;
@@ -51,10 +55,18 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
+<<<<<<< Updated upstream
         .menu-item i {
             color: black;
             opacity: 0.7;
         }
+=======
+        .menu-item i{
+            color: black;
+            opacity: 0.7;
+        }
+ 
+>>>>>>> Stashed changes
     </style>
     @livewireStyles
 </head>
@@ -67,8 +79,15 @@
         <main id="page-conten">
             <div class="header">
                 <nav class="navbar-default navbar navbar-expand-lg">
+                    <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button">
+                        <i class="bi bi-arrow-left fs-3"></i>
+                    </button>
                     <div class="ms-lg-3 d-none d-md-none d-lg-block navbar-icon">
+<<<<<<< Updated upstream
                         <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button"
+=======
+                        <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button" 
+>>>>>>> Stashed changes
                             data-bs-toggle="modal" data-bs-target="#menuModal">
                             <i class="bi bi-grid-3x3-gap"></i>
                         </button>
@@ -368,6 +387,7 @@
     <!-- Menu -->
     <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
+<<<<<<< Updated upstream
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title text-secondary" id="menuModalLabel">Menu</h3>
@@ -503,7 +523,7 @@
         </div>
     </div>
     </div>
-    @endauth
+
 
     @livewireScripts
     <script>
