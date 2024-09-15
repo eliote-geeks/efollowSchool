@@ -68,9 +68,9 @@
         <main id="page-conten">
             <div class="header">
                 <nav class="navbar-default navbar navbar-expand-lg">
-                    <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button">
+                    <a class="btn btn-light btn-icon rounded-circle d-flex align-items-center" href="{{ url()->previous() }}">
                         <i class="bi bi-arrow-left fs-3"></i>
-                    </button>
+                    </a>
                     <div class="ms-lg-3 d-none d-md-none d-lg-block navbar-icon">
                         <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button" 
                             data-bs-toggle="modal" data-bs-target="#menuModal">
