@@ -11,12 +11,12 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="admin-dashboard.html">Dashboard</a>
+                                    <a href="{{ route('dashboard') }}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="javascript:;">Ecommerce</a>
+                                    <a href="{{ url()->previous() }}">retour</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Add Customer</li>
+                                <li class="breadcrumb-item active" aria-current="page">Controle presence</li>
                             </ol>
                         </nav>
                     </div>

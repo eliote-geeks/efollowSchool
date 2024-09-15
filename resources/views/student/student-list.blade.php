@@ -20,11 +20,13 @@
                     <div>
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb">                                
                                 <li class="breadcrumb-item">
-                                    <a href="admin-dashboard.html">Dashboard</a>
+                                    <a href="{{ route('niveau.index') }}">Niveaux</a>
                                 </li>
-
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('niveau.show',$classe->niveau) }}">Classes</a>
+                                </li>
                                 <li class="breadcrumb-item active" aria-current="page">Gestion des élèves de la
                                     <b>{{ $classe->name }} </b>
                                 </li>
