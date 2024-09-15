@@ -24,10 +24,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="admin-dashboard.html">Dashboard</a>
+                                    <a href="javascript:;">Dashboard</a>
                                 </li>
 
-                                <li class="breadcrumb-item active" aria-current="page">Gestion des niveaux</li>
+                                <li class="breadcrumb-item active" aria-current="page">Gestion des emplois de temps</li>
                             </ol>
                         </nav>
                     </div>
@@ -198,9 +198,29 @@
                             </tbody>
                         </table>
 
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" onclick="printPage()">
                             <i class="bi bi-printer fs-4 me-2"></i>Imprimer
                         </button>
+
+                        <script>
+                            function printPage() {
+                                // Sélection des éléments à masquer
+                                const buttons = document.querySelectorAll('a, button');
+            
+                                // Masquer les boutons et liens
+                                buttons.forEach(button => {
+                                    button.style.display = 'none';
+                                });
+            
+                                // Lancer l'impression
+                                window.print();
+            
+                                // Réafficher les boutons après l'impression
+                                buttons.forEach(button => {
+                                    button.style.display = 'inline-block';
+                                });
+                            }
+                        </script>
                         
                         @foreach ($schedules as $schedule)
                             

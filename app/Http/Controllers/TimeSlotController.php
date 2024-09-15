@@ -43,7 +43,7 @@ class TimeSlotController extends Controller
                     'required',
                     'date_format:H:i',
                     Rule::unique('time_slots')->where(function ($query) use ($request) {
-                        return $query->where('start_time', $request->start_time)->where('end_time', $request->end_time);
+                        return $query->where('classe_id',$request->classe_id)->where('start_time', $request->start_time)->where('end_time', $request->end_time);
                     }),
                 ],
                 'end_time' => 'required|date_format:H:i|after:start_time',
