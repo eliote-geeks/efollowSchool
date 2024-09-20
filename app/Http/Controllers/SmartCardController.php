@@ -13,6 +13,7 @@ use App\Models\Schedule;
 use App\Models\Scolarite;
 use App\Models\SmartCard;
 use App\Models\EndSchedule;
+use App\Models\Moratoire;
 use Illuminate\Http\Request;
 use App\Models\StudentClasse;
 
@@ -94,7 +95,7 @@ class SmartCardController extends Controller
                     $student->save();
                     $class = StudentClasse::where('student_id', $student->id)->first();
                     $classe = Classe::find($class->classe_id);
-                    
+
                     User::log('Attribution d\'une carte à l\'etudiant: '.$student->first_name.' '.$student->first_name);
                     return redirect()
                         ->route('classe.show', $classe)
@@ -178,8 +179,14 @@ class SmartCardController extends Controller
                         ->back()
                         ->with('error', 'Controle impossible pour l\' etudiant: ' . $student->first_name . ' ' . $student->last_name . 'car il est desactivé');
                 }
+
+                if(Moratoire::where('student_id',$student->id)->latest()->count() > 0)
+                    $end_date = Carbon::parse(Moratoire::where('user_id',$student->id)->latest()->first()->end_date);
+                else
+                    $end_date = Carbon::now();
+
                 $niveau = $student->studentClasse->classe->niveau->id;
-                $scolarites = Scolarite::where('end_date', '<', now())
+                $scolarites = Scolarite::where('end_date', '>', $end_date)
                     ->get()
                     ->filter(function ($scolarite) use ($niveau) {
                         $niveaux = json_decode($scolarite->niveaux, true);

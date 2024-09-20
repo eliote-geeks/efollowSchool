@@ -94,7 +94,7 @@ class DashboardController extends Controller
         $studentNames = [];
         $lateAmounts = [];
         $scolariteNames = [];
-        
+
         foreach ($studentsLatePayments as $payment) {
             $studentNames[] = $payment->student_name ? $payment->student_name . ' (' . $payment->scolarite_name . ')' : $payment->scolarite_name;
             $lateAmounts[] = $payment->total_due - $payment->total_paid;
@@ -117,3 +117,7 @@ class DashboardController extends Controller
         return view('dashboard', compact('lateAmounts', 'studentNames', 'classes', 'absenceCounts', 'years', 'school', 'totalStudents', 'weeklyAbsences', 'totalPayments', 'totalRemises', 'totalAbsences', 'totalPresences', 'totalMoratoires', 'totalScolarites', 'monthlyPayments', 'weeklyPayments', 'absenceDataW'));
     }
 }
+
+
+
+

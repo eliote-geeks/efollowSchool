@@ -193,7 +193,7 @@ class AttendanceController extends Controller
                 ->get();
         } elseif ($request->student) {
             $presences = DB::table('schedules')
-                ->leftJoin('presences', 'absences.schedule_id', '=', 'schedules.id')
+                ->leftJoin('presences', 'presences.schedule_id', '=', 'schedules.id')
                 ->selectRaw('presences.date date, schedules.day_of_week day_of_week, schedules.subject subject, schedules.teacher_id teacher, schedules.time_slot_id timeslot, presences.student_id student')
                 ->where('schedules.classe_id', '=', $classe->id)
                 ->where('presences.student_id', '=', $request->student)
