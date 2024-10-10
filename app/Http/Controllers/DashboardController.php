@@ -25,6 +25,9 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+        if(SchoolInformation::where('status', 1)->count() == 0){
+            return redirect()->route('schoolInformation.index');
+        }
         $start = Carbon::parse($this->schoolInformation->start)->format('Y');
         $end = Carbon::parse($this->schoolInformation->end)->format('Y');
         $totalStudents = Student::where('school_information_id', $this->schoolInformation->id)->count();
