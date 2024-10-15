@@ -302,11 +302,7 @@ class PaymentController extends Controller
         User::log('Paiement enregistré: ' . $payment->student->first_name . ' ' . $payment->student->last_name . ' Scolarite: ' . $payment->scolarite->name . ' Montant: ' . number_format($payment->rest) . '!!');
 
         return redirect()
-            ->route('receiptPayment', [
-                'student' => $payment->student,
-                'payment' => $payment,
-            ])
-            ->with('success', 'Paiement Reussi !! reçu téléchargé !!');
+            ->back()->with('success', 'Paiement Reussi Vous pouvez imprimer le reçu !!');
     }
 
     public function receiptPayment(Student $student, Payment $payment)
