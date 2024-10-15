@@ -186,7 +186,7 @@ class SmartCardController extends Controller
                     $end_date = Carbon::now();
 
                 $niveau = $student->studentClasse->classe->niveau->id;
-                $scolarites = Scolarite::where('end_date', '>', $end_date)
+                $scolarites = Scolarite::where('end_date', '<', $end_date)
                     ->get()
                     ->filter(function ($scolarite) use ($niveau) {
                         $niveaux = json_decode($scolarite->niveaux, true);
